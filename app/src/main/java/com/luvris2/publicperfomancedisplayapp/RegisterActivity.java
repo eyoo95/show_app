@@ -42,10 +42,13 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnRegister);
         txtLogin = findViewById(R.id.txtLogin);
 
+
+        // 회원가입 버튼
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                // 이메일
                 String email = editEmail.getText().toString().trim();
                 Pattern pattern = Patterns.EMAIL_ADDRESS;
                 if (pattern.matcher(email).matches() == false) {
@@ -53,24 +56,28 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
+                // 비밀번호
                 String password = editPassword.getText().toString().trim();
                 if (password.length() < 4 || password.length() > 12) {
                     Toast.makeText(RegisterActivity.this, "비번길이는 4자이상 12자 이하로만 입력하세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
+                // 이름
                 String name = editName.getText().toString().trim();
                 if (name.isEmpty()) {
                     Toast.makeText(RegisterActivity.this, "이름을 입력하세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
+                // 닉네임
                 String nickname = editNickname.getText().toString().trim();
                 if (name.isEmpty()) {
                     Toast.makeText(RegisterActivity.this, "닉네임을 입력하세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
+                // 성별
                 String gender;
                 int checkedId = radioGender.getCheckedRadioButtonId();
                 if (checkedId == R.id.radioMale) {
