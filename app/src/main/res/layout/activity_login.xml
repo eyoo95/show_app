@@ -17,6 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
@@ -51,7 +52,7 @@
             android:textSize="28sp" />
 
         <TextView
-            android:id="@+id/txtRegister"
+            android:id="@+id/txtLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="30dp"
@@ -60,13 +61,31 @@
             android:textColor="#0E5995"
             android:textSize="26sp" />
 
+
         <EditText
-            android:id="@+id/editTextTextPassword3"
-            android:layout_width="wrap_content"
+            android:id="@+id/editEmail2"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="이메일을 입력해주세요."
+            android:inputType="textEmailAddress"
+            android:minHeight="48dp"
+            tools:layout_editor_absoluteX="20dp"
+            tools:layout_editor_absoluteY="552dp" />
+
+        <EditText
+            android:id="@+id/editPassword2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="비밀번호를 입력해주세요."
             android:inputType="textPassword"
-            app:layout_constrainedHeight="false" />
+            android:minHeight="48dp"
+            tools:layout_editor_absoluteX="20dp"
+            tools:layout_editor_absoluteY="600dp" />
+
 
     </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
