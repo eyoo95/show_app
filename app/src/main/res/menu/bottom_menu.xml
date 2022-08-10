@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menuHome"
+        android:icon="@drawable/tap_menu_icon_home_fill"
+        android:title="홈"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/menuMap"
+        android:icon="@drawable/tap_menu_icon_map"
+        android:title="내 주변"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/menuCommunity"
+        android:icon="@drawable/tap_menu_icon_community"
+        android:title="커뮤니티"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/menuMyPage"
+        android:icon="@drawable/tap_menu_icon_my_page"
+        android:title="내 정보"
+        app:showAsAction="always" />
+</menu>
