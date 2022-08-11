@@ -3,8 +3,7 @@ package com.luvris2.publicperfomancedisplayapp.api;
 
 import com.luvris2.publicperfomancedisplayapp.model.UserRes;
 import com.luvris2.publicperfomancedisplayapp.model.Users;
-import com.sawol.posting.model.User;
-import com.sawol.posting.model.UserRes;
+
 
 import retrofit2.Call;
 import retrofit2.http.Body;

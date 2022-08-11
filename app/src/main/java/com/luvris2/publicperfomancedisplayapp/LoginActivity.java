@@ -85,9 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                             finish();
 
                         }else{
-
                         }
-
                     }
 
                     @Override
@@ -95,7 +93,6 @@ public class LoginActivity extends AppCompatActivity {
                         dismissProgress();
                     }
                 });
-
             }
         });
 
@@ -107,9 +104,7 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
-
 
     void showProgress(String message){
         dialog = new ProgressDialog(this);

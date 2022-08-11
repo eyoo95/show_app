@@ -3,7 +3,6 @@ package com.luvris2.publicperfomancedisplayapp.api;
 import android.content.Context;
 
 import com.luvris2.publicperfomancedisplayapp.config.Config;
-import com.sawol.posting.config.Config;
 
 import java.util.concurrent.TimeUnit;
 

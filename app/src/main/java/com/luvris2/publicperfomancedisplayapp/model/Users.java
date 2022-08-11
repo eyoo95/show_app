@@ -8,4 +8,7 @@ public class Users implements Serializable {
     private String name; // 사용자의 이름
     private Boolean gender; // 사용자의 성별
     private int age; // 사용자의 나이
+
+    public Users(String email, String password) {
+    }
 }
