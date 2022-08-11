@@ -108,23 +108,23 @@
         </RadioGroup>
 
         <Button
-            android:id="@+id/btnLogin"
+            android:id="@+id/btnRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:backgroundTint="#7ad7e1"
+            android:layout_marginTop="20dp"
             android:text="회원가입"
-            android:textSize="28sp" />
+            android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/txtRegister"
+            android:id="@+id/txtLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="30dp"
             android:gravity="center"
-            android:text="로그인"
-            android:textColor="#0E5995"
-            android:textSize="26sp" />
+            android:text="@string/txt_login_btn"
+            android:textColor="#0579F4"
+            android:textSize="20sp" />
 
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

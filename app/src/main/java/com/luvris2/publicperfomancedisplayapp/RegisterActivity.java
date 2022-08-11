@@ -56,7 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
         radioGender = findViewById(R.id.radioGender);
         btnRegister = findViewById(R.id.btnLogin);
 
-        txtLogin = findViewById(R.id.txtRegister);
+        txtLogin = findViewById(R.id.txtLogin);
 
         txtLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,8 +115,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 // 나이
-                String age = editAge.getText().toString().trim();
-                int age = Integer.parseInt(age);
+                int age = Integer.parseInt(editAge.getText().toString());
                 if (age >= 0) {
                     Toast.makeText(RegisterActivity.this, "나이를 입력하세요.", Toast.LENGTH_SHORT).show();
                     return;
@@ -128,7 +127,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Retrofit retrofit = NetworkClient.getRetrofitClient(RegisterActivity.this);
 
                 UserApi api = retrofit.create(UserApi.class);
-                Users user = new Users (email, password, name, nickname, gender);
+                Users user = new Users (email, password, name, nickname);
 
                 Call<UserRes> call = api.register(user);
                 call.enqueue(new Callback<UserRes>() {

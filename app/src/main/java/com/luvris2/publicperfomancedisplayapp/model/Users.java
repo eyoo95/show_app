@@ -11,9 +11,18 @@ public class Users implements Serializable {
     private Boolean gender; // 사용자의 성별
     private int age; // 사용자의 나이
 
-    public Users(String email1, String s, String name, String email, String password) {
+    public Users(String email, String password, String name, String nickname) {
         this.email = email;
         this.password = password;
+        this.name = name;
+        this.nickname = nickname;
+
+    }
+
+    public Users(String email, String password) {
+        this.email = email;
+        this.password = password;
+
     }
 
     public String getNickname() {

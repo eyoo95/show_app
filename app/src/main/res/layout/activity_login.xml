@@ -70,17 +70,14 @@
 
     <Button
         android:id="@+id/btnLogin"
-        android:layout_width="300dp"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="#7ad7e1"
         android:text="로그인"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.609" />
+        tools:layout_editor_absoluteY="419dp" />
 
     <TextView
         android:id="@+id/txtRegister"
@@ -90,15 +87,15 @@
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:gravity="center"
-        android:text="회원가입"
-        android:textColor="#0E5995"
+        android:text="@string/txt_register_btn"
+        android:textColor="#0579F4"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.705" />
+        app:layout_constraintVertical_bias="0.718" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
