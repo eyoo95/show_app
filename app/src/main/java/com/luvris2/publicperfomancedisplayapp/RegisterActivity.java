@@ -2,9 +2,6 @@ package com.luvris2.publicperfomancedisplayapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -39,8 +36,8 @@ public class RegisterActivity extends AppCompatActivity {
         editName = findViewById(R.id.editName);
         editNickname = findViewById(R.id.editNickname);
         radioGender = findViewById(R.id.radioGender);
-        btnRegister = findViewById(R.id.btnRegister);
-        txtLogin = findViewById(R.id.txtLogin);
+        btnRegister = findViewById(R.id.btnLogin);
+        txtLogin = findViewById(R.id.txtRegister);
 
 
         // 회원가입 버튼
