@@ -5,6 +5,7 @@ public class UserRes {
     private String result;
     private String access_token;
 
+    // Getter Setter
     public String getResult() {
         return result;
     }

@@ -17,10 +17,11 @@ public class NetworkClient {
 
     public static Retrofit getRetrofitClient(Context context){
         if(retrofit == null){
+            // 네트워크 통신 로그
             HttpLoggingInterceptor loggingInterceptor =
                     new HttpLoggingInterceptor();
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
-
+            // 네트워크 연결
             OkHttpClient httpClient = new OkHttpClient.Builder()
                     .connectTimeout(1, TimeUnit.MINUTES)
                     .readTimeout(1, TimeUnit.MINUTES)
@@ -35,7 +36,6 @@ public class NetworkClient {
         }
         return retrofit;
     }
-
 }
 
 

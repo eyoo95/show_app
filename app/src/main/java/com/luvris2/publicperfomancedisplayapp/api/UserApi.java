@@ -4,7 +4,6 @@ package com.luvris2.publicperfomancedisplayapp.api;
 import com.luvris2.publicperfomancedisplayapp.model.UserRes;
 import com.luvris2.publicperfomancedisplayapp.model.Users;
 
-
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Header;

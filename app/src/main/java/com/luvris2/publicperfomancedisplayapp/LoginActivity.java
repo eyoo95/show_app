@@ -31,7 +31,10 @@ public class LoginActivity extends AppCompatActivity {
     EditText editEmail;
     EditText editPassword;
     Button btnLogin;
+    
     TextView txtRegister;
+    
+    // 프로그레스 다이얼로그
     private ProgressDialog dialog;
 
     @Override
@@ -39,62 +42,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // 화면연결
         editEmail = findViewById(R.id.editEmail);
         editPassword = findViewById(R.id.editPassword);
         btnLogin = findViewById(R.id.btnLogin);
         txtRegister = findViewById(R.id.txtRegister);
-
-
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                String email = editEmail.getText().toString().trim();
-                Pattern pattern = Patterns.EMAIL_ADDRESS;
-                if(pattern.matcher(email).matches() == false){
-                    Toast.makeText(LoginActivity.this, "이메일 형식이 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                String password = editPassword.getText().toString().trim();
-
-                Retrofit retrofit = NetworkClient.getRetrofitClient(LoginActivity.this);
-                UserApi api = retrofit.create(UserApi.class);
-
-                Users users = new Users(email, password);
-                Call<UserRes> call = api.login(users);
-
-                showProgress("로그인 중...");
-                call.enqueue(new Callback<UserRes>() {
-                    @Override
-                    public void onResponse(Call<UserRes> call, Response<UserRes> response) {
-                        dismissProgress();
-
-                        if(response.isSuccessful()){
-
-                            UserRes userRes = response.body();
-                            String accessToken = userRes.getAccess_token();
-
-                            SharedPreferences sp = getApplication().getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
-                            SharedPreferences.Editor editor = sp.edit();
-                            editor.putString("accessToken", accessToken);
-                            editor.apply();
-
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            finish();
-
-                        }else{
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<UserRes> call, Throwable t) {
-                        dismissProgress();
-                    }
-                });
-            }
-        });
 
         txtRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,8 +56,70 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // 이메일 - 형식체크
+                String email = editEmail.getText().toString().trim();
+                Pattern pattern = Patterns.EMAIL_ADDRESS;
+                if(pattern.matcher(email).matches() == false){
+                    Toast.makeText(LoginActivity.this, "이메일 형식이 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // 비밀번호
+                String password = editPassword.getText().toString().trim();
+
+                Retrofit retrofit = NetworkClient.getRetrofitClient(LoginActivity.this);
+                UserApi api = retrofit.create(UserApi.class);
+
+                Users users = new Users(email, password);
+
+                Call<UserRes> call = api.login(users);
+
+                showProgress("로그인 중...");
+                
+                call.enqueue(new Callback<UserRes>() {
+                    @Override
+                    public void onResponse(Call<UserRes> call, Response<UserRes> response) {
+                        dismissProgress();
+
+                        if(response.isSuccessful()){
+                            // 200 OK 일 때 처리
+                            UserRes userRes = response.body();
+                            
+                            String accessToken = userRes.getAccess_token();
+
+                            SharedPreferences sp = getApplication().getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sp.edit();
+                            editor.putString("accessToken", userRes.getAccess_token());
+                            editor.apply();
+
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+
+                            finish();
+
+                        }else {
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserRes> call, Throwable t) {
+                        dismissProgress();
+                        Toast.makeText(LoginActivity.this, "네트워크에 문제가 있습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }
+        });
     }
 
+    // 데이터를 보내줄 때,,(?)
     void showProgress(String message){
         dialog = new ProgressDialog(this);
         dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
