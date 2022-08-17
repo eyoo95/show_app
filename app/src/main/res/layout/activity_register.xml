@@ -118,8 +118,8 @@
         <TextView
             android:id="@+id/txtLogin"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="30dp"
+            android:layout_height="91dp"
+            android:layout_margin="10dp"
             android:gravity="center"
             android:text="@string/txt_login_btn"
             android:textColor="#0579F4"

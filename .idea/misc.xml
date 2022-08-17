@@ -3,17 +3,28 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-<<<<<<< HEAD
-        <entry key="..\:/Users/-/Documents/GitHub/show_app/app/src/main/res/layout/activity_login.xml" value="0.33" />
-        <entry key="..\:/Users/-/Documents/GitHub/show_app/app/src/main/res/layout/activity_register.xml" value="0.33" />
-=======
+        <entry key="..\:/Users/-/AndroidStudioProjects/show_app/app/src/main/res/layout/activity_analysis.xml" value="0.3079710144927536" />
+        <entry key="..\:/Users/-/AndroidStudioProjects/show_app/app/src/main/res/layout/activity_analysis2.xml" value="0.3120471014492754" />
+        <entry key="..\:/Users/-/AndroidStudioProjects/show_app/app/src/main/res/layout/activity_analysis_loading.xml" value="0.25" />
+        <entry key="..\:/Users/-/AndroidStudioProjects/show_app/app/src/main/res/layout/activity_event_info.xml" value="0.31476449275362317" />
+        <entry key="..\:/Users/-/AndroidStudioProjects/show_app/app/src/main/res/layout/activity_event_information.xml" value="0.31476449275362317" />
+        <entry key="..\:/Users/-/AndroidStudioProjects/show_app/app/src/main/res/layout/activity_login.xml" value="0.3079710144927536" />
+        <entry key="..\:/Users/-/AndroidStudioProjects/show_app/app/src/main/res/layout/activity_logo.xml" value="0.3079710144927536" />
+        <entry key="..\:/Users/-/AndroidStudioProjects/show_app/app/src/main/res/layout/activity_main.xml" value="0.3079710144927536" />
+        <entry key="..\:/Users/-/AndroidStudioProjects/show_app/app/src/main/res/layout/activity_register.xml" value="0.3079710144927536" />
+        <entry key="..\:/Users/-/AndroidStudioProjects/show_app/app/src/main/res/layout/dialog_search.xml" value="0.3079710144927536" />
+        <entry key="..\:/Users/-/AndroidStudioProjects/show_app/app/src/main/res/layout/fragment_community.xml" value="0.1875" />
+        <entry key="..\:/Users/-/AndroidStudioProjects/show_app/app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="..\:/Users/-/AndroidStudioProjects/show_app/app/src/main/res/layout/fragment_map.xml" value="0.1" />
+        <entry key="..\:/Users/-/AndroidStudioProjects/show_app/app/src/main/res/layout/fragment_my_page.xml" value="0.3079710144927536" />
         <entry key="..\:/Users/-/Documents/GitHub/dasdsa/show_app/app/src/main/res/layout/activity_logo.xml" value="0.16111111111111112" />
         <entry key="..\:/Users/-/Documents/GitHub/dasdsa/show_app/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/-/Documents/GitHub/dasdsa/show_app/app/src/main/res/layout/dialog_search.xml" value="0.23052536231884058" />
         <entry key="..\:/Users/-/Documents/GitHub/dasdsa/show_app/app/src/main/res/layout/fragment_community.xml" value="0.33" />
         <entry key="..\:/Users/-/Documents/GitHub/dasdsa/show_app/app/src/main/res/layout/fragment_home.xml" value="0.23867753623188406" />
         <entry key="..\:/Users/-/Documents/GitHub/dasdsa/show_app/app/src/main/res/layout/fragment_map.xml" value="0.23867753623188406" />
->>>>>>> 4d96383a8c8a2e7c60663cf7c7f5bbdaa6ed1a0e
+        <entry key="..\:/Users/-/Documents/GitHub/show_app/app/src/main/res/layout/activity_test.xml" value="0.1875" />
+        <entry key="..\:/Users/-/Documents/GitHub/show_app/app/src/main/res/layout/fragment_map.xml" value="0.33" />
         <entry key="..\:/Users/-/GitHub/PublicPerfomanceDisplayApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.206" />
         <entry key="..\:/Users/-/GitHub/PublicPerfomanceDisplayApp/app/src/main/res/drawable/bottom_menu_selected_color.xml" value="0.206" />
         <entry key="..\:/Users/-/GitHub/PublicPerfomanceDisplayApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3295" />
