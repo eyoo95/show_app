@@ -119,14 +119,14 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    // 데이터를 보내줄 때,,(?)
+    // 다이얼로그 나오는 함수 만들기
     void showProgress(String message){
-        dialog = new ProgressDialog(this);
+        dialog = new ProgressDialog(LoginActivity.this);
         dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         dialog.setMessage(message);
         dialog.show();
     }
-
+    // 다이얼로그를 없애기
     void dismissProgress(){
         dialog.dismiss();
     }
