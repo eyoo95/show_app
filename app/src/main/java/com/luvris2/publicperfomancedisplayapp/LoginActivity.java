@@ -16,8 +16,8 @@ import android.widget.Toast;
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
 import com.luvris2.publicperfomancedisplayapp.api.UserApi;
 import com.luvris2.publicperfomancedisplayapp.config.Config;
+import com.luvris2.publicperfomancedisplayapp.model.User;
 import com.luvris2.publicperfomancedisplayapp.model.UserRes;
-import com.luvris2.publicperfomancedisplayapp.model.Users;
 
 import java.util.regex.Pattern;
 
@@ -27,11 +27,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class LoginActivity extends AppCompatActivity {
-
     EditText editEmail;
     EditText editPassword;
     Button btnLogin;
-    
     TextView txtRegister;
     
     // 프로그레스 다이얼로그
@@ -51,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         txtRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
                 finish();
@@ -75,9 +74,9 @@ public class LoginActivity extends AppCompatActivity {
                 Retrofit retrofit = NetworkClient.getRetrofitClient(LoginActivity.this);
                 UserApi api = retrofit.create(UserApi.class);
 
-                Users users = new Users(email, password);
+                User user = new User(email, password);
 
-                Call<UserRes> call = api.login(users);
+                Call<UserRes> call = api.login(user);
 
                 showProgress("로그인 중...");
 
@@ -90,11 +89,11 @@ public class LoginActivity extends AppCompatActivity {
                             // 200 OK 일 때 처리
                             UserRes userRes = response.body();
 
-                            String accessToken = userRes.getAccess_token();
+                            String accessToken = userRes.getAccessToken();
 
                             SharedPreferences sp = getApplication().getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
                             SharedPreferences.Editor editor = sp.edit();
-                            editor.putString("accessToken", userRes.getAccess_token());
+                            editor.putString("accessToken", accessToken);
                             editor.apply();
 
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -102,16 +101,15 @@ public class LoginActivity extends AppCompatActivity {
 
                             finish();
 
-                        }else {
+                        }else{
+                            Toast.makeText(LoginActivity.this, "잘못된 정보를 입력하셨습니다.", Toast.LENGTH_SHORT).show();
 
                         }
-
                     }
 
                     @Override
                     public void onFailure(Call<UserRes> call, Throwable t) {
-                        dismissProgress();
-                        Toast.makeText(LoginActivity.this, "네트워크에 문제가 있습니다.", Toast.LENGTH_SHORT).show();
+
                     }
                 });
 

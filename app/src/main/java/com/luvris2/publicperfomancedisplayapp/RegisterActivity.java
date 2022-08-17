@@ -17,8 +17,8 @@ import android.widget.Toast;
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
 import com.luvris2.publicperfomancedisplayapp.api.UserApi;
 import com.luvris2.publicperfomancedisplayapp.config.Config;
+import com.luvris2.publicperfomancedisplayapp.model.User;
 import com.luvris2.publicperfomancedisplayapp.model.UserRes;
-import com.luvris2.publicperfomancedisplayapp.model.Users;
 
 import java.util.regex.Pattern;
 
@@ -58,6 +58,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         txtLogin = findViewById(R.id.txtLogin);
 
+        // 로그인 이동
         txtLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,12 +104,12 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 // 성별
-                String gender;
+                int gender;
                 int checkedId = radioGender.getCheckedRadioButtonId();
                 if (checkedId == R.id.radioMale) {
-                    gender = "Male";
+                    gender = 1;
                 } else if (checkedId == R.id.radioFemale) {
-                    gender = "Female";
+                    gender = 0;
                 } else {
                     Toast.makeText(RegisterActivity.this, "선택하세요", Toast.LENGTH_SHORT).show();
                     return;
@@ -127,7 +128,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Retrofit retrofit = NetworkClient.getRetrofitClient(RegisterActivity.this);
 
                 UserApi api = retrofit.create(UserApi.class);
-                Users user = new Users (email, password, name, nickname);
+                User user = new User (email, password, name, nickname, gender, age);
 
                 Call<UserRes> call = api.register(user);
                 call.enqueue(new Callback<UserRes>() {
@@ -138,16 +139,15 @@ public class RegisterActivity extends AppCompatActivity {
                         // 200 OK 일 때,
                         if (response.isSuccessful()){
 
-                            UserRes registerRes = response.body();
+                            UserRes usersRes = response.body();
+                            String accessToken = usersRes.getAccessToken();
 
                             SharedPreferences sp = getApplication().getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
                             SharedPreferences.Editor editor = sp.edit();
-                            editor.putString("accessToken", registerRes.getAccess_token());
+                            editor.putString("accessToken", accessToken);
                             editor.apply();
 
                             finish();
-
-                        } else if (response.code() == 400){
 
                         } else {
                             Toast.makeText(RegisterActivity.this, "에러 발생 : "+response.code(), Toast.LENGTH_SHORT).show();

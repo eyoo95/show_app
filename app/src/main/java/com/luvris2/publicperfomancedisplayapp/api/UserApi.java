@@ -2,7 +2,7 @@ package com.luvris2.publicperfomancedisplayapp.api;
 
 
 import com.luvris2.publicperfomancedisplayapp.model.UserRes;
-import com.luvris2.publicperfomancedisplayapp.model.Users;
+import com.luvris2.publicperfomancedisplayapp.model.User;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -13,11 +13,11 @@ public interface UserApi {
 
     // 회원가입 API
     @POST("/users/register")
-    Call<UserRes> register(@Body Users users);
+    Call<UserRes> register(@Body User user);
 
     // 로그인 API
     @POST("/users/login")
-    Call<UserRes> login(@Body Users users);
+    Call<UserRes> login(@Body User user);
 
     // 로그아웃 API
     @POST("/users/logout")
