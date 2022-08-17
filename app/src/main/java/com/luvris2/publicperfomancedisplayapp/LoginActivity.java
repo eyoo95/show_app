@@ -27,7 +27,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class LoginActivity extends AppCompatActivity {
-//굿굿
+
     EditText editEmail;
     EditText editPassword;
     Button btnLogin;
@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
                 Call<UserRes> call = api.login(users);
 
                 showProgress("로그인 중...");
-                
+
                 call.enqueue(new Callback<UserRes>() {
                     @Override
                     public void onResponse(Call<UserRes> call, Response<UserRes> response) {
@@ -89,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                         if(response.isSuccessful()){
                             // 200 OK 일 때 처리
                             UserRes userRes = response.body();
-                            
+
                             String accessToken = userRes.getAccess_token();
 
                             SharedPreferences sp = getApplication().getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
