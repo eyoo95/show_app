@@ -21,13 +21,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="30dp"
                     android:layout_weight="40"
                     android:gravity="center|left"
                     android:text="행사 상세 정보"
@@ -43,6 +45,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginBottom="5dp"
                     android:orientation="vertical">
 
                     <ImageView
@@ -50,37 +53,45 @@
                         android:layout_width="200dp"
                         android:layout_height="300dp"
                         android:layout_gravity="center"
+                        android:layout_margin="5dp"
                         tools:src="@tools:sample/avatars" />
 
                     <TextView
-                        android:id="@+id/textView2"
+                        android:id="@+id/txtTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:gravity="center"
                         android:text="[뮤지컬] 지킬 앤 하이드"
                         android:textSize="20sp" />
 
                     <TextView
-                        android:id="@+id/textView11"
+                        android:id="@+id/txtDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
                         android:gravity="center"
                         android:text="2022.08.18 ~ 2022.08.20"
                         android:textSize="20sp" />
 
                     <TextView
-                        android:id="@+id/textView19"
+                        android:id="@+id/txtEventPlace"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
                         android:gravity="center"
                         android:text="GS칼텍스 여울마루"
                         android:textSize="20sp" />
 
                     <TextView
-                        android:id="@+id/textView21"
+                        android:id="@+id/textEventDesc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="지금 이 순간, 단 하나의 선택! 뮤지컬 <지킬앤하이드> 대한민국 뮤지컬 역사상 가장 압도적인 흥행작. 2004년 국내 초연 이후 누적 회차 1,410회, 평균 객석 점유율 95%, 누적 관객수 150만 명을 돌파한 그 누구도 넘볼 수… " />
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="30dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/txtEventInfo" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -88,6 +99,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="5dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -104,6 +119,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/avgRating"
+                    android:isIndicator="true"
                     android:numStars="5"
                     android:rating="3"
                     android:stepSize="3"
@@ -116,18 +132,23 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/imageView9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_weight="1"
                     app:srcCompat="@drawable/ic_likes" />
 
                 <Button
                     android:id="@+id/button3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="30dp"
                     android:layout_weight="1"
                     android:text="티켓 구매 링크" />
             </LinearLayout>
@@ -135,22 +156,38 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/textView23"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="30dp"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:text="이미 관람하셨다면?\n뷰를 남겨주세요! " />
 
                 <Button
                     android:id="@+id/button4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="30dp"
                     android:layout_weight="1"
                     android:text="리뷰 작성하러가기" />
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
             </LinearLayout>
 
         </LinearLayout>
