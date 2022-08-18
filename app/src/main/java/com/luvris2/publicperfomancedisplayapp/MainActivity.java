@@ -53,28 +53,7 @@ public class MainActivity extends AppCompatActivity {
         communityFragment = new CommunityFragment();
         myPageFragment = new MyPageFragment();
 
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        // 마지막 위치 받아오기
 
-        // 퍼미션 체크 코드
-        if (ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this,
-                        Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        Location loc_Current = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-        // 좌표 받아서 변수 지정
-        gpsX = loc_Current.getLatitude();
-        gpsY = loc_Current.getLongitude();
 
         Log.i("myLocation create", "위도 : " + gpsX);
         Log.i("myLocation create", "경도 : " + gpsY);
@@ -133,6 +112,29 @@ public class MainActivity extends AppCompatActivity {
                 } return loadFragment(fragment);
             }
         });
+
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        // 마지막 위치 받아오기
+
+        // 퍼미션 체크 코드
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        Location loc_Current = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+        // 좌표 받아서 변수 지정
+        gpsX = loc_Current.getLatitude();
+        gpsY = loc_Current.getLongitude();
     }
 
     // 프래그먼트 이동 메소드
