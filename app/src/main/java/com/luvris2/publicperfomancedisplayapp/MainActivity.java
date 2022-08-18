@@ -27,7 +27,10 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
 
     // 프래그먼트
-    Fragment homeFragment, mapFragment, communityFragment, myPageFragment;
+    Fragment homeFragment;
+    Fragment mapFragment;
+    Fragment communityFragment;
+    Fragment myPageFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +39,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // 억세스 토큰 확인
-        SharedPreferences sp = getApplication().getSharedPreferences(Config.PREFERENCES_NAME,MODE_PRIVATE);
+        SharedPreferences sp = getApplication().getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
         String accessToken = sp.getString("accessToken","");
 
         if (accessToken.isEmpty()){
-            Intent intent = new Intent(MainActivity.this,RegisterActivity.class);
+            Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
             startActivity(intent);
 
             finish();
@@ -60,10 +63,11 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
                 // 메뉴 선택시 이동 할 프래그먼트의 이름을 저장 할 변수
                 Fragment fragment = null;
 
-                if (item.getItemId() == R.id.menuHome) {
+                if (itemId == R.id.menuHome) {
                     // 메뉴 선택시 지정된 프래그먼트로 이동
                     fragment = homeFragment;
                     // 프래그먼트의 액션바 타이틀 설정
@@ -104,7 +108,8 @@ public class MainActivity extends AppCompatActivity {
                     bottomNavigationView.getMenu().findItem(R.id.menuHome).setIcon(R.drawable.tap_menu_icon_home);
                     bottomNavigationView.getMenu().findItem(R.id.menuMap).setIcon(R.drawable.tap_menu_icon_map);
                     bottomNavigationView.getMenu().findItem(R.id.menuCommunity).setIcon(R.drawable.tap_menu_icon_community);
-                } return loadFragment(fragment);
+                }
+                return loadFragment(fragment);
             }
         });
 

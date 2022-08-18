@@ -1,7 +1,11 @@
 package com.luvris2.publicperfomancedisplayapp.fragment;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
@@ -13,7 +17,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.luvris2.publicperfomancedisplayapp.MainActivity;
 import com.luvris2.publicperfomancedisplayapp.R;
+import com.luvris2.publicperfomancedisplayapp.RegisterActivity;
+import com.luvris2.publicperfomancedisplayapp.config.Config;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -126,6 +133,8 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
+        // 이 위에서 기능 작성 (return rootView;)
         return rootView;
     }
 }

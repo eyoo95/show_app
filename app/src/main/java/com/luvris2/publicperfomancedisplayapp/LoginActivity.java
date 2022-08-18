@@ -109,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<UserRes> call, Throwable t) {
-
+                        dismissProgress();
                     }
                 });
 
