@@ -54,7 +54,7 @@ public class RegisterActivity extends AppCompatActivity {
         editNickname = findViewById(R.id.editNickname);
         editAge = findViewById(R.id.editAge);
         radioGender = findViewById(R.id.radioGender);
-        btnRegister = findViewById(R.id.btnLogin);
+        btnRegister = findViewById(R.id.btnRegister);
 
         txtLogin = findViewById(R.id.txtLogin);
 
@@ -89,16 +89,9 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
-                // 이름 - 빈 문자열인지만 체크
-                String name = editName.getText().toString().trim();
-                if (name.isEmpty()) {
-                    Toast.makeText(RegisterActivity.this, "이름을 입력하세요.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
                 // 닉네임 - 빈 문자열인지만 체크
                 String nickname = editNickname.getText().toString().trim();
-                if (name.isEmpty()) {
+                if (nickname.isEmpty()) {
                     Toast.makeText(RegisterActivity.this, "닉네임을 입력하세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -128,7 +121,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Retrofit retrofit = NetworkClient.getRetrofitClient(RegisterActivity.this);
 
                 UserApi api = retrofit.create(UserApi.class);
-                User user = new User (email, password, name, nickname, gender, age);
+                User user = new User (email, password, nickname, gender, age);
 
                 Call<UserRes> call = api.register(user);
                 call.enqueue(new Callback<UserRes>() {
