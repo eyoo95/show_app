@@ -3,9 +3,10 @@ package com.luvris2.publicperfomancedisplayapp.model;
 public class UserRes {
 
     private String result;
-    private String access_token;
+    private String accessToken;
 
     // Getter Setter
+
     public String getResult() {
         return result;
     }
@@ -14,11 +15,11 @@ public class UserRes {
         this.result = result;
     }
 
-    public String getAccess_token() {
-        return access_token;
+    public String getAccessToken() {
+        return accessToken;
     }
 
-    public void setAccess_token(String access_token) {
-        this.access_token = access_token;
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 }
