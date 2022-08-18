@@ -1,10 +1,12 @@
 package com.luvris2.publicperfomancedisplayapp;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -27,6 +29,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class LoginActivity extends AppCompatActivity {
+
     EditText editEmail;
     EditText editPassword;
     Button btnLogin;
@@ -81,6 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                 showProgress("로그인 중...");
 
                 call.enqueue(new Callback<UserRes>() {
+                    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
                     @Override
                     public void onResponse(Call<UserRes> call, Response<UserRes> response) {
                         dismissProgress();
