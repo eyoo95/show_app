@@ -3,16 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/-/AndroidStudioProjects/PublicPerfomanceDisplayApp/show_app/app/src/main/res/drawable-v24/border.xml" value="0.327" />
         <entry key="..\:/Users/-/AndroidStudioProjects/PublicPerfomanceDisplayApp/show_app/app/src/main/res/drawable/border.xml" value="0.327" />
         <entry key="..\:/Users/-/AndroidStudioProjects/PublicPerfomanceDisplayApp/show_app/app/src/main/res/drawable/ic_baseline_photo_camera_24.xml" value="0.327" />
         <entry key="..\:/Users/-/AndroidStudioProjects/PublicPerfomanceDisplayApp/show_app/app/src/main/res/layout/activity_analysis.xml" value="0.31476449275362317" />
         <entry key="..\:/Users/-/AndroidStudioProjects/PublicPerfomanceDisplayApp/show_app/app/src/main/res/layout/activity_analysis2.xml" value="0.31476449275362317" />
         <entry key="..\:/Users/-/AndroidStudioProjects/PublicPerfomanceDisplayApp/show_app/app/src/main/res/layout/activity_analysis_loading.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/-/AndroidStudioProjects/PublicPerfomanceDisplayApp/show_app/app/src/main/res/layout/activity_edit_post.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/-/AndroidStudioProjects/PublicPerfomanceDisplayApp/show_app/app/src/main/res/layout/activity_edit_review.xml" value="0.31476449275362317" />
         <entry key="..\:/Users/-/AndroidStudioProjects/PublicPerfomanceDisplayApp/show_app/app/src/main/res/layout/activity_event_info.xml" value="0.33" />
+        <entry key="..\:/Users/-/AndroidStudioProjects/PublicPerfomanceDisplayApp/show_app/app/src/main/res/layout/activity_like.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/-/AndroidStudioProjects/PublicPerfomanceDisplayApp/show_app/app/src/main/res/layout/activity_login.xml" value="0.31476449275362317" />
         <entry key="..\:/Users/-/AndroidStudioProjects/PublicPerfomanceDisplayApp/show_app/app/src/main/res/layout/activity_logo.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/-/AndroidStudioProjects/PublicPerfomanceDisplayApp/show_app/app/src/main/res/layout/activity_main.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/-/AndroidStudioProjects/PublicPerfomanceDisplayApp/show_app/app/src/main/res/layout/activity_my_post.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/-/AndroidStudioProjects/PublicPerfomanceDisplayApp/show_app/app/src/main/res/layout/activity_privacy_corr.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/-/AndroidStudioProjects/PublicPerfomanceDisplayApp/show_app/app/src/main/res/layout/activity_register.xml" value="0.31476449275362317" />
         <entry key="..\:/Users/-/AndroidStudioProjects/PublicPerfomanceDisplayApp/show_app/app/src/main/res/layout/activity_test.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/-/AndroidStudioProjects/PublicPerfomanceDisplayApp/show_app/app/src/main/res/layout/dialog_search.xml" value="0.36614583333333334" />
