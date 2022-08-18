@@ -84,7 +84,7 @@ public class RegisterActivity extends AppCompatActivity {
                 // 비밀번호 - 길이체크
                 String password = editPassword.getText().toString().trim();
                 if (password.length() < 4 || password.length() > 12) {
-                    Toast.makeText(RegisterActivity.this, "비번길이는 4자이상 12자 이하로만 입력하세요.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "비밀번호의 길이는 4자이상 12자 이하로만 입력하세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
