@@ -4,11 +4,14 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.luvris2.publicperfomancedisplayapp.R;
+import com.luvris2.publicperfomancedisplayapp.model.TestDataTransfer;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,6 +64,13 @@ public class CommunityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        // 번들 객체 생성
+        Bundle result = new Bundle();
+        // 번들 키 값과 전달 할 데이터 입력
+        result.putString("bundleKey", "result");
+        // setFragmentResult 메소드의 리퀘스트 키 값과 전달 할 데이터(번들) 입력
+        getParentFragmentManager().setFragmentResult("requestKey", result);
+
         return inflater.inflate(R.layout.fragment_community, container, false);
     }
 }

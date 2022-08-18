@@ -1,14 +1,20 @@
 package com.luvris2.publicperfomancedisplayapp.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.luvris2.publicperfomancedisplayapp.R;
+import com.luvris2.publicperfomancedisplayapp.model.TestDataTransfer;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,6 +67,16 @@ public class MyPageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        getParentFragmentManager().setFragmentResultListener("requestKey", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
+                // 번들 키 값 입력
+                String result = bundle.getString("bundleKey");
+                // 전달 받은 result 이용하여 코딩
+                Toast.makeText(getActivity(), result, Toast.LENGTH_LONG).show();
+            }
+        });
+
         return inflater.inflate(R.layout.fragment_my_page, container, false);
     }
 }

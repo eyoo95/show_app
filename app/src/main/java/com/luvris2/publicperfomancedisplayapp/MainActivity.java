@@ -3,19 +3,27 @@ package com.luvris2.publicperfomancedisplayapp;
 import static java.lang.Thread.sleep;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
-import com.luvris2.publicperfomancedisplayapp.config.Config;
 import com.luvris2.publicperfomancedisplayapp.fragment.CommunityFragment;
 import com.luvris2.publicperfomancedisplayapp.fragment.HomeFragment;
 import com.luvris2.publicperfomancedisplayapp.fragment.MapFragment;
@@ -29,23 +37,15 @@ public class MainActivity extends AppCompatActivity {
     // 프래그먼트
     Fragment homeFragment, mapFragment, communityFragment, myPageFragment;
 
+    // GPS 관련 변수
+    LocationManager locationManager;
+    LocationListener locationListener;
+    double gpsX, gpsY;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // 억세스 토큰 확인
-        SharedPreferences sp = getApplication().getSharedPreferences(Config.PREFERENCES_NAME,MODE_PRIVATE);
-        String accessToken = sp.getString("accessToken","");
-
-        if (accessToken.isEmpty()){
-            Intent intent = new Intent(MainActivity.this,LoginActivity.class);
-            startActivity(intent);
-
-            finish();
-            return;
-        }
 
         // 탭 메뉴 객체 생성
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -108,10 +108,89 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
         // todo : 이후 코드 작성
+        // 현재 위치 정보 확인 및 저장
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(@NonNull Location location) {
+                gpsX = location.getLatitude();
+                gpsY = location.getLongitude();
+                Bundle gpsLatLng = new Bundle();
+                gpsLatLng.putDouble("gpsLat", gpsX);
+                gpsLatLng.putDouble("gpsLng", gpsY);
+                getSupportFragmentManager().setFragmentResult("requestKey", gpsLatLng);
+                Log.i("MyTest", "onLocationChanged " + gpsX + ", " + gpsY);
+                locationManager.removeUpdates(locationListener);
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) { }
+        };
+
+        // GPS 사용 권한 확인 및 요청
+        if (ContextCompat.checkSelfPermission(MainActivity.this,
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+        && ContextCompat.checkSelfPermission(MainActivity.this,
+                Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            // You can use the API that requires the permission.
+            if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) == false ) {
+                showGPSDisabledAlertToUser();
+            }
+            else if (locationManager.getAllProviders().contains("network")) {
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1, 1, locationListener);
+                //locationManager.removeUpdates(locationListener);
+            }
+        } else {
+            // You can directly ask for the permission.
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[] { Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION },
+                    100);
+        }
+    }
+
+    // GPS 기능 설정 대화 상자 출력
+    private void showGPSDisabledAlertToUser(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("GPS가 비활성화되어 있습니다. 기능을 활성화하시겠습니까?")
+                .setCancelable(false)
+                .setPositiveButton("GPS 설정 페이지로 이동하기",
+                        new DialogInterface.OnClickListener(){
+                            public void onClick(DialogInterface dialog, int id){
+                                Intent callGPSSettingIntent = new Intent(
+                                        android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                                startActivity(callGPSSettingIntent);
+                            }
+                        });
+        alertDialogBuilder.setNegativeButton("취소",
+                new DialogInterface.OnClickListener(){
+                    public void onClick(DialogInterface dialog, int id){
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = alertDialogBuilder.create();
+        alert.show();
+    }
+
+    // GPS 사용자 기기의 현재 위치 정보 확인
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (ContextCompat.checkSelfPermission(MainActivity.this,
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(MainActivity.this,
+                Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1, 1, locationListener);
+            //removeUpdates(locationListener);
+        }
+        else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) == false ) {
+            showGPSDisabledAlertToUser();
+        }
+        else {
+            ActivityCompat.requestPermissions(MainActivity.this,
+                new String[] { Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION }, 100);
+        }
     }
 
     // 프래그먼트 이동 메소드
@@ -125,4 +204,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
+
 }
