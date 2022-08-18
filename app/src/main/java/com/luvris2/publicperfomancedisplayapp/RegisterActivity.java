@@ -30,7 +30,6 @@ import retrofit2.Retrofit;
 public class RegisterActivity extends AppCompatActivity {
 
     EditText editNickname;
-    EditText editName;
     EditText editAge;
     EditText editEmail;
     EditText editPassword;
@@ -50,7 +49,6 @@ public class RegisterActivity extends AppCompatActivity {
         // 화면연결
         editEmail = findViewById(R.id.editEmail);
         editPassword = findViewById(R.id.editPassword);
-        editName = findViewById(R.id.editName);
         editNickname = findViewById(R.id.editNickname);
         editAge = findViewById(R.id.editAge);
         radioGender = findViewById(R.id.radioGender);
@@ -110,7 +108,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 // 나이
                 int age = Integer.parseInt(editAge.getText().toString());
-                if (age >= 0) {
+                if (age <= 0) {
                     Toast.makeText(RegisterActivity.this, "나이를 입력하세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }

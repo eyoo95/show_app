@@ -38,18 +38,6 @@
             android:minHeight="48dp" />
 
         <EditText
-            android:id="@+id/editName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:ems="10"
-            android:hint="이름을 입력해주세요."
-            android:inputType="textPersonName"
-            android:minHeight="48dp" />
-
-        <EditText
             android:id="@+id/editAge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

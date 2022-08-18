@@ -25,6 +25,7 @@ public class User implements Serializable {
 
     }
 
+    // Getter Setter
     public String getNickname() {
         return nickname;
     }
@@ -33,7 +34,6 @@ public class User implements Serializable {
         this.nickname = nickname;
     }
 
-    // Getter Setter
     public String getEmail() {
         return email;
     }

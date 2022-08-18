@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         String accessToken = sp.getString("accessToken","");
 
         if (accessToken.isEmpty()){
-            Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+            Intent intent = new Intent(MainActivity.this,RegisterActivity.class);
             startActivity(intent);
 
             finish();

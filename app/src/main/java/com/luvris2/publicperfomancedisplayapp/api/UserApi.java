@@ -12,15 +12,15 @@ import retrofit2.http.POST;
 public interface UserApi {
 
     // 회원가입 API
-    @POST("/users/register")
+    @POST("/user/register")
     Call<UserRes> register(@Body User user);
 
     // 로그인 API
-    @POST("/users/login")
+    @POST("/user/login")
     Call<UserRes> login(@Body User user);
 
     // 로그아웃 API
-    @POST("/users/logout")
+    @POST("/user/logout")
     Call<UserRes> logout(@Header("Authorization") String token);
 
 
