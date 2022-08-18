@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         editEmail = findViewById(R.id.editEmail);
         editPassword = findViewById(R.id.editPassword);
         btnLogin = findViewById(R.id.btnLogin);
-        txtRegister = findViewById(R.id.txtLogin);
+        txtRegister = findViewById(R.id.txtRegister);
 
         txtRegister.setOnClickListener(new View.OnClickListener() {
             @Override
