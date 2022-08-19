@@ -45,6 +45,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="30dp"
                     android:layout_marginBottom="5dp"
                     android:orientation="vertical">
 
@@ -60,7 +61,7 @@
                         android:id="@+id/txtTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="10dp"
                         android:gravity="center"
                         android:text="[뮤지컬] 지킬 앤 하이드"
                         android:textSize="20sp" />
@@ -69,7 +70,7 @@
                         android:id="@+id/txtDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_marginTop="10dp"
                         android:gravity="center"
                         android:text="2022.08.18 ~ 2022.08.20"
                         android:textSize="20sp" />
@@ -78,7 +79,7 @@
                         android:id="@+id/txtEventPlace"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_marginTop="10dp"
                         android:gravity="center"
                         android:text="GS칼텍스 여울마루"
                         android:textSize="20sp" />
@@ -88,9 +89,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="30dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginRight="30dp"
-                        android:layout_marginBottom="5dp"
                         android:text="@string/txtEventInfo" />
                 </LinearLayout>
 
@@ -157,7 +157,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -184,7 +184,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginRight="30dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -194,7 +196,8 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="5dp"
-                    android:text="관람후기" />
+                    android:text="관람후기"
+                    android:textSize="20sp" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/eventInfoCardView"
@@ -252,12 +255,12 @@
                                         android:textSize="18sp" />
                                 </LinearLayout>
 
-<!--                                <RatingBar-->
-<!--                                    android:id="@+id/ratingBar"-->
-<!--                                    android:layout_width="wrap_content"-->
-<!--                                    android:layout_height="wrap_content"-->
-<!--                                    android:layout_gravity="center"-->
-<!--                                    android:contentDescription="@string/reviewEditRating" />-->
+                                <!--                                <RatingBar-->
+                                <!--                                    android:id="@+id/ratingBar"-->
+                                <!--                                    android:layout_width="wrap_content"-->
+                                <!--                                    android:layout_height="wrap_content"-->
+                                <!--                                    android:layout_gravity="center"-->
+                                <!--                                    android:contentDescription="@string/reviewEditRating" />-->
 
                             </LinearLayout>
                         </LinearLayout>
@@ -320,13 +323,13 @@
                                         android:textSize="18sp" />
                                 </LinearLayout>
 
-<!--                                <RatingBar-->
-<!--                                    android:id="@+id/ratingBar1"-->
-<!--                                    android:layout_width="wrap_content"-->
-<!--                                    android:layout_height="wrap_content"-->
-<!--                                    android:layout_gravity="center"-->
-<!--                                    android:contentDescription="@string/reviewEditRating"-->
-<!--                                    android:style="@style/Widget.AppCompat.RatingBar.Indicator"/>-->
+                                <!--                                <RatingBar-->
+                                <!--                                    android:id="@+id/ratingBar1"-->
+                                <!--                                    android:layout_width="wrap_content"-->
+                                <!--                                    android:layout_height="wrap_content"-->
+                                <!--                                    android:layout_gravity="center"-->
+                                <!--                                    android:contentDescription="@string/reviewEditRating"-->
+                                <!--                                    android:style="@style/Widget.AppCompat.RatingBar.Indicator"/>-->
 
                             </LinearLayout>
                         </LinearLayout>
@@ -389,13 +392,13 @@
                                         android:textSize="18sp" />
                                 </LinearLayout>
 
-<!--                                <RatingBar-->
-<!--                                    android:id="@+id/ratingBar2"-->
-<!--                                    android:layout_width="wrap_content"-->
-<!--                                    android:layout_height="wrap_content"-->
-<!--                                    android:layout_gravity="center"-->
-<!--                                    android:contentDescription="@string/reviewEditRating"-->
-<!--                                    android:style="@style/Widget.AppCompat.RatingBar.Indicator"/>-->
+                                <!--                                <RatingBar-->
+                                <!--                                    android:id="@+id/ratingBar2"-->
+                                <!--                                    android:layout_width="wrap_content"-->
+                                <!--                                    android:layout_height="wrap_content"-->
+                                <!--                                    android:layout_gravity="center"-->
+                                <!--                                    android:contentDescription="@string/reviewEditRating"-->
+                                <!--                                    android:style="@style/Widget.AppCompat.RatingBar.Indicator"/>-->
 
                             </LinearLayout>
                         </LinearLayout>
@@ -408,6 +411,7 @@
                 android:id="@+id/imageView14"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 tools:srcCompat="@tools:sample/avatars" />
 
         </LinearLayout>
