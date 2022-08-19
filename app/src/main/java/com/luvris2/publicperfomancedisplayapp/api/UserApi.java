@@ -6,8 +6,10 @@ import com.luvris2.publicperfomancedisplayapp.model.User;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface UserApi {
 
@@ -22,6 +24,11 @@ public interface UserApi {
     // 로그아웃 API
     @POST("/user/logout")
     Call<UserRes> logout(@Header("Authorization") String token);
+
+    // 회원탈퇴 API
+    @DELETE("/user/withdrawal/{userId}")
+    Call<UserRes> withdrawal(@Header("Authorization") String token,
+                             @Path("userId")int userId);
 
 
 }

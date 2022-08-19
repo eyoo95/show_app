@@ -64,6 +64,7 @@
         android:ems="10"
         android:hint="비밀번호를 입력해주세요."
         android:inputType="textPassword"
+        android:maxLength="18"
         android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/imgPassword"

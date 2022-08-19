@@ -72,7 +72,7 @@
             android:ems="10"
             android:hint="비밀번호를 입력해주세요."
             android:inputType="textPassword"
-            android:maxLength="12"
+            android:maxLength="18"
             android:minHeight="48dp" />
 
         <RadioGroup
