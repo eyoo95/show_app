@@ -37,7 +37,7 @@
                     android:textSize="32dp" />
 
                 <ImageView
-                    android:id="@+id/imgSearch"
+                    android:id="@+id/imgHomeSearch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -137,7 +137,7 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/txtPlace"
+                                android:id="@+id/txtHomeSortRegion"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="10dp"
@@ -147,7 +147,7 @@
                                 android:textSize="28sp" />
 
                             <TextView
-                                android:id="@+id/txtType"
+                                android:id="@+id/txtHomeSortType"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="10dp"
