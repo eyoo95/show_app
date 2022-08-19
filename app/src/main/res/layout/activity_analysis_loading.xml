@@ -30,7 +30,7 @@
                 android:textSize="34sp" />
 
             <ProgressBar
-                android:id="@+id/progressBar"
+                android:id="@+id/progressBarAnalisys"
                 style="@android:style/Widget.Material.Light.ProgressBar.Large"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

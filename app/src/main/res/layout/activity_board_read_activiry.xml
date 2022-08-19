@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BoardActivity">
+    tools:context=".BoardReadActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,42 +38,32 @@
                 app:srcCompat="@drawable/ic_back" />
         </LinearLayout>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
+        <ImageView
+            android:id="@+id/imgBoardRead"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="7dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="8dp">
+            android:layout_height="250dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="30dp"
+            tools:src="@tools:sample/avatars" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+        <EditText
+            android:id="@+id/txtBoardContent"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/border"
+            android:ems="10"
+            android:gravity="top"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            android:padding="10dp"
+            android:text="텍스트 내용 부분" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/txtTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="TextView"
-                        android:textSize="24sp" />
-
-                    <ListView
-                        android:id="@+id/listViewBoard"
-                        android:layout_width="match_parent"
-                        android:layout_height="591dp" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -31,7 +31,7 @@
                 android:textSize="24sp" />
 
             <ImageView
-                android:id="@+id/imageView20"
+                android:id="@+id/imgEditorBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -39,7 +39,7 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/imageView21"
+            android:id="@+id/imgBoardRead"
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:layout_gravity="center"
@@ -49,7 +49,7 @@
             tools:src="@tools:sample/avatars" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName5"
+            android:id="@+id/txtBoardContent"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:layout_gravity="center"

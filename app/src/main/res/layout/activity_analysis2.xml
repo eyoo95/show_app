@@ -49,14 +49,14 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:id="@+id/imageView3"
+                        android:id="@+id/imgAnalysisSelect1"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
                         android:layout_marginRight="10dp"
                         tools:srcCompat="@tools:sample/avatars" />
 
                     <ImageView
-                        android:id="@+id/imageView4"
+                        android:id="@+id/imgAnalysisSelect2"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
                         android:layout_marginLeft="10dp"
@@ -70,14 +70,14 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:id="@+id/imageView5"
+                        android:id="@+id/imgAnalysisSelect3"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
                         android:layout_marginRight="10dp"
                         tools:srcCompat="@tools:sample/avatars" />
 
                     <ImageView
-                        android:id="@+id/imageView6"
+                        android:id="@+id/imgAnalysisSelect4"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
                         android:layout_marginLeft="10dp"
@@ -88,7 +88,7 @@
             </TableLayout>
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/btnAnalisysNext1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="100dp"

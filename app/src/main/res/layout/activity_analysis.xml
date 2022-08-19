@@ -38,7 +38,7 @@
                 app:srcCompat="@drawable/ic_baseline_search_24" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/btnAnalysisStart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="50dp"
@@ -48,7 +48,7 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/txtLogin2"
+                android:id="@+id/txtAnalysisLater"
                 android:layout_width="match_parent"
                 android:layout_height="91dp"
                 android:layout_margin="10dp"
