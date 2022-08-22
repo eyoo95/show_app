@@ -29,6 +29,11 @@ public interface UserApi {
     @DELETE("/user/withdrawal")
     Call<UserRes> withdrawal(@Header("Authorization") String token);
 
+    // 비밀번호 수정 API
+    @DELETE("/user/editpassword")
+    Call<UserRes> editpassword(@Header("Authorization") String token,
+                               @Body User user);
+
 
 }
 

@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
 import com.luvris2.publicperfomancedisplayapp.api.UserApi;
 import com.luvris2.publicperfomancedisplayapp.config.Config;
+import com.luvris2.publicperfomancedisplayapp.model.User;
 import com.luvris2.publicperfomancedisplayapp.model.UserRes;
 
 import retrofit2.Call;
@@ -54,6 +55,26 @@ public class UserEditActivity extends AppCompatActivity {
         btnPassword = findViewById(R.id.btnPassword);
         btnGender = findViewById(R.id.btnGender);
 
+        // 비밀번호 수정
+        btnPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                AlertDialog.Builder alert = new AlertDialog.Builder(UserEditActivity.this);
+                alert.setTitle("비밀번호를 바꾸시겠습니까?");
+                alert.setPositiveButton("네", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                       changePassword();
+                    }
+                });
+
+                alert.setNegativeButton("아니요", null);
+                alert.show();
+
+            }
+        });
+
         // 회원탈퇴
         btnWithdrawal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +108,52 @@ public class UserEditActivity extends AppCompatActivity {
     // 다이얼로그를 없애기
     void dismissProgress(){
         dialog.dismiss();
+    }
+
+    // 비밀번호 변경기능
+    private void changePassword(){
+
+        // 비밀번호 - 길이체크
+        String password = editPassword.getText().toString().trim();
+        if (password.length() < 4 || password.length() > 18) {
+            Toast.makeText(UserEditActivity.this, "비밀번호의 길이는 4자이상 18자 이하로만 입력하세요.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // 프로그레스 다이얼로그
+        showProgress("비밀번호를 변경합니다..");
+
+        Retrofit retrofit = NetworkClient.getRetrofitClient(UserEditActivity.this);
+        UserApi api = retrofit.create(UserApi.class);
+        User user = new User (password);
+
+        SharedPreferences sp = UserEditActivity.this.getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
+        String accessToken = sp.getString("accessToken", "");
+
+        Call<UserRes> call = api.editpassword("Bearer " + accessToken, user);
+
+        call.enqueue(new Callback<UserRes>() {
+            @Override // 성공했을 때
+            public void onResponse(Call<UserRes> call, Response<UserRes> response) {
+                dismissProgress();
+
+                // 200 OK 일 때,
+                if (response.isSuccessful()) {
+                    editPassword.setText("");
+                    Toast.makeText(UserEditActivity.this, "비밀번호를 변경했습니다." , Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(UserEditActivity.this, "에러 발생 : " + response.code(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override // 실패했을 때
+            public void onFailure(Call<UserRes> call, Throwable t) {
+                // 네트워크 자체 문제로 실패!
+                dismissProgress();
+            }
+        });
+
     }
 
     // 회원탈퇴 기능
