@@ -4,11 +4,11 @@
     package="com.luvris2.publicperfomancedisplayapp"
     android:targetSandboxVersion="1">
 
-    <uses-sdk android:minSdkVersion="8"/>
+    <uses-sdk android:minSdkVersion="8" />
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -20,6 +20,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PublicPerfomanceDisplayApp"
         tools:targetApi="31">
+        <activity
+            android:name=".UserEditActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ValidateActivity"
+            android:exported="false" />
         <activity
             android:name=".LoginActivity"
             android:exported="false" />

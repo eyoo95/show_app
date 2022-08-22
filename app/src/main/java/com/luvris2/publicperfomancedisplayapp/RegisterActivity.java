@@ -90,7 +90,7 @@ public class RegisterActivity extends AppCompatActivity {
                 // 닉네임 - 빈 문자열인지만 체크
                 String nickname = editNickname.getText().toString().trim();
                 if (nickname.isEmpty() || nickname.length() < 2 || nickname.length() > 12) {
-                    Toast.makeText(RegisterActivity.this, "비밀번호의 길이는 2자이상 12자 이하로만 입력하세요.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "닉네임의 길이는 2자이상 12자 이하로만 입력하세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
