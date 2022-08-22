@@ -216,7 +216,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/textView36"
+                android:id="@+id/txtLogout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"

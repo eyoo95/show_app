@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.luvris2.publicperfomancedisplayapp.LoginActivity;
@@ -47,7 +48,7 @@ public class MyPageFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    Button btnLogout;
+    TextView txtLogout;
     Button btnWithdrawal;
     Button btnEdit;
     // 프로그레스 다이얼로그
@@ -90,23 +91,13 @@ public class MyPageFragment extends Fragment {
         // Inflate the layout for this fragment
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_my_page, container, false);
 
-        btnLogout = rootView.findViewById(R.id.btnLogout);
+        txtLogout = rootView.findViewById(R.id.txtLogout);
         btnWithdrawal = rootView.findViewById(R.id.btnWithdrawal);
         btnEdit = rootView.findViewById(R.id.btnWithdrawal);
 
-        // 회원정보수정
-        btnEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                startActivity(new Intent(getActivity(), ValidateActivity.class));
-
-            }
-        });
-
 
         // 로그아웃
-        btnLogout.setOnClickListener(new View.OnClickListener() {
+        txtLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -116,26 +107,6 @@ public class MyPageFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         userLogout();
-                    }
-                });
-
-                alert.setNegativeButton("아니요", null);
-                alert.show();
-
-            }
-        });
-
-        // 회원탈퇴
-        btnWithdrawal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-                alert.setTitle("정말로 회원탈퇴 하시겠습니까?");
-                alert.setPositiveButton("네", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        userWithdrawal();
                     }
                 });
 
@@ -207,49 +178,7 @@ public class MyPageFragment extends Fragment {
         });
     }
 
-    // 회원탈퇴 기능
-    private void userWithdrawal() {
-        // 프로그레스 다이얼로그
-        showProgress("회원가입 화면으로 이동합니다..");
 
-        Retrofit retrofit = NetworkClient.getRetrofitClient(getContext());
-        UserApi api = retrofit.create(UserApi.class);
-
-        SharedPreferences sp = getActivity().getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
-        String accessToken = sp.getString("accessToken", "");
-
-        Call<UserRes> call = api.withdrawal("Bearer " + accessToken);
-
-        call.enqueue(new Callback<UserRes>() {
-            @Override // 성공했을 때
-            public void onResponse(Call<UserRes> call, Response<UserRes> response) {
-                dismissProgress();
-
-                // 200 OK 일 때,
-                if (response.isSuccessful()) {
-
-                    SharedPreferences sp = getActivity().getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sp.edit();
-                    editor.putString("accessToken", accessToken);
-                    editor.apply();
-
-                    Intent intent = new Intent(getActivity(), RegisterActivity.class);
-                    startActivity(intent);
-
-                    getActivity().finish();
-
-                } else {
-                    Toast.makeText(getActivity(), "에러 발생 : " + response.code(), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override // 실패했을 때
-            public void onFailure(Call<UserRes> call, Throwable t) {
-                // 네트워크 자체 문제로 실패!
-                dismissProgress();
-            }
-        });
-    }
 }
 
 

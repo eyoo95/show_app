@@ -2,7 +2,9 @@ package com.luvris2.publicperfomancedisplayapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -27,10 +29,9 @@ public class UserEditActivity extends AppCompatActivity {
 
     EditText editNickname;
     EditText editAge;
-    EditText editEmail;
     EditText editPassword;
     RadioGroup radioGender;
-    Button btnEdit;
+    Button btnWithdrawal;
 
     // 네트워크 처리 보여주는 프로그레스 다이얼로그
     ProgressDialog dialog;
@@ -40,93 +41,29 @@ public class UserEditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_edit);
         // 화면연결
-        editEmail = findViewById(R.id.editEmail);
+        btnWithdrawal = findViewById(R.id.btnWithdrawal);
         editPassword = findViewById(R.id.editPassword);
         editNickname = findViewById(R.id.editNickname);
         editAge = findViewById(R.id.editAge);
         radioGender = findViewById(R.id.radioGender);
-        btnEdit = findViewById(R.id.btnWithdrawal);
 
 
-        // 수정버튼
-        btnEdit.setOnClickListener(new View.OnClickListener() {
+        // 회원탈퇴
+        btnWithdrawal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                // 비밀번호 - 길이체크
-                String password = editPassword.getText().toString().trim();
-                if (password.length() < 4 || password.length() > 18) {
-                    Toast.makeText(UserEditActivity.this, "비밀번호의 길이는 4자이상 18자 이하로만 입력하세요.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                // 닉네임 - 빈 문자열인지만 체크
-                String nickname = editNickname.getText().toString().trim();
-                if (nickname.isEmpty() || nickname.length() < 2 || nickname.length() > 12) {
-                    Toast.makeText(UserEditActivity.this, "닉네임의 길이는 2자이상 12자 이하로만 입력하세요.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                // 성별
-                int gender;
-                int checkedId = radioGender.getCheckedRadioButtonId();
-                if (checkedId == R.id.radioMale) {
-                    gender = 1;
-                } else if (checkedId == R.id.radioFemale) {
-                    gender = 0;
-                } else {
-                    Toast.makeText(UserEditActivity.this, "선택하세요", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                // 나이
-                int age = Integer.parseInt(editAge.getText().toString());
-                if (age <= 0) {
-                    Toast.makeText(UserEditActivity.this, "나이를 입력하세요.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                // 프로그레스 다이얼로그
-                showProgress(getString(R.string.dialog_register));
-
-                Retrofit retrofit = NetworkClient.getRetrofitClient(UserEditActivity.this);
-
-                UserApi api = retrofit.create(UserApi.class);
-                User user = new User (password, nickname, gender, age);
-
-                Call<UserRes> call = api.register(user);
-                call.enqueue(new Callback<UserRes>() {
-                    @Override // 성공했을 때
-                    public void onResponse(Call<UserRes> call, Response<UserRes> response) {
-                        dismissProgress(); // 동글동글 돌아가서 '회원가입 중입니다.' 없애는 함수!
-
-                        // 200 OK 일 때,
-                        if (response.isSuccessful()){
-
-                            UserRes usersRes = response.body();
-                            String accessToken = usersRes.getAccessToken();
-
-                            SharedPreferences sp = getApplication().getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
-                            SharedPreferences.Editor editor = sp.edit();
-                            editor.putString("accessToken", accessToken);
-                            editor.apply();
-
-                            Intent intent = new Intent(UserEditActivity.this, MainActivity.class);
-                            startActivity(intent);
-
-                            finish();
-
-                        } else {
-                            Toast.makeText(UserEditActivity.this, "에러 발생 : "+response.code(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override // 실패했을 때
-                    public void onFailure(Call<UserRes> call, Throwable t) {
-                        // 네트워크 자체 문제로 실패!
-                        dismissProgress();
+                AlertDialog.Builder alert = new AlertDialog.Builder(UserEditActivity.this);
+                alert.setTitle("정말로 회원탈퇴 하시겠습니까?");
+                alert.setPositiveButton("네", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        userWithdrawal();
                     }
                 });
+
+                alert.setNegativeButton("아니요", null);
+                alert.show();
 
             }
         });
@@ -145,4 +82,45 @@ public class UserEditActivity extends AppCompatActivity {
     void dismissProgress(){
         dialog.dismiss();
     }
+
+    // 회원탈퇴 기능
+    private void userWithdrawal() {
+        // 프로그레스 다이얼로그
+        showProgress("회원가입 화면으로 이동합니다..");
+
+        Retrofit retrofit = NetworkClient.getRetrofitClient(UserEditActivity.this);
+        UserApi api = retrofit.create(UserApi.class);
+
+        SharedPreferences sp = UserEditActivity.this.getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
+        String accessToken = sp.getString("accessToken", "");
+
+        Call<UserRes> call = api.withdrawal("Bearer " + accessToken);
+
+        call.enqueue(new Callback<UserRes>() {
+            @Override // 성공했을 때
+            public void onResponse(Call<UserRes> call, Response<UserRes> response) {
+                dismissProgress();
+
+                // 200 OK 일 때,
+                if (response.isSuccessful()) {
+
+                    Intent intent = new Intent(UserEditActivity.this, RegisterActivity.class);
+                    startActivity(intent);
+
+                    finish();
+
+                } else {
+                    Toast.makeText(UserEditActivity.this, "에러 발생 : " + response.code(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override // 실패했을 때
+            public void onFailure(Call<UserRes> call, Throwable t) {
+                // 네트워크 자체 문제로 실패!
+                dismissProgress();
+            }
+        });
+    }
+
+
 }
