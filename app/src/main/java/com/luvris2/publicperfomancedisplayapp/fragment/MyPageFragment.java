@@ -20,7 +20,6 @@ import android.widget.Toast;
 
 import com.luvris2.publicperfomancedisplayapp.LoginActivity;
 import com.luvris2.publicperfomancedisplayapp.R;
-import com.luvris2.publicperfomancedisplayapp.RegisterActivity;
 import com.luvris2.publicperfomancedisplayapp.ValidateActivity;
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
 import com.luvris2.publicperfomancedisplayapp.api.UserApi;
@@ -92,8 +91,8 @@ public class MyPageFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_my_page, container, false);
 
         txtLogout = rootView.findViewById(R.id.txtLogout);
-        btnWithdrawal = rootView.findViewById(R.id.btnWithdrawal);
-        btnEdit = rootView.findViewById(R.id.btnWithdrawal);
+        btnWithdrawal = rootView.findViewById(R.id.btnWithdrawals);
+        btnEdit = rootView.findViewById(R.id.btnWithdrawals);
 
 
         // 로그아웃
