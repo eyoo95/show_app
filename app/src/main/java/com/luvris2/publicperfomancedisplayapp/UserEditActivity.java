@@ -6,12 +6,10 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
@@ -19,8 +17,6 @@ import com.luvris2.publicperfomancedisplayapp.api.UserApi;
 import com.luvris2.publicperfomancedisplayapp.config.Config;
 import com.luvris2.publicperfomancedisplayapp.model.User;
 import com.luvris2.publicperfomancedisplayapp.model.UserRes;
-
-import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,7 +45,7 @@ public class UserEditActivity extends AppCompatActivity {
         editNickname = findViewById(R.id.editNickname);
         editAge = findViewById(R.id.editAge);
         radioGender = findViewById(R.id.radioGender);
-        btnEdit = findViewById(R.id.btnEdit);
+        btnEdit = findViewById(R.id.btnWithdrawal);
 
 
         // 수정버튼

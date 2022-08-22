@@ -7,13 +7,9 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +24,6 @@ import com.luvris2.publicperfomancedisplayapp.ValidateActivity;
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
 import com.luvris2.publicperfomancedisplayapp.api.UserApi;
 import com.luvris2.publicperfomancedisplayapp.config.Config;
-import com.luvris2.publicperfomancedisplayapp.model.User;
 import com.luvris2.publicperfomancedisplayapp.model.UserRes;
 
 import retrofit2.Call;
@@ -97,7 +92,7 @@ public class MyPageFragment extends Fragment {
 
         btnLogout = rootView.findViewById(R.id.btnLogout);
         btnWithdrawal = rootView.findViewById(R.id.btnWithdrawal);
-        btnEdit = rootView.findViewById(R.id.btnEdit);
+        btnEdit = rootView.findViewById(R.id.btnWithdrawal);
 
         // 회원정보수정
         btnEdit.setOnClickListener(new View.OnClickListener() {

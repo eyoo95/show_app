@@ -22,13 +22,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:gravity="center"
-            android:text="회원정보수정"
+            android:text="내 정보수정"
             android:textSize="30sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal">
 
             <EditText
@@ -49,13 +50,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
-                android:text="닉네임 변경" />
+                android:text="닉네임 수정" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal">
 
             <EditText
@@ -82,6 +84,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal">
 
             <EditText
@@ -102,7 +105,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
-                android:text="비밀번호 변경" />
+                android:text="비밀번호 수정" />
         </LinearLayout>
 
         <LinearLayout
@@ -137,17 +140,19 @@
                 android:id="@+id/btnChgGender"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_weight="4"
-                android:text="성별 변경" />
+                android:text="성별 수정" />
         </LinearLayout>
 
         <Button
-            android:id="@+id/btnEdit"
+            android:id="@+id/btnWithdrawal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="수정"
-            android:textSize="24sp" />
+            android:layout_marginTop="200dp"
+            android:backgroundTint="#D61414"
+            android:text="회원탈퇴"
+            android:textSize="20sp" />
 
     </LinearLayout>
 
