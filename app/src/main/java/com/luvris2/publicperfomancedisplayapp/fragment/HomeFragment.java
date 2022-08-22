@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
@@ -15,6 +16,8 @@ import android.widget.TextView;
 
 import com.luvris2.publicperfomancedisplayapp.R;
 
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 public class HomeFragment extends Fragment {
@@ -36,12 +39,13 @@ public class HomeFragment extends Fragment {
     ImageView img2;
     ImageView imgSearch;
     ViewPager2 viewPager2;
+    private ViewGroup rootView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_home, container, false);
+        rootView = (ViewGroup) inflater.inflate(R.layout.fragment_home, container, false);
 
         imgSearch = rootView.findViewById(R.id.imgHomeSearch);
         cardView1 = rootView.findViewById(R.id.cardView1);
@@ -95,4 +99,5 @@ public class HomeFragment extends Fragment {
 
         return rootView;
     }
+
 }

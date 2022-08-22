@@ -52,12 +52,24 @@
                 android:layout_height="match_parent"
                 android:layout_weight="40">
 
-                <androidx.viewpager2.widget.ViewPager2
-                    android:layout_weight="1"
-                    android:id="@+id/viewPager2First"
+                <FrameLayout
+                    android:layout_marginTop="20dp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"/>
+                    android:layout_height="@dimen/frameSize">
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/viewpager"
+                        android:clipToPadding="false"
+                        android:clipChildren="false"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/frameSize" />
+
+                    <me.relex.circleindicator.CircleIndicator3
+                        android:id="@+id/indicator"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_gravity="bottom"/>
+
+                </FrameLayout>
 
             </androidx.cardview.widget.CardView>
 
