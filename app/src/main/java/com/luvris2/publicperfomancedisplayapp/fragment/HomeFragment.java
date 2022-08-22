@@ -15,11 +15,8 @@ import android.widget.TextView;
 
 import com.luvris2.publicperfomancedisplayapp.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import androidx.viewpager2.widget.ViewPager2;
+
 public class HomeFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -38,38 +35,7 @@ public class HomeFragment extends Fragment {
     ImageView img1;
     ImageView img2;
     ImageView imgSearch;
-
-
-    public HomeFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    ViewPager2 viewPager2;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -97,12 +63,12 @@ public class HomeFragment extends Fragment {
                 // 다이얼로그 객체 생성
                 AlertDialog.Builder dialogSearch = new AlertDialog.Builder(getContext());
 
-                // 다이얼로그 제목 설정
+                // 다이얼로그 제목 설정 - 안 해도 될 듯?
 //                dialogSearch.setMessage("연극");
 //                dialogSearch.setTitle("유형선택");
 
                 // 레이아웃 xml 뷰와 연결 설정
-                ViewGroup itemView = (ViewGroup) inflater.inflate(R.layout.dialog_search, container, false);
+                ViewGroup itemView = (ViewGroup) inflater.inflate(R.layout.fragment_dialog, container, false);
                 dialogSearch.setView(itemView);
 
                 // 확인을 누르면 실행 될 코드 작성
@@ -110,6 +76,7 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         // 확인시 실행 코드 작성
+                        // todo: 다이얼로그 데이터 받아와서 새로운 액티비티로 검색결과 띄워주기
                     }
                 });
 
