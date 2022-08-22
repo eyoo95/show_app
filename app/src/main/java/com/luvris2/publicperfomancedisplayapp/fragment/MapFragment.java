@@ -1,9 +1,19 @@
 package com.luvris2.publicperfomancedisplayapp.fragment;
 
+import static android.content.Context.LOCATION_SERVICE;
+
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +35,9 @@ public class MapFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+//    LocationManager locationManager;
+//    LocationListener locationListener;
 
     public MapFragment() {
         // Required empty public constructor
@@ -61,6 +74,55 @@ public class MapFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_map, container, false);
+        return inflater.inflate(R.layout.fragment_community, container, false);
+//        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_my_page, container, false);
+
+//        locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
+//        locationListener = new LocationListener() {
+//            @Override
+//            public void onLocationChanged(@NonNull Location location) {
+//                Log.i("MyApp", "위도 " + location.getLatitude());
+//                Log.i("MyApp", "경도 " + location.getLongitude());
+//            }
+//        };
+//
+//
+//        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//
+//            ActivityCompat.requestPermissions(getActivity(),
+//                    new String[]{ Manifest.permission.ACCESS_FINE_LOCATION,
+//                            Manifest.permission.ACCESS_COARSE_LOCATION}, 100);
+//            return rootView;
+//        }
+//
+//        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+//                3000, 3, locationListener);
+
+
+//        return rootView;
     }
+
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//
+//        if(requestCode == 100){
+//            if(ActivityCompat.checkSelfPermission(getActivity(),
+//                    Manifest.permission.ACCESS_FINE_LOCATION) !=
+//                    PackageManager.PERMISSION_GRANTED &&
+//                    ActivityCompat.checkSelfPermission(getActivity(),
+//                            Manifest.permission.ACCESS_FINE_LOCATION) !=
+//                            PackageManager.PERMISSION_GRANTED){
+//
+//                ActivityCompat.requestPermissions(getActivity(),
+//                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+//                                Manifest.permission.ACCESS_COARSE_LOCATION}, 100);
+//                return;
+//            }
+//
+//            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+//                    3000, 3, locationListener);
+//        }
+//
+//    }
 }

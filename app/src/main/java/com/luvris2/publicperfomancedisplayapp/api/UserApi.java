@@ -26,9 +26,8 @@ public interface UserApi {
     Call<UserRes> logout(@Header("Authorization") String token);
 
     // 회원탈퇴 API
-    @DELETE("/user/withdrawal/{userId}")
-    Call<UserRes> withdrawal(@Header("Authorization") String token,
-                             @Path("userId")int userId);
+    @DELETE("/user/withdrawal")
+    Call<UserRes> withdrawal(@Header("Authorization") String token);
 
 
 }

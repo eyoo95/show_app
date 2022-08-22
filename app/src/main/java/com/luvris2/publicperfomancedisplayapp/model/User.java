@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 public class User implements Serializable {
 
-    private int id; // 사용자 아이디
     private String email; // 사용자 이메일
     private String password; // 사용자 비밀번호
     private String nickname; // 사용자의 닉네임
@@ -57,14 +56,6 @@ public class User implements Serializable {
 
     public int getGender() {
         return gender;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public void setGender(int gender) {

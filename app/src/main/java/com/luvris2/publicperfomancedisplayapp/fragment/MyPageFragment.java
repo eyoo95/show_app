@@ -203,15 +203,13 @@ public class MyPageFragment extends Fragment {
         // 프로그레스 다이얼로그
         showProgress("회원가입 화면으로 이동합니다..");
 
-        User user = new User();
-
         Retrofit retrofit = NetworkClient.getRetrofitClient(getContext());
         UserApi api = retrofit.create(UserApi.class);
 
         SharedPreferences sp = getActivity().getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
         String accessToken = sp.getString("accessToken", "");
 
-        Call<UserRes> call = api.withdrawal("Bearer " + accessToken, user.getId());
+        Call<UserRes> call = api.withdrawal("Bearer " + accessToken);
 
         call.enqueue(new Callback<UserRes>() {
             @Override // 성공했을 때
