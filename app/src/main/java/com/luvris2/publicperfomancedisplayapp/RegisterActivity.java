@@ -52,7 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
         editNickname = findViewById(R.id.editNickname);
         editAge = findViewById(R.id.editAge);
         radioGender = findViewById(R.id.radioGender);
-        btnRegister = findViewById(R.id.btnRegister);
+        btnRegister = findViewById(R.id.btnEdit);
 
         txtLogin = findViewById(R.id.txtLogin);
 

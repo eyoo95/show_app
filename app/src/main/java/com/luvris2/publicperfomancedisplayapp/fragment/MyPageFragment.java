@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.luvris2.publicperfomancedisplayapp.LoginActivity;
 import com.luvris2.publicperfomancedisplayapp.R;
 import com.luvris2.publicperfomancedisplayapp.RegisterActivity;
+import com.luvris2.publicperfomancedisplayapp.ValidateActivity;
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
 import com.luvris2.publicperfomancedisplayapp.api.UserApi;
 import com.luvris2.publicperfomancedisplayapp.config.Config;
@@ -53,6 +54,7 @@ public class MyPageFragment extends Fragment {
 
     Button btnLogout;
     Button btnWithdrawal;
+    Button btnEdit;
     // 프로그레스 다이얼로그
     private ProgressDialog dialog;
 
@@ -95,6 +97,17 @@ public class MyPageFragment extends Fragment {
 
         btnLogout = rootView.findViewById(R.id.btnLogout);
         btnWithdrawal = rootView.findViewById(R.id.btnWithdrawal);
+        btnEdit = rootView.findViewById(R.id.btnEdit);
+
+        // 회원정보수정
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivity(new Intent(getActivity(), ValidateActivity.class));
+
+            }
+        });
 
 
         // 로그아웃
@@ -136,6 +149,7 @@ public class MyPageFragment extends Fragment {
 
             }
         });
+
 
         // 이 위에서 기능 작업하기
         return rootView;
