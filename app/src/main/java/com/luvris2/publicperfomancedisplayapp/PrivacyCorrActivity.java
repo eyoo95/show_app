@@ -1,8 +1,8 @@
 package com.luvris2.publicperfomancedisplayapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class PrivacyCorrActivity extends AppCompatActivity {
 
