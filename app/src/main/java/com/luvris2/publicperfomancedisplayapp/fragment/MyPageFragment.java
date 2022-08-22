@@ -91,8 +91,6 @@ public class MyPageFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_my_page, container, false);
 
         txtLogout = rootView.findViewById(R.id.txtLogout);
-        btnWithdrawal = rootView.findViewById(R.id.btnWithdrawals);
-        btnEdit = rootView.findViewById(R.id.btnWithdrawals);
 
 
         // 로그아웃

@@ -31,6 +31,10 @@ public class UserEditActivity extends AppCompatActivity {
     EditText editPassword;
     RadioGroup radioGender;
     Button btnWithdrawal;
+    Button btnNickname;
+    Button btnAge;
+    Button btnPassword;
+    Button btnGender;
 
     // 네트워크 처리 보여주는 프로그레스 다이얼로그
     ProgressDialog dialog;
@@ -39,13 +43,16 @@ public class UserEditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_edit);
+
         // 화면연결
         btnWithdrawal = findViewById(R.id.btnWithdrawal);
         editPassword = findViewById(R.id.editPassword);
         editNickname = findViewById(R.id.editNickname);
         editAge = findViewById(R.id.editAge);
-        radioGender = findViewById(R.id.radioGender);
-
+        btnNickname = findViewById(R.id.btnNickname);
+        btnAge = findViewById(R.id.btnAge);
+        btnPassword = findViewById(R.id.btnPassword);
+        btnGender = findViewById(R.id.btnGender);
 
         // 회원탈퇴
         btnWithdrawal.setOnClickListener(new View.OnClickListener() {

@@ -46,7 +46,7 @@
                 android:minHeight="48dp" />
 
             <Button
-                android:id="@+id/btnChgNickname"
+                android:id="@+id/btnNickname"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
@@ -74,7 +74,7 @@
                 android:minHeight="48dp" />
 
             <Button
-                android:id="@+id/btnChgAge"
+                android:id="@+id/btnAge"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
@@ -101,7 +101,7 @@
                 android:minHeight="48dp" />
 
             <Button
-                android:id="@+id/btnChgPassword"
+                android:id="@+id/btnPassword"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
@@ -137,7 +137,7 @@
             </RadioGroup>
 
             <Button
-                android:id="@+id/btnChgGender"
+                android:id="@+id/btnGender"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
