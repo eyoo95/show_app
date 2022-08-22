@@ -12,7 +12,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView28"
+            android:id="@+id/txtFragBoard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="30dp"
@@ -44,7 +44,7 @@
                     android:text="TextView" />
 
                 <TextView
-                    android:id="@+id/textView29"
+                    android:id="@+id/txtFragEditor"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="TextView" />
@@ -57,7 +57,7 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/imageView19"
+                    android:id="@+id/imgFragBoard"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:srcCompat="@tools:sample/avatars" />
@@ -96,7 +96,7 @@
                     tools:srcCompat="@tools:sample/avatars" />
 
                 <TextView
-                    android:id="@+id/textView29"
+                    android:id="@+id/txtFragEditor"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="TextView" />
@@ -115,7 +115,7 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/imageView19"
+                    android:id="@+id/imgFragBoard"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:srcCompat="@tools:sample/avatars" />

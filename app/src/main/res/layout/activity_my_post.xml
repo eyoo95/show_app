@@ -31,7 +31,7 @@
                 android:textSize="24sp" />
 
             <ImageView
-                android:id="@+id/imgEditorBack"
+                android:id="@+id/imgBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -59,14 +59,14 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/txtTitle"
+                        android:id="@+id/txtEventTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="TextView"
                         android:textSize="24sp" />
 
                     <TextView
-                        android:id="@+id/txtDate"
+                        android:id="@+id/txtEventDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="10dp"

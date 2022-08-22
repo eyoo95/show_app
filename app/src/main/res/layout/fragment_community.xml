@@ -35,7 +35,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView28"
+                    android:id="@+id/txtFragBoard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
@@ -44,7 +44,7 @@
                     android:textSize="20sp" />
 
                 <ImageView
-                    android:id="@+id/imageView19"
+                    android:id="@+id/imgFragBoard"
                     android:layout_width="20sp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
@@ -76,7 +76,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView29"
+                    android:id="@+id/txtFragEditor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
@@ -84,7 +84,7 @@
                     android:textSize="20sp" />
 
                 <ImageView
-                    android:id="@+id/imgEditorBack"
+                    android:id="@+id/imgBack"
                     android:layout_width="20sp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
