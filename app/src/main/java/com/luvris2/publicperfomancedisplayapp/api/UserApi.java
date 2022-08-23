@@ -34,6 +34,18 @@ public interface UserApi {
     @PUT("/user/editpassword")
     Call<UserRes> editpassword(@Header("Authorization") String token,
                                @Body User user);
+    // 닉네임 수정 API
+    @PUT("/user/editnickname")
+    Call<UserRes> editnickname(@Header("Authorization") String token,
+                               @Body User user);
+    // 나이 수정 API
+    @PUT("/user/editage")
+    Call<UserRes> editage(@Header("Authorization") String token,
+                               @Body User user);
+    // 성별 수정 API
+    @PUT("/user/editgender")
+    Call<UserRes> editgender(@Header("Authorization") String token,
+                               @Body User user);
 
 
 }
