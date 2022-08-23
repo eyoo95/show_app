@@ -11,17 +11,28 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
+import com.luvris2.publicperfomancedisplayapp.api.UserApi;
 import com.luvris2.publicperfomancedisplayapp.config.Config;
 import com.luvris2.publicperfomancedisplayapp.fragment.CommunityFragment;
 import com.luvris2.publicperfomancedisplayapp.fragment.HomeFragment;
 import com.luvris2.publicperfomancedisplayapp.fragment.MapFragment;
 import com.luvris2.publicperfomancedisplayapp.fragment.MyPageFragment;
+import com.luvris2.publicperfomancedisplayapp.model.User;
+import com.luvris2.publicperfomancedisplayapp.model.UserRes;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,6 +44,11 @@ public class MainActivity extends AppCompatActivity {
     Fragment mapFragment;
     Fragment communityFragment;
     Fragment myPageFragment;
+
+    private String myEmail;
+    private String myNickname;
+    private int myAge;
+    private int myGender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +67,22 @@ public class MainActivity extends AppCompatActivity {
             finish();
             return;
         }
+
+        loadUserInfo();
+
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("email", myEmail);
+        editor.apply();
+
+        editor.putString("nickname", myNickname);
+        editor.apply();
+
+        editor.putInt("age",myAge);
+        editor.apply();
+
+        editor.putInt("gender",myGender);
+        editor.apply();
+
 
         // 탭 메뉴 객체 생성
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -132,5 +164,43 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+    // 회원정보 불러오는 기능
+    private void loadUserInfo() {
+
+        Retrofit retrofit = NetworkClient.getRetrofitClient(MainActivity.this);
+        UserApi api = retrofit.create(UserApi.class);
+
+        SharedPreferences sp = MainActivity.this.getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
+        String accessToken = sp.getString("accessToken", "");
+
+        Call<UserRes> call = api.getUserInfo("Bearer " + accessToken);
+
+        call.enqueue(new Callback<UserRes>() {
+            @Override // 성공했을 때
+            public void onResponse(Call<UserRes> call, Response<UserRes> response) {
+
+                // 200 OK 일 때,
+                if (response.isSuccessful()) {
+
+                    //TODO: 회원정보 넣어야 됨
+
+                    UserRes data = response.body();
+                    User userInfo = data.getUserInfo();
+                    myEmail = userInfo.getEmail();
+                    myNickname = userInfo.getNickname();
+                    myAge = userInfo.getAge();
+                    myGender = userInfo.getGender();
+
+                } else {
+                    Toast.makeText(MainActivity.this, "에러 발생 : " + response.code(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override // 실패했을 때
+            public void onFailure(Call<UserRes> call, Throwable t) {
+                // 네트워크 자체 문제로 실패!
+            }
+        });
     }
 }

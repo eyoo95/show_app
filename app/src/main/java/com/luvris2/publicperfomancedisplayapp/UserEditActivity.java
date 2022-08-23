@@ -56,6 +56,7 @@ public class UserEditActivity extends AppCompatActivity {
         btnAge = findViewById(R.id.btnAge);
         btnPassword = findViewById(R.id.btnPassword);
         btnGender = findViewById(R.id.btnGender);
+        radioGender = findViewById(R.id.radioGender);
 
 
         // 비밀번호 변경
@@ -109,6 +110,26 @@ public class UserEditActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         changeAge();
+                    }
+                });
+
+                alert.setNegativeButton("아니요", null);
+                alert.show();
+
+            }
+        });
+
+        // 성별 변경
+        btnGender.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                AlertDialog.Builder alert = new AlertDialog.Builder(UserEditActivity.this);
+                alert.setTitle("성별을 바꾸시겠습니까?");
+                alert.setPositiveButton("네", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        changeGender();
                     }
                 });
 

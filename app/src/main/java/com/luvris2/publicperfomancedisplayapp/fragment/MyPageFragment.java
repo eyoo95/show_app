@@ -14,8 +14,6 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +24,7 @@ import com.luvris2.publicperfomancedisplayapp.UserEditActivity;
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
 import com.luvris2.publicperfomancedisplayapp.api.UserApi;
 import com.luvris2.publicperfomancedisplayapp.config.Config;
+import com.luvris2.publicperfomancedisplayapp.model.User;
 import com.luvris2.publicperfomancedisplayapp.model.UserRes;
 
 import retrofit2.Call;
@@ -56,6 +55,10 @@ public class MyPageFragment extends Fragment {
 
     // 프로그레스 다이얼로그
     private ProgressDialog dialog;
+    private String myEmail;
+    private String myNickname;
+    private int myAge;
+    private int myGender;
 
     public MyPageFragment() {
         // Required empty public constructor
@@ -98,6 +101,11 @@ public class MyPageFragment extends Fragment {
         imgEditUser = rootView.findViewById(R.id.imgEditUser);
         txtNickname = rootView.findViewById(R.id.txtMyNickname);
         txtEmail = rootView.findViewById(R.id.txtMyEmail);
+
+        loadUserInfo();
+
+        txtNickname.setText(myNickname);
+        txtEmail.setText(myEmail);
 
         // 로그아웃
         txtLogout.setOnClickListener(new View.OnClickListener() {
@@ -144,6 +152,46 @@ public class MyPageFragment extends Fragment {
     // 다이얼로그를 없애기
     void dismissProgress() {
         dialog.dismiss();
+    }
+
+    // 회원정보 불러오는 기능
+    private void loadUserInfo() {
+
+        Retrofit retrofit = NetworkClient.getRetrofitClient(getContext());
+        UserApi api = retrofit.create(UserApi.class);
+
+        SharedPreferences sp = getActivity().getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
+        String accessToken = sp.getString("accessToken", "");
+
+        Call<UserRes> call = api.getUserInfo("Bearer " + accessToken);
+
+        call.enqueue(new Callback<UserRes>() {
+            @Override // 성공했을 때
+            public void onResponse(Call<UserRes> call, Response<UserRes> response) {
+
+                // 200 OK 일 때,
+                if (response.isSuccessful()) {
+
+                    //TODO: 회원정보 넣어야 됨
+
+                    UserRes data = response.body();
+                    User userInfo = data.getUserInfo();
+                    myEmail = userInfo.getEmail();
+                    myNickname = userInfo.getNickname();
+                    myAge = userInfo.getAge();
+                    myGender = userInfo.getGender();
+                    return;
+
+                } else {
+                    Toast.makeText(getActivity(), "에러 발생 : " + response.code(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override // 실패했을 때
+            public void onFailure(Call<UserRes> call, Throwable t) {
+                // 네트워크 자체 문제로 실패!
+            }
+        });
     }
 
     // 로그아웃 기능
