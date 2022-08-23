@@ -136,10 +136,6 @@ public class RegisterActivity extends AppCompatActivity {
                             SharedPreferences sp = getApplication().getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
                             SharedPreferences.Editor editor = sp.edit();
                             editor.putString("accessToken", accessToken);
-                            editor.putString("email", email);
-                            editor.putString("nickname", nickname);
-                            editor.putInt("age", age);
-                            editor.putInt("gender", gender);
                             editor.apply();
 
                             Intent intent = new Intent(RegisterActivity.this, MainActivity.class);

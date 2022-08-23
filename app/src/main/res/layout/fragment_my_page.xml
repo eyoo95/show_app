@@ -40,7 +40,9 @@
                     android:id="@+id/imageView12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_weight="1"
+                    app:srcCompat="@drawable/tap_menu_icon_my_page_fill"
                     tools:src="@tools:sample/avatars" />
 
                 <LinearLayout

@@ -51,8 +51,9 @@ public class MyPageFragment extends Fragment {
 
     TextView txtLogout;
     ImageView imgEditUser;
-    EditText txtNickname;
-    EditText txtEmail;
+    TextView txtNickname;
+    TextView txtEmail;
+
     // 프로그레스 다이얼로그
     private ProgressDialog dialog;
 
@@ -97,14 +98,6 @@ public class MyPageFragment extends Fragment {
         imgEditUser = rootView.findViewById(R.id.imgEditUser);
         txtNickname = rootView.findViewById(R.id.txtMyNickname);
         txtEmail = rootView.findViewById(R.id.txtMyEmail);
-
-        SharedPreferences sp = getActivity().getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
-        String myEmail = sp.getString("email", "");
-        String myNickname = sp.getString("nickname", "");
-
-        txtEmail.setText(myEmail);
-        txtNickname.setText(myNickname);
-
 
         // 로그아웃
         txtLogout.setOnClickListener(new View.OnClickListener() {

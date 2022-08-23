@@ -58,14 +58,6 @@ public class UserEditActivity extends AppCompatActivity {
         btnGender = findViewById(R.id.btnGender);
 
 
-        SharedPreferences sp = UserEditActivity.this.getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
-        String myNickname = sp.getString("nickname", "");
-        int myAge = sp.getInt("age",0 );
-        int myGender = sp.getInt("gender",1);
-
-        editNickname.setText(myNickname);
-        editAge.setText(myAge+"");
-
         // 비밀번호 변경
         btnPassword.setOnClickListener(new View.OnClickListener() {
             @Override

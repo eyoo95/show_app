@@ -98,6 +98,7 @@ public class LoginActivity extends AppCompatActivity {
                             SharedPreferences sp = getApplication().getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
                             SharedPreferences.Editor editor = sp.edit();
                             editor.putString("accessToken", accessToken);
+
                             editor.apply();
 
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
