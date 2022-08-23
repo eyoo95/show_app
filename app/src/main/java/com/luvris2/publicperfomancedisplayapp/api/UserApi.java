@@ -9,6 +9,7 @@ import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface UserApi {
@@ -30,7 +31,7 @@ public interface UserApi {
     Call<UserRes> withdrawal(@Header("Authorization") String token);
 
     // 비밀번호 수정 API
-    @DELETE("/user/editpassword")
+    @PUT("/user/editpassword")
     Call<UserRes> editpassword(@Header("Authorization") String token,
                                @Body User user);
 
