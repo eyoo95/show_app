@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 import com.luvris2.publicperfomancedisplayapp.LoginActivity;
 import com.luvris2.publicperfomancedisplayapp.R;
-import com.luvris2.publicperfomancedisplayapp.ValidateActivity;
+import com.luvris2.publicperfomancedisplayapp.UserEditActivity;
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
 import com.luvris2.publicperfomancedisplayapp.api.UserApi;
 import com.luvris2.publicperfomancedisplayapp.config.Config;
@@ -48,8 +48,7 @@ public class MyPageFragment extends Fragment {
     private String mParam2;
 
     TextView txtLogout;
-    Button btnWithdrawal;
-    Button btnEdit;
+    Button btnUserInfo;
     // 프로그레스 다이얼로그
     private ProgressDialog dialog;
 
@@ -91,6 +90,7 @@ public class MyPageFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_my_page, container, false);
 
         txtLogout = rootView.findViewById(R.id.txtLogout);
+        btnUserInfo = rootView.findViewById(R.id.btnUserInfo);
 
 
         // 로그아웃
@@ -110,6 +110,15 @@ public class MyPageFragment extends Fragment {
                 alert.setNegativeButton("아니요", null);
                 alert.show();
 
+            }
+        });
+
+        // 내 정보 수정버튼
+        btnUserInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), UserEditActivity.class);
+                startActivity(intent);
             }
         });
 

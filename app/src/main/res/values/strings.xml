@@ -3,6 +3,7 @@
     <string name="app_name">PublicPerfomanceDisplayApp</string>
 
     <string name="dialog_register">회원가입 중입니다...</string>
+    <string name="dialog_logout">로그아웃 중입니다...</string>
 
 
     -

@@ -84,11 +84,11 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_home, container, false);
 
-        imgSearch = rootView.findViewById(R.id.imgSearch);
+        imgSearch = rootView.findViewById(R.id.imgHomeSearch);
         cardView1 = rootView.findViewById(R.id.cardView1);
         cardView2 = rootView.findViewById(R.id.cardView2);
-        txtPlace = rootView.findViewById(R.id.txtPlace);
-        txtType = rootView.findViewById(R.id.txtType);
+        txtPlace = rootView.findViewById(R.id.txtHomeSortRegion);
+        txtType = rootView.findViewById(R.id.txtHomeSortType);
         img1 = rootView.findViewById(R.id.img1);
         img2 = rootView.findViewById(R.id.img2);
 
