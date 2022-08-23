@@ -62,19 +62,21 @@
                 android:id="@+id/imgLoginPassword"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:visibility="visible"
                 app:srcCompat="@drawable/login_password2" />
 
             <EditText
                 android:id="@+id/editTxtRegisterPassword"
-                android:layout_width="218dp"
+                android:layout_width="216dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="70dp"
                 android:ems="10"
                 android:fontFamily="@font/nanum_square_r"
                 android:hint="비밀번호를 입력해주세요."
-                android:inputType="textPassword"
-                android:minHeight="48dp" />
+                android:inputType="textPassword|textEmailAddress"
+                tools:ignore="TouchTargetSizeCheck" />
+
         </FrameLayout>
 
         <LinearLayout

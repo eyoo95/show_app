@@ -368,6 +368,11 @@ public class UserEditActivity extends AppCompatActivity {
                 // 200 OK 일 때,
                 if (response.isSuccessful()) {
 
+                    SharedPreferences sp = UserEditActivity.this.getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putString("accessToken", null);
+                    editor.apply();
+
                     Intent intent = new Intent(UserEditActivity.this, RegisterActivity.class);
                     startActivity(intent);
 

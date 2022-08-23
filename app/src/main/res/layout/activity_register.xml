@@ -21,33 +21,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
+            android:layout_marginBottom="50dp"
             android:gravity="center"
             android:text="회원가입"
             android:textSize="30sp" />
-
-        <EditText
-            android:id="@+id/editNickname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginRight="10dp"
-            android:ems="10"
-            android:hint="닉네임을 입력해주세요."
-            android:inputType="textPersonName"
-            android:minHeight="48dp" />
-
-        <EditText
-            android:id="@+id/editAge"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:ems="10"
-            android:hint="나이를 입력해주세요."
-            android:inputType="number"
-            android:minHeight="48dp" />
 
         <EditText
             android:id="@+id/editEmail"
@@ -71,6 +48,30 @@
             android:ems="10"
             android:hint="비밀번호를 입력해주세요."
             android:inputType="textPassword"
+            android:minHeight="48dp" />
+
+        <EditText
+            android:id="@+id/editNickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:ems="10"
+            android:hint="닉네임을 입력해주세요."
+            android:inputType="textPersonName"
+            android:minHeight="48dp" />
+
+        <EditText
+            android:id="@+id/editAge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:ems="10"
+            android:hint="나이를 입력해주세요."
+            android:inputType="number"
             android:minHeight="48dp" />
 
         <RadioGroup
