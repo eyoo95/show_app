@@ -55,7 +55,7 @@ public class UserEditActivity extends AppCompatActivity {
         btnPassword = findViewById(R.id.btnPassword);
         btnGender = findViewById(R.id.btnGender);
 
-        // 비밀번호 수정
+        // 비밀번호 변경
         btnPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,6 +74,27 @@ public class UserEditActivity extends AppCompatActivity {
 
             }
         });
+
+        // 닉네임 변경
+        btnNickname.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                AlertDialog.Builder alert = new AlertDialog.Builder(UserEditActivity.this);
+                alert.setTitle("비밀번호를 바꾸시겠습니까?");
+                alert.setPositiveButton("네", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        changePassword();
+                    }
+                });
+
+                alert.setNegativeButton("아니요", null);
+                alert.show();
+
+            }
+        });
+
 
         // 회원탈퇴
         btnWithdrawal.setOnClickListener(new View.OnClickListener() {
