@@ -1,140 +1,358 @@
 package com.luvris2.publicperfomancedisplayapp.fragment;
 
-import static android.content.Context.MODE_PRIVATE;
-
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.luvris2.publicperfomancedisplayapp.MainActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.luvris2.publicperfomancedisplayapp.R;
-import com.luvris2.publicperfomancedisplayapp.RegisterActivity;
-import com.luvris2.publicperfomancedisplayapp.config.Config;
+import com.luvris2.publicperfomancedisplayapp.adapter.PerformanceSearchAdapter;
+import com.luvris2.publicperfomancedisplayapp.api.KopisPerformanceApi;
+import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
+import com.luvris2.publicperfomancedisplayapp.model.KopisApiPerformance;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 public class HomeFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    TextView txtPlace, txtType;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    // 리사이클러 뷰 관련 변수
+    RecyclerView recyclerView;
+    PerformanceSearchAdapter adapter;
+    ArrayList<KopisApiPerformance> performanceList = new ArrayList<>();
 
-    CardView cardView1;
-    CardView cardView2;
-    TextView txtPlace;
-    TextView txtType;
-    ImageView img1;
-    ImageView img2;
+    // 프로그레스 다이얼로그
+    private ProgressDialog dialog;
+
+    // 공연 검색 키워드
+    String prfName="", prfPlace="", prfGenre="", signgucode="";
+    int prfState=2; // 2=공연중
+    String[] signguList = {"서울", "부산", "대구", "인천", "광주", "대전", "울산", "세종", "경기",
+            "강원", "충북", "충남", "전북", "전남", "경북", "경남", "제주"};
+    String[] genreList = {"연극", "뮤지컬" , "무용", "클래식", "오페라", "국악", "복합"};
+
+    // 공연 검색 아이콘
     ImageView imgSearch;
 
+    // 공연 검색을 위한 스피너
+    Spinner spinner;
+    int spinnerNumber = 0; // 0=지역별, 1=유형별
 
     public HomeFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // 뷰 화면 설정
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_home, container, false);
 
-        imgSearch = rootView.findViewById(R.id.imgHomeSearch);
-        cardView1 = rootView.findViewById(R.id.cardView1);
-        cardView2 = rootView.findViewById(R.id.cardView2);
-        txtPlace = rootView.findViewById(R.id.txtHomeSortRegion);
-        txtType = rootView.findViewById(R.id.txtHomeSortType);
-        img1 = rootView.findViewById(R.id.img1);
-        img2 = rootView.findViewById(R.id.img2);
+        // UI 객체 생성
+        txtPlace = rootView.findViewById(R.id.txtPlace);
+        txtType = rootView.findViewById(R.id.txtType);
+        txtPlace.setBackgroundColor(Color.parseColor("#DAFBFF"));
+        imgSearch = rootView.findViewById(R.id.imgSearch);
 
-        imgSearch.setOnClickListener(new View.OnClickListener() {
+        // 리사이클러뷰 화면 설정
+        recyclerView = rootView.findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
+
+        // 지역 선택을 위한 스피너 설정
+        spinner = rootView.findViewById(R.id.spinner);
+
+        // 지역별 스피너 설정
+        ArrayAdapter<String> placeArrayAdapter = new ArrayAdapter<>
+                (getActivity(), android.R.layout.simple_spinner_dropdown_item, signguList);
+        placeArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // 유형별 스피너 설정
+        ArrayAdapter<String> typeArrayAdapter = new ArrayAdapter<>
+                (getActivity(), android.R.layout.simple_spinner_dropdown_item, genreList);
+        typeArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // 스피너 화면 설정
+        spinner.setAdapter(placeArrayAdapter);
+
+        // 지역 선택에 따른 지역코드 입력
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View view) {
-                // todo : 다이얼로그를 활용하여 화면에 새로운 레이아웃 띄우기
-                // 별점 남기기 모의 테스트
-                // dialogAddRating = 확인을 누르면 별점을 남길 수 있도록하는 다이얼로그
-                // viewAddRating = 유저에게 보여줄 레이아웃의 뷰 정보 저장한 객체
-                // R.layout.dialog_add_reivew = 유저에게 보여줄 레이아웃
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (spinnerNumber == 0) { selectedPlaceData(i);
+                } else if (spinnerNumber == 1 ) { selectedTypeData(i); }
 
-                // 다이얼로그 객체 생성
-                AlertDialog.Builder dialogSearch = new AlertDialog.Builder(getContext());
-
-                // 다이얼로그 제목 설정
-//                dialogSearch.setMessage("연극");
-//                dialogSearch.setTitle("유형선택");
-
-                // 레이아웃 xml 뷰와 연결 설정
-                ViewGroup itemView = (ViewGroup) inflater.inflate(R.layout.dialog_search, container, false);
-                dialogSearch.setView(itemView);
-
-                // 확인을 누르면 실행 될 코드 작성
-                dialogSearch.setPositiveButton("검색", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // 확인시 실행 코드 작성
-                    }
-                });
-
-                // 취소를 누르면 실행 될 코드 작성
-                dialogSearch.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // 취소시 실행 코드 작성
-                    }
-                });
-
-                // 다이얼로그 유저에게 출력
-                dialogSearch.show();
+                // 조건에 따른 공연 검색
+                getPerformanceData( prfName, prfPlace, prfGenre, signgucode, 2);
             }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) { }
+        });
+
+        // todo : 지역별 공연 검색
+        txtPlace.setOnClickListener(view -> {
+            spinnerNumber = 0 ;
+            txtPlace.setBackgroundColor(Color.parseColor("#DAFBFF"));
+            txtType.setBackgroundColor(Color.parseColor("#ffffff"));
+            spinner.setAdapter(placeArrayAdapter);
+        });
+
+        // todo : 유형별 공연 검색
+        txtType.setOnClickListener(view -> {
+            spinnerNumber = 1 ;
+            txtType.setBackgroundColor(Color.parseColor("#DAFBFF"));
+            txtPlace.setBackgroundColor(Color.parseColor("#ffffff"));
+            spinner.setAdapter(typeArrayAdapter);
         });
 
 
-        // 이 위에서 기능 작성 (return rootView;)
+        imgSearch.setOnClickListener(view -> {
+            AlertDialog.Builder dialogAddRating = new AlertDialog.Builder(getActivity());
+
+            // 다이얼로그 제목 설정
+            dialogAddRating.setTitle("공연 상세 검색");
+
+            // 레이아웃 xml 뷰와 연결 설정
+            View performanceSearchView = (View) View.inflate(getActivity(), R.layout.dialog_search_layout, null);
+            dialogAddRating.setView(performanceSearchView);
+
+            // 분류별 스피너 설정, 지역별/장르별
+            Spinner spinnerType = performanceSearchView.findViewById(R.id.spinnerType);
+            Spinner spinnerRegion = performanceSearchView.findViewById(R.id.spinnerRegion);
+            ArrayAdapter<String> searchTypeArrayAdapter = new ArrayAdapter<>
+                    (getActivity(), android.R.layout.simple_spinner_dropdown_item, genreList);
+            ArrayAdapter<String> searchPlaceArrayAdapter = new ArrayAdapter<>
+                    (getActivity(), android.R.layout.simple_spinner_dropdown_item, signguList);
+            searchTypeArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            searchPlaceArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            // 스피너 화면 설정
+            spinnerType.setAdapter(searchTypeArrayAdapter);
+            spinnerRegion.setAdapter(searchPlaceArrayAdapter);
+
+            // 지역 선택에 따른 지역코드 입력
+            spinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    selectedTypeData(i);
+                }
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) { }
+            });
+
+            // 지역 선택에 따른 지역코드 입력
+            spinnerRegion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    selectedPlaceData(i);
+                }
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) { }
+            });
+
+            // 확인을 누르면 실행 될 코드 작성
+            dialogAddRating.setPositiveButton("확인", (dialogInterface, i) -> {
+                getPerformanceData( prfName, prfPlace, prfGenre, signgucode, 2);
+            });
+
+            // 취소를 누르면 실행 될 코드 작성
+            dialogAddRating.setNegativeButton("취소", (dialogInterface, i) -> {
+                // 취소시 실행 코드 작성
+            });
+
+            // 다이얼로그 유저에게 출력
+            dialogAddRating.show();
+        });
         return rootView;
+    }
+
+    // 스피너를 통한 지역 선택시 지역 코드 저장 메소드
+    void selectedPlaceData(int i) {
+        switch (signguList[i]) {
+            case "서울":
+                signgucode = "11";
+                break;
+            case "부산":
+                signgucode = "26";
+                break;
+            case "대구":
+                signgucode = "27";
+                break;
+            case "인천":
+                signgucode = "28";
+                break;
+            case "광주":
+                signgucode = "29";
+                break;
+            case "대전":
+                signgucode = "30";
+                break;
+            case "울산":
+                signgucode = "31";
+                break;
+            case "세종":
+                signgucode = "36";
+                break;
+            case "경기":
+                signgucode = "41";
+                break;
+            case "강원":
+                signgucode = "42";
+                break;
+            case "충북":
+                signgucode = "43";
+                break;
+            case "충남":
+                signgucode = "44";
+                break;
+            case "전북":
+                signgucode = "45";
+                break;
+            case "전남":
+                signgucode = "46";
+                break;
+            case "경북":
+                signgucode = "47";
+                break;
+            case "경남":
+                signgucode = "48";
+                break;
+            case "제주":
+                signgucode = "50";
+                break;
+        }
+    }
+
+    // 스피너를 통한 장르 선택시 장르 코드 저장 메소드
+    void selectedTypeData(int i) {
+        switch (genreList[i]) {
+            case "연극":
+                prfGenre = "AAAA";
+                break;
+            case "뮤지컬":
+                prfGenre = "AAAB";
+                break;
+            case "무용":
+                prfGenre = "BBBA";
+                break;
+            case "클래식":
+                prfGenre = "CCCA";
+                break;
+            case "오페라":
+                prfGenre = "CCCB";
+                break;
+            case "국악":
+                prfGenre = "CCCC";
+                break;
+            case "복합":
+                prfGenre = "EEEA";
+                break;
+        }
+    }
+
+    // todo : 공연 목록 확인
+    void getPerformanceData(String prfName, String prfPlace, String prfGenre, String signgucode, int prfState) {
+        // 데이터 초기화
+        performanceList.clear();
+
+        // 1페이지, 6개씩 보여주기
+        int cpage = 1;
+        int rows = 6;
+
+        // 현재 시간 불러오기
+        String currentTime = getCurrentTime();
+
+        showProgress("공연 목록 불러오는 중...");
+
+        // 네트워크로 데이터 전송, Retrofit 객체 생성
+        Retrofit retrofit = NetworkClient.getRetrofitClient(getActivity());
+        KopisPerformanceApi api = retrofit.create(KopisPerformanceApi.class);
+
+        // 헤더에 설정 할 데이터 확인, 공유 저장소에 저장되어있는 토큰 호출
+        // API 요청
+        Call<KopisApiPerformance> call = api.getPlaceSearch(currentTime, currentTime, cpage, rows, prfName, prfPlace, prfGenre, signgucode, prfState);
+
+        call.enqueue(new Callback<KopisApiPerformance>() {
+            @Override
+            public void onResponse(@NonNull Call<KopisApiPerformance> call, @NonNull Response<KopisApiPerformance> response) {
+                dismissProgress();
+
+                // 200 OK, 네트워크 정상 응답
+                if(response.isSuccessful()) {
+                    KopisApiPerformance data = response.body();
+
+                    // 기존의 데이터에서 추가
+                    if (data != null) { performanceList.addAll(data.getResultList()); }
+                    else { performanceList.clear(); }
+                    adapter = new PerformanceSearchAdapter(getActivity(), performanceList);
+                    recyclerView.setAdapter(adapter);
+                }
+                // 진행중인 공연이 없을 경우 메시지 출력
+                else if(response.code() == 500) {
+                    Toast.makeText(getActivity(), "현재 진행중인 공연이 없습니다.", Toast.LENGTH_LONG).show();
+                    performanceList.clear();
+                    adapter = new PerformanceSearchAdapter(getActivity(), performanceList);
+                    recyclerView.setAdapter(adapter);
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<KopisApiPerformance> call, @NonNull Throwable t) {
+                dismissProgress();
+            }
+        });
+        initKeyword(); // 검색 조건 초기화
+    }
+
+    // 현재 시간을 구하는 메소드
+    public String getCurrentTime() {
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+        return dateFormat.format(date);
+    }
+
+    // 공연 조회 변수 초기화
+    public void initKeyword() {
+        prfName="";
+        prfPlace="";
+        prfGenre="";
+        signgucode="";
+        prfState=2;
+    }
+
+    // 프로그레스 다이얼로그
+    void showProgress(String message) {
+        dialog = new ProgressDialog(getActivity());
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setMessage(message);
+        dialog.show();
+    }
+    void dismissProgress() {
+        dialog.dismiss();
     }
 }

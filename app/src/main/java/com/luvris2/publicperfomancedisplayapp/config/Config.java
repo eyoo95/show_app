@@ -8,4 +8,7 @@ public class Config {
 
     public static final String IMAGE_URL = "yh-db.c3pciphtm1bo.ap-northeast-2.rds.amazonaws.com";
 
+    public static final String GOOGLE_MAPS_BASE_URL = "https://maps.googleapis.com";
+    public static final String GOOGLE_MAPS_API_KEY = "AIzaSyDLRY2CF9QwQ5UENhzwJsOb6FKKqieCwhk";
+
 }
