@@ -87,7 +87,7 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
-                // 닉네임 - 빈 문자열인지만 체크
+                // 닉네임 - 빈 문자열, 길이 체크
                 String nickname = editNickname.getText().toString().trim();
                 if (nickname.isEmpty() || nickname.length() < 2 || nickname.length() > 12) {
                     Toast.makeText(RegisterActivity.this, "닉네임의 길이는 2자이상 12자 이하로만 입력하세요.", Toast.LENGTH_SHORT).show();
@@ -102,7 +102,7 @@ public class RegisterActivity extends AppCompatActivity {
                 } else if (checkedId == R.id.radioFemale) {
                     gender = 0;
                 } else {
-                    Toast.makeText(RegisterActivity.this, "선택하세요", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "성별을 선택하세요", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -136,6 +136,10 @@ public class RegisterActivity extends AppCompatActivity {
                             SharedPreferences sp = getApplication().getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
                             SharedPreferences.Editor editor = sp.edit();
                             editor.putString("accessToken", accessToken);
+                            editor.putString("email", email);
+                            editor.putString("nickname", nickname);
+                            editor.putInt("age", age);
+                            editor.putInt("gender", gender);
                             editor.apply();
 
                             Intent intent = new Intent(RegisterActivity.this, MainActivity.class);

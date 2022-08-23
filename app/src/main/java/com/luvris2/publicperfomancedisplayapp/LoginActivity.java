@@ -44,8 +44,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         // 화면연결
-        editEmail = findViewById(R.id.editEmail);
-        editPassword = findViewById(R.id.editPassword);
+        editEmail = findViewById(R.id.editTxtLoginEmail);
+        editPassword = findViewById(R.id.editTxtRegisterPassword);
         btnLogin = findViewById(R.id.btnLogin);
         txtRegister = findViewById(R.id.txtRegister);
 

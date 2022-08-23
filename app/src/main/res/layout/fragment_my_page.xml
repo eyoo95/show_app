@@ -49,36 +49,31 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <EditText
-                        android:id="@+id/editTextTextPersonName3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="textPersonName"
-                        android:text="User"
-                        tools:ignore="TouchTargetSizeCheck" />
-
-                    <EditText
-                        android:id="@+id/editTextTextEmailAddress"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="textEmailAddress"
-                        android:text="000@gmail.com"
-                        tools:ignore="TouchTargetSizeCheck" />
-
-                    <Button
-                        android:id="@+id/btnUserInfo"
+                    <TextView
+                        android:id="@+id/txtMyNickname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
                         android:layout_marginRight="10dp"
-                        android:text="내 정보수정" />
+                        android:layout_marginBottom="5dp"
+                        android:text="User"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/txtMyEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="000@gmail.com" />
 
                 </LinearLayout>
 
                 <ImageView
-                    android:id="@+id/imageView13"
+                    android:id="@+id/imgEditUser"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

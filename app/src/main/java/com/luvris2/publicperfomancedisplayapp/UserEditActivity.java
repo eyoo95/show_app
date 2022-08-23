@@ -36,6 +36,8 @@ public class UserEditActivity extends AppCompatActivity {
     Button btnAge;
     Button btnPassword;
     Button btnGender;
+    String nickname;
+    int age;
 
     // 네트워크 처리 보여주는 프로그레스 다이얼로그
     ProgressDialog dialog;
@@ -54,6 +56,15 @@ public class UserEditActivity extends AppCompatActivity {
         btnAge = findViewById(R.id.btnAge);
         btnPassword = findViewById(R.id.btnPassword);
         btnGender = findViewById(R.id.btnGender);
+
+
+        SharedPreferences sp = UserEditActivity.this.getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
+        String myNickname = sp.getString("nickname", "");
+        int myAge = sp.getInt("age",0 );
+        int myGender = sp.getInt("gender",1);
+
+        editNickname.setText(myNickname);
+        editAge.setText(myAge+"");
 
         // 비밀번호 변경
         btnPassword.setOnClickListener(new View.OnClickListener() {
@@ -81,11 +92,31 @@ public class UserEditActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 AlertDialog.Builder alert = new AlertDialog.Builder(UserEditActivity.this);
-                alert.setTitle("비밀번호를 바꾸시겠습니까?");
+                alert.setTitle("닉네임을 "+nickname+"(으)로 바꾸시겠습니까?");
                 alert.setPositiveButton("네", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        changePassword();
+                        changeNickname();
+                    }
+                });
+
+                alert.setNegativeButton("아니요", null);
+                alert.show();
+
+            }
+        });
+
+        // 나이 변경
+        btnAge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                AlertDialog.Builder alert = new AlertDialog.Builder(UserEditActivity.this);
+                alert.setTitle("나이를 "+age+"세로 바꾸시겠습니까?");
+                alert.setPositiveButton("네", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        changeAge();
                     }
                 });
 
@@ -146,7 +177,8 @@ public class UserEditActivity extends AppCompatActivity {
 
         Retrofit retrofit = NetworkClient.getRetrofitClient(UserEditActivity.this);
         UserApi api = retrofit.create(UserApi.class);
-        User user = new User (password);
+        User user = new User ();
+        user.setPassword(password);
 
         SharedPreferences sp = UserEditActivity.this.getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
         String accessToken = sp.getString("accessToken", "");
@@ -162,6 +194,152 @@ public class UserEditActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     editPassword.setText("");
                     Toast.makeText(UserEditActivity.this, "비밀번호를 변경했습니다." , Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(UserEditActivity.this, "에러 발생 : " + response.code(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override // 실패했을 때
+            public void onFailure(Call<UserRes> call, Throwable t) {
+                // 네트워크 자체 문제로 실패!
+                dismissProgress();
+            }
+        });
+
+    }
+
+    // 닉네임 변경기능
+    private void changeNickname(){
+
+        // 닉네임 - 빈 문자열, 길이 체크
+        nickname = editNickname.getText().toString().trim();
+        if (nickname.isEmpty() || nickname.length() < 2 || nickname.length() > 12) {
+            Toast.makeText(UserEditActivity.this, "닉네임의 길이는 2자이상 12자 이하로만 입력하세요.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // 프로그레스 다이얼로그
+        showProgress("닉네임을 변경합니다..");
+
+        Retrofit retrofit = NetworkClient.getRetrofitClient(UserEditActivity.this);
+        UserApi api = retrofit.create(UserApi.class);
+        User user = new User();
+        user.setNickname(nickname);
+
+        SharedPreferences sp = UserEditActivity.this.getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
+        String accessToken = sp.getString("accessToken", "");
+
+        Call<UserRes> call = api.editnickname("Bearer " + accessToken, user);
+
+        call.enqueue(new Callback<UserRes>() {
+            @Override // 성공했을 때
+            public void onResponse(Call<UserRes> call, Response<UserRes> response) {
+                dismissProgress();
+
+                // 200 OK 일 때,
+                if (response.isSuccessful()) {
+                    editPassword.setText("");
+                    Toast.makeText(UserEditActivity.this, "닉네임을 변경했습니다." , Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(UserEditActivity.this, "에러 발생 : " + response.code(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override // 실패했을 때
+            public void onFailure(Call<UserRes> call, Throwable t) {
+                // 네트워크 자체 문제로 실패!
+                dismissProgress();
+            }
+        });
+
+    }
+
+    // 나이 변경기능
+    private void changeAge(){
+
+        // 나이
+        age = Integer.parseInt(editAge.getText().toString());
+        if (age <= 0) {
+            Toast.makeText(UserEditActivity.this, "나이를 입력하세요.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // 프로그레스 다이얼로그
+        showProgress("나이를 수정합니다..");
+
+        Retrofit retrofit = NetworkClient.getRetrofitClient(UserEditActivity.this);
+        UserApi api = retrofit.create(UserApi.class);
+        User user = new User();
+        user.setAge(age);
+
+        SharedPreferences sp = UserEditActivity.this.getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
+        String accessToken = sp.getString("accessToken", "");
+
+        Call<UserRes> call = api.editage("Bearer " + accessToken, user);
+
+        call.enqueue(new Callback<UserRes>() {
+            @Override // 성공했을 때
+            public void onResponse(Call<UserRes> call, Response<UserRes> response) {
+                dismissProgress();
+
+                // 200 OK 일 때,
+                if (response.isSuccessful()) {
+                    editPassword.setText("");
+                    Toast.makeText(UserEditActivity.this, "나이를 수정했습니다." , Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(UserEditActivity.this, "에러 발생 : " + response.code(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override // 실패했을 때
+            public void onFailure(Call<UserRes> call, Throwable t) {
+                // 네트워크 자체 문제로 실패!
+                dismissProgress();
+            }
+        });
+
+    }
+
+    // 성별 변경기능
+    private void changeGender(){
+
+        // 성별
+        int gender;
+        int checkedId = radioGender.getCheckedRadioButtonId();
+        if (checkedId == R.id.radioMale) {
+            gender = 1;
+        } else if (checkedId == R.id.radioFemale) {
+            gender = 0;
+        } else {
+            Toast.makeText(UserEditActivity.this, "성별을 선택하세요", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // 프로그레스 다이얼로그
+        showProgress("성별을 수정합니다..");
+
+        Retrofit retrofit = NetworkClient.getRetrofitClient(UserEditActivity.this);
+        UserApi api = retrofit.create(UserApi.class);
+        User user = new User();
+        user.setGender(gender);
+
+        SharedPreferences sp = UserEditActivity.this.getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
+        String accessToken = sp.getString("accessToken", "");
+
+        Call<UserRes> call = api.editgender("Bearer " + accessToken, user);
+
+        call.enqueue(new Callback<UserRes>() {
+            @Override // 성공했을 때
+            public void onResponse(Call<UserRes> call, Response<UserRes> response) {
+                dismissProgress();
+
+                // 200 OK 일 때,
+                if (response.isSuccessful()) {
+                    editPassword.setText("");
+                    Toast.makeText(UserEditActivity.this, "성별을 수정했습니다." , Toast.LENGTH_SHORT).show();
 
                 } else {
                     Toast.makeText(UserEditActivity.this, "에러 발생 : " + response.code(), Toast.LENGTH_SHORT).show();

@@ -27,9 +27,11 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public User( String password ) {
+    public User(String string) {
+
         this.password = password;
     }
+
 
     // Getter Setter
     public String getNickname() {

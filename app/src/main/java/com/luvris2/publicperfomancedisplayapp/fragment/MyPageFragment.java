@@ -15,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,7 +50,9 @@ public class MyPageFragment extends Fragment {
     private String mParam2;
 
     TextView txtLogout;
-    Button btnUserInfo;
+    ImageView imgEditUser;
+    EditText txtNickname;
+    EditText txtEmail;
     // 프로그레스 다이얼로그
     private ProgressDialog dialog;
 
@@ -90,7 +94,16 @@ public class MyPageFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_my_page, container, false);
 
         txtLogout = rootView.findViewById(R.id.txtLogout);
-        btnUserInfo = rootView.findViewById(R.id.btnUserInfo);
+        imgEditUser = rootView.findViewById(R.id.imgEditUser);
+        txtNickname = rootView.findViewById(R.id.txtMyNickname);
+        txtEmail = rootView.findViewById(R.id.txtMyEmail);
+
+        SharedPreferences sp = getActivity().getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
+        String myEmail = sp.getString("email", "");
+        String myNickname = sp.getString("nickname", "");
+
+        txtEmail.setText(myEmail);
+        txtNickname.setText(myNickname);
 
 
         // 로그아웃
@@ -114,7 +127,7 @@ public class MyPageFragment extends Fragment {
         });
 
         // 내 정보 수정버튼
-        btnUserInfo.setOnClickListener(new View.OnClickListener() {
+        imgEditUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), UserEditActivity.class);
@@ -163,7 +176,7 @@ public class MyPageFragment extends Fragment {
 
                     SharedPreferences sp = getActivity().getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
                     SharedPreferences.Editor editor = sp.edit();
-                    editor.putString("accessToken", accessToken);
+                    editor.putString("accessToken", null);
                     editor.apply();
 
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
