@@ -26,6 +26,8 @@ import com.luvris2.publicperfomancedisplayapp.api.UserApi;
 import com.luvris2.publicperfomancedisplayapp.config.Config;
 import com.luvris2.publicperfomancedisplayapp.model.User;
 import com.luvris2.publicperfomancedisplayapp.model.UserRes;
+import com.luvris2.publicperfomancedisplayapp.ui.BoardActivity;
+import com.luvris2.publicperfomancedisplayapp.ui.LikeActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,6 +54,12 @@ public class MyPageFragment extends Fragment {
     ImageView imgEditUser;
     TextView txtNickname;
     TextView txtEmail;
+
+    ImageView imgMypageRating; // 별점 (리뷰)
+    ImageView imgMypageBoard; // 내가 쓴 글 (자유게시판)
+    ImageView imgMypageLike; // 좋아요
+    ImageView imgMypageAnalysis; // 취향분석
+
 
     // 프로그레스 다이얼로그
     private ProgressDialog dialog;
@@ -102,6 +110,11 @@ public class MyPageFragment extends Fragment {
         txtNickname = rootView.findViewById(R.id.txtMyNickname);
         txtEmail = rootView.findViewById(R.id.txtMyEmail);
 
+        imgMypageRating = rootView.findViewById(R.id.imgMypageRating);
+        imgMypageBoard = rootView.findViewById(R.id.imgMypageBoard);
+        imgMypageLike = rootView.findViewById(R.id.imgMypageLike);
+        imgMypageAnalysis = rootView.findViewById(R.id.imgMypageAnalysis);
+
         loadUserInfo();
 
         // 로그아웃
@@ -132,6 +145,28 @@ public class MyPageFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        // 내 별점 (리뷰)
+
+        // 내가 작성한 글 (자유게시판)
+        imgMypageBoard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), BoardActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // 좋아요
+        imgMypageLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), LikeActivity.class);
+                startActivity(intent);
+            }
+        });
+        
+        // 취향분석
 
 
         // 이 위에서 기능 작업하기
