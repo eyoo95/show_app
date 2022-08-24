@@ -249,7 +249,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="100dp"
                 android:gravity="right|center_horizontal"
-                android:text="로그아웃" />
+                android:text="로그아웃 테스트" />
 
         </LinearLayout>
 
