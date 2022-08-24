@@ -36,11 +36,20 @@ public class UserEditActivity extends AppCompatActivity {
     Button btnAge;
     Button btnPassword;
     Button btnGender;
-    String nickname;
-    int age;
+    private String nickname;
+    private String password;
+    private int age;
+    private int gender;
+
+    private String myNickname;
+    private String myEmail;
+    private int myAge;
+    private int myGender;
 
     // 네트워크 처리 보여주는 프로그레스 다이얼로그
     ProgressDialog dialog;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,11 +67,23 @@ public class UserEditActivity extends AppCompatActivity {
         btnGender = findViewById(R.id.btnGender);
         radioGender = findViewById(R.id.radioGender);
 
+        loadUserInfo();
+
+
+
 
         // 비밀번호 변경
         btnPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+                // 비밀번호 - 길이체크
+                password = editPassword.getText().toString().trim();
+                if (password.length() < 4 || password.length() > 18) {
+                    Toast.makeText(UserEditActivity.this, "비밀번호의 길이는 4자이상 18자 이하로만 입력하세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 AlertDialog.Builder alert = new AlertDialog.Builder(UserEditActivity.this);
                 alert.setTitle("비밀번호를 바꾸시겠습니까?");
@@ -84,6 +105,13 @@ public class UserEditActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                // 닉네임 - 빈 문자열, 길이 체크
+                nickname = editNickname.getText().toString().trim();
+                if (nickname.isEmpty() || nickname.length() < 2 || nickname.length() > 12) {
+                    Toast.makeText(UserEditActivity.this, "닉네임의 길이는 2자이상 12자 이하로만 입력하세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 AlertDialog.Builder alert = new AlertDialog.Builder(UserEditActivity.this);
                 alert.setTitle("닉네임을 "+nickname+"(으)로 바꾸시겠습니까?");
                 alert.setPositiveButton("네", new DialogInterface.OnClickListener() {
@@ -104,6 +132,12 @@ public class UserEditActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                age = Integer.parseInt(editAge.getText().toString());
+                if (age <= 0) {
+                    Toast.makeText(UserEditActivity.this, "나이를 입력하세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 AlertDialog.Builder alert = new AlertDialog.Builder(UserEditActivity.this);
                 alert.setTitle("나이를 "+age+"세로 바꾸시겠습니까?");
                 alert.setPositiveButton("네", new DialogInterface.OnClickListener() {
@@ -123,6 +157,17 @@ public class UserEditActivity extends AppCompatActivity {
         btnGender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // 성별
+                int checkedId = radioGender.getCheckedRadioButtonId();
+                if (checkedId == R.id.radioMale) {
+                    gender = 1;
+                } else if (checkedId == R.id.radioFemale) {
+                    gender = 0;
+                } else {
+                    Toast.makeText(UserEditActivity.this, "성별을 선택하세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 AlertDialog.Builder alert = new AlertDialog.Builder(UserEditActivity.this);
                 alert.setTitle("성별을 바꾸시겠습니까?");
@@ -178,13 +223,6 @@ public class UserEditActivity extends AppCompatActivity {
     // 비밀번호 변경기능
     private void changePassword(){
 
-        // 비밀번호 - 길이체크
-        String password = editPassword.getText().toString().trim();
-        if (password.length() < 4 || password.length() > 18) {
-            Toast.makeText(UserEditActivity.this, "비밀번호의 길이는 4자이상 18자 이하로만 입력하세요.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
         // 프로그레스 다이얼로그
         showProgress("비밀번호를 변경합니다..");
 
@@ -225,12 +263,7 @@ public class UserEditActivity extends AppCompatActivity {
     // 닉네임 변경기능
     private void changeNickname(){
 
-        // 닉네임 - 빈 문자열, 길이 체크
-        nickname = editNickname.getText().toString().trim();
-        if (nickname.isEmpty() || nickname.length() < 2 || nickname.length() > 12) {
-            Toast.makeText(UserEditActivity.this, "닉네임의 길이는 2자이상 12자 이하로만 입력하세요.", Toast.LENGTH_SHORT).show();
-            return;
-        }
+
 
         // 프로그레스 다이얼로그
         showProgress("닉네임을 변경합니다..");
@@ -272,13 +305,6 @@ public class UserEditActivity extends AppCompatActivity {
     // 나이 변경기능
     private void changeAge(){
 
-        // 나이
-        age = Integer.parseInt(editAge.getText().toString());
-        if (age <= 0) {
-            Toast.makeText(UserEditActivity.this, "나이를 입력하세요.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
         // 프로그레스 다이얼로그
         showProgress("나이를 수정합니다..");
 
@@ -318,18 +344,6 @@ public class UserEditActivity extends AppCompatActivity {
 
     // 성별 변경기능
     private void changeGender(){
-
-        // 성별
-        int gender;
-        int checkedId = radioGender.getCheckedRadioButtonId();
-        if (checkedId == R.id.radioMale) {
-            gender = 1;
-        } else if (checkedId == R.id.radioFemale) {
-            gender = 0;
-        } else {
-            Toast.makeText(UserEditActivity.this, "성별을 선택하세요", Toast.LENGTH_SHORT).show();
-            return;
-        }
 
         // 프로그레스 다이얼로그
         showProgress("성별을 수정합니다..");
@@ -412,5 +426,46 @@ public class UserEditActivity extends AppCompatActivity {
         });
     }
 
+    // 회원정보 불러오는 기능
+    private void loadUserInfo() {
+
+        Retrofit retrofit = NetworkClient.getRetrofitClient(UserEditActivity.this);
+        UserApi api = retrofit.create(UserApi.class);
+
+        SharedPreferences sp = UserEditActivity.this.getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
+        String accessToken = sp.getString("accessToken", "");
+
+        Call<UserRes> call = api.getUserInfo("Bearer " + accessToken);
+
+        call.enqueue(new Callback<UserRes>() {
+            @Override // 성공했을 때
+            public void onResponse(Call<UserRes> call, Response<UserRes> response) {
+
+                // 200 OK 일 때,
+                if (response.isSuccessful()) {
+
+                    //TODO: 회원정보 넣어야 됨
+
+                    UserRes data = response.body();
+                    User userInfo = data.getUserInfo();
+                    myEmail = userInfo.getEmail();
+                    myNickname = userInfo.getNickname();
+                    myAge = userInfo.getAge();
+                    myGender = userInfo.getGender();
+
+                    editNickname.setText(myNickname+"");
+                    editAge.setText(myAge+"");
+
+                } else {
+                    Toast.makeText(UserEditActivity.this, "에러 발생 : " + response.code(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override // 실패했을 때
+            public void onFailure(Call<UserRes> call, Throwable t) {
+                // 네트워크 자체 문제로 실패!
+            }
+        });
+    }
 
 }

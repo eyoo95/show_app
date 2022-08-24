@@ -1,6 +1,6 @@
 package com.luvris2.publicperfomancedisplayapp.ui;
 
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,8 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.luvris2.publicperfomancedisplayapp.R;
 import com.luvris2.publicperfomancedisplayapp.adapter.BoardAdapter;
+import com.luvris2.publicperfomancedisplayapp.adapter.BoardMyAdapter;
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
 import com.luvris2.publicperfomancedisplayapp.api.PostingApi;
+import com.luvris2.publicperfomancedisplayapp.config.Config;
 import com.luvris2.publicperfomancedisplayapp.model.Posting;
 import com.luvris2.publicperfomancedisplayapp.model.PostingList;
 
@@ -24,56 +26,39 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-// 자유게시판 - 전체 게시글
-// 최지훈
-public class BoardActivity extends AppCompatActivity {
+public class BoardMyActivity extends AppCompatActivity {
 
-    ImageView imgBoardPosting;
-    ImageView imgBack;
-    TextView txtEventTitle;
     RecyclerView recyclerView;
+    ImageView imgBoardMyBack;
 
     // 어댑터, 리스트
-    BoardAdapter adapter;
-    ArrayList<Posting>postingList = new ArrayList<>();
+    BoardMyAdapter adapter;
+    ArrayList<Posting> postingList = new ArrayList<>();
 
     // 페이징에 필요한 멤버변수
     int offset = 0;
     int limit = 25;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_board);
+        setContentView(R.layout.activity_board_my);
 
-        imgBoardPosting = findViewById(R.id.imgBoardPosting);
-        imgBack = findViewById(R.id.imgBoardMyBack);
-        txtEventTitle = findViewById(R.id.txtEventTitle);
+        imgBoardMyBack = findViewById(R.id.imgBoardMyBack);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(BoardActivity.this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(BoardMyActivity.this));
 
-        imgBoardPosting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(BoardActivity.this, BoardPostingActivity.class);
-                startActivity(intent);
-
-                finish();
-            }
-        });
-
-
-        imgBack.setOnClickListener(new View.OnClickListener() {
+        imgBoardMyBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
 
-        // 네트워크로 부터 데이터 가져온다.
+        // 네트워크 데이터를 받아온다.
         getNetworkData();
-
     }
 
     private void getNetworkData() {
@@ -81,10 +66,14 @@ public class BoardActivity extends AppCompatActivity {
         offset = 0;
         limit = 25;
 
-        Retrofit retrofit = NetworkClient.getRetrofitClient(BoardActivity.this);
+        Retrofit retrofit = NetworkClient.getRetrofitClient(BoardMyActivity.this);
         PostingApi api = retrofit.create(PostingApi.class);
 
-        Call<PostingList> call = api.getPostingList(offset, limit);
+        SharedPreferences sp = getApplication().getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
+
+        String token = sp.getString("accessToken", "");
+
+        Call<PostingList> call = api.getMyPosting("Bearer "+ token, offset, limit);
 
         call.enqueue(new Callback<PostingList>() {
             @Override
@@ -94,7 +83,7 @@ public class BoardActivity extends AppCompatActivity {
 
                     postingList.addAll( response.body().getResultList() );
 
-                    adapter = new BoardAdapter(BoardActivity.this, postingList);
+                    adapter = new BoardMyAdapter(BoardMyActivity.this, postingList);
 
                     adapter.notifyDataSetChanged();
 

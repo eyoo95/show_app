@@ -8,7 +8,7 @@
     android:background="@drawable/loading_logo_img_back">
 
     <ImageView
-        android:id="@+id/imageView16"
+        android:id="@+id/imgLike"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

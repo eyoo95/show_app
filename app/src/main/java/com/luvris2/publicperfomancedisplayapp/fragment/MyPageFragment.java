@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ import com.luvris2.publicperfomancedisplayapp.api.UserApi;
 import com.luvris2.publicperfomancedisplayapp.config.Config;
 import com.luvris2.publicperfomancedisplayapp.model.User;
 import com.luvris2.publicperfomancedisplayapp.model.UserRes;
+import com.luvris2.publicperfomancedisplayapp.ui.BoardMyActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,10 +50,28 @@ public class MyPageFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    TextView txtLogout;
-    ImageView imgEditUser;
-    TextView txtNickname;
-    TextView txtEmail;
+    // 공지사항, 피드백, 앱 별점
+    Button btnMypageNotice;
+    Button btnMypageFeedback;
+    Button btnMypageApprating;
+
+
+    ImageView imgMypageSetting;
+
+    TextView txtMypageNickName;
+    TextView txtMypageEmail;
+
+
+    ImageView imgMypageRating;
+    ImageView imgMypageBoard;
+    ImageView imgMypageLike;
+    ImageView imgMypageAnalysis;
+
+    // 로그아웃, 회원탈퇴 버튼
+    Button btnLogout;
+    Button btnWithdrawal;
+
+
 
     // 프로그레스 다이얼로그
     private ProgressDialog dialog;
@@ -97,18 +117,22 @@ public class MyPageFragment extends Fragment {
         // Inflate the layout for this fragment
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_my_page, container, false);
 
-        txtLogout = rootView.findViewById(R.id.txtLogout);
-        imgEditUser = rootView.findViewById(R.id.imgEditUser);
-        txtNickname = rootView.findViewById(R.id.txtMyNickname);
-        txtEmail = rootView.findViewById(R.id.txtMyEmail);
+        btnLogout = rootView.findViewById(R.id.btnLogout);
+
+        imgMypageSetting = rootView.findViewById(R.id.imgMypageSetting);
+
+        txtMypageNickName = rootView.findViewById(R.id.txtMypageNickName);
+        txtMypageEmail = rootView.findViewById(R.id.txtMypageEmail);
+
+        imgMypageRating = rootView.findViewById(R.id.imgMypageRating);
+        imgMypageBoard = rootView.findViewById(R.id.imgMypageBoard);
+        imgMypageLike = rootView.findViewById(R.id.imgMypageLike);
+        imgMypageAnalysis = rootView.findViewById(R.id.imgMypageAnalysis);
 
         loadUserInfo();
 
-        txtNickname.setText(myNickname);
-        txtEmail.setText(myEmail);
-
         // 로그아웃
-        txtLogout.setOnClickListener(new View.OnClickListener() {
+        btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -128,10 +152,19 @@ public class MyPageFragment extends Fragment {
         });
 
         // 내 정보 수정버튼
-        imgEditUser.setOnClickListener(new View.OnClickListener() {
+        imgMypageSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), UserEditActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // 내 글 버튼
+        imgMypageBoard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), BoardMyActivity.class);
                 startActivity(intent);
             }
         });
@@ -180,6 +213,10 @@ public class MyPageFragment extends Fragment {
                     myNickname = userInfo.getNickname();
                     myAge = userInfo.getAge();
                     myGender = userInfo.getGender();
+
+                    txtMypageNickName.setText(myNickname);
+                    txtMypageEmail.setText(myEmail);
+
                     return;
 
                 } else {

@@ -39,6 +39,19 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".ui.BoardActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.BoardPostingActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.BoardMyActivity"
+            android:exported="false" />
+
         <activity
             android:name=".ui.LogoActivity"
             android:exported="true">

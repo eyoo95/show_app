@@ -3,26 +3,27 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-<<<<<<< HEAD
-        <entry key="..\:/Users/-/Documents/GitHub/show_app/app/src/main/res/layout/activity_login.xml" value="0.33" />
-        <entry key="..\:/Users/-/Documents/GitHub/show_app/app/src/main/res/layout/activity_register.xml" value="0.33" />
-=======
-        <entry key="..\:/Users/-/Documents/GitHub/dasdsa/show_app/app/src/main/res/layout/activity_logo.xml" value="0.16111111111111112" />
-        <entry key="..\:/Users/-/Documents/GitHub/dasdsa/show_app/app/src/main/res/layout/activity_main.xml" value="0.33" />
-        <entry key="..\:/Users/-/Documents/GitHub/dasdsa/show_app/app/src/main/res/layout/dialog_search.xml" value="0.23052536231884058" />
-        <entry key="..\:/Users/-/Documents/GitHub/dasdsa/show_app/app/src/main/res/layout/fragment_community.xml" value="0.33" />
-        <entry key="..\:/Users/-/Documents/GitHub/dasdsa/show_app/app/src/main/res/layout/fragment_home.xml" value="0.23867753623188406" />
-        <entry key="..\:/Users/-/Documents/GitHub/dasdsa/show_app/app/src/main/res/layout/fragment_map.xml" value="0.23867753623188406" />
->>>>>>> 4d96383a8c8a2e7c60663cf7c7f5bbdaa6ed1a0e
-        <entry key="..\:/Users/-/GitHub/PublicPerfomanceDisplayApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.206" />
-        <entry key="..\:/Users/-/GitHub/PublicPerfomanceDisplayApp/app/src/main/res/drawable/bottom_menu_selected_color.xml" value="0.206" />
-        <entry key="..\:/Users/-/GitHub/PublicPerfomanceDisplayApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3295" />
-        <entry key="..\:/Users/-/GitHub/PublicPerfomanceDisplayApp/app/src/main/res/layout/activity_logo.xml" value="0.17603850050658562" />
-        <entry key="..\:/Users/-/GitHub/PublicPerfomanceDisplayApp/app/src/main/res/layout/activity_main.xml" value="0.17603850050658562" />
-        <entry key="..\:/Users/-/GitHub/PublicPerfomanceDisplayApp/app/src/main/res/layout/loading_logo_img.xml" value="0.17603850050658562" />
-        <entry key="..\:/Users/-/GitHub/PublicPerfomanceDisplayApp/app/src/main/res/menu/bottom_menu.xml" value="0.28055555555555556" />
-        <entry key="..\:/Users/-/GitHub/PublicPerfomanceDisplayApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1945" />
-        <entry key="..\:/Users/-/GitHub/PublicPerfomanceDisplayApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1955" />
+        <entry key="..\:/Users/-/Downloads/Yoo_V2/show_app/app/src/main/res/drawable/ic_image_not_supported.xml" value="0.2495" />
+        <entry key="..\:/Users/-/Downloads/Yoo_V2/show_app/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.2495" />
+        <entry key="..\:/Users/-/Downloads/Yoo_V2/show_app/app/src/main/res/drawable/ic_mypage_like.xml" value="0.2495" />
+        <entry key="..\:/Users/-/Downloads/Yoo_V2/show_app/app/src/main/res/drawable/round_layout.xml" value="0.2495" />
+        <entry key="..\:/Users/-/Downloads/Yoo_V2/show_app/app/src/main/res/drawable/square_layout.xml" value="0.2495" />
+        <entry key="..\:/Users/-/Downloads/Yoo_V2/show_app/app/src/main/res/layout/activity_analysis_loading.xml" value="0.1480978260869565" />
+        <entry key="..\:/Users/-/Downloads/Yoo_V2/show_app/app/src/main/res/layout/activity_board.xml" value="0.1" />
+        <entry key="..\:/Users/-/Downloads/Yoo_V2/show_app/app/src/main/res/layout/activity_board_edit.xml" value="0.1480978260869565" />
+        <entry key="..\:/Users/-/Downloads/Yoo_V2/show_app/app/src/main/res/layout/activity_board_posting.xml" value="0.10925925925925926" />
+        <entry key="..\:/Users/-/Downloads/Yoo_V2/show_app/app/src/main/res/layout/activity_board_read_activiry.xml" value="0.1480978260869565" />
+        <entry key="..\:/Users/-/Downloads/Yoo_V2/show_app/app/src/main/res/layout/activity_edit_board.xml" value="0.1480978260869565" />
+        <entry key="..\:/Users/-/Downloads/Yoo_V2/show_app/app/src/main/res/layout/activity_main.xml" value="0.1480978260869565" />
+        <entry key="..\:/Users/-/Downloads/Yoo_V2/show_app/app/src/main/res/layout/activity_my_post.xml" value="0.17806484295845998" />
+        <entry key="..\:/Users/-/Downloads/Yoo_V2/show_app/app/src/main/res/layout/activity_user_edit.xml" value="0.17806484295845998" />
+        <entry key="..\:/Users/-/Downloads/Yoo_V2/show_app/app/src/main/res/layout/board_my_row.xml" value="0.20108695652173914" />
+        <entry key="..\:/Users/-/Downloads/Yoo_V2/show_app/app/src/main/res/layout/board_row.xml" value="0.17806484295845998" />
+        <entry key="..\:/Users/-/Downloads/Yoo_V2/show_app/app/src/main/res/layout/dsadsaads.xml" value="0.19791666666666666" />
+        <entry key="..\:/Users/-/Downloads/Yoo_V2/show_app/app/src/main/res/layout/dsds_row.xml" value="0.19791666666666666" />
+        <entry key="..\:/Users/-/Downloads/Yoo_V2/show_app/app/src/main/res/layout/dsds_rr_row.xml" value="0.19791666666666666" />
+        <entry key="..\:/Users/-/Downloads/Yoo_V2/show_app/app/src/main/res/layout/fragment_community.xml" value="0.33" />
+        <entry key="..\:/Users/-/Downloads/Yoo_V2/show_app/app/src/main/res/layout/fragment_my_page.xml" value="0.17806484295845998" />
       </map>
     </option>
   </component>

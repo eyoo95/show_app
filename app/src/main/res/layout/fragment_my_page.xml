@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#00FF0000"
     tools:context=".fragment.HomeFragment">
 
 
@@ -18,138 +19,161 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textView24"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/nanum_square_eb"
                 android:text="내 정보"
-                android:fontFamily="@font/nanum_square_b"
-                android:textColor="#000000"
                 android:textSize="24sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="10dp"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/imageView12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/tap_menu_icon_my_page_fill"
                     tools:src="@tools:sample/avatars" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="8"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/txtMyNickname"
-                        android:layout_width="match_parent"
+                    <ImageView
+                        android:id="@+id/imgMypageSetting"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginBottom="5dp"
-                        android:text="User"
-                        android:textSize="24sp" />
+                        android:layout_gravity="right"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_baseline_settings_24"
+                        android:tint="#E1E1E1" />
 
                     <TextView
-                        android:id="@+id/txtMyEmail"
+                        android:id="@+id/txtMypageNickName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="30dp"
+                        android:fontFamily="@font/nanum_square_b"
+                        android:text="NickName"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/txtMypageEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/nanum_square_r"
                         android:text="000@gmail.com" />
 
                 </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/imgEditUser"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/ic_baseline_settings_24" />
-
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="10dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/imageView14"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:id="@+id/imgMypageRating"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="center"
-                        tools:src="@drawable/ic_mypage_star" />
+                        android:tint="#7AD7E1"
+                        tools:src="@drawable/ic_mypage_rating" />
 
-                    <Button
-                        android:id="@+id/button5"
-                        android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/textView53"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:text="별점" />
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/nanum_square_b"
+                        android:gravity="center"
+                        android:text="내 별점"
+                        android:textSize="12sp" />
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/imageView15"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:id="@+id/imgMypageBoard"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="center"
-                        tools:src="@drawable/ic_mypage_note" />
+                        android:tint="#7AD7E1"
+                        tools:src="@drawable/ic_mypage_board" />
 
-                    <Button
-                        android:id="@+id/button6"
-                        android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/textView54"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:text="내 글" />
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/nanum_square_b"
+                        android:gravity="center"
+                        android:text="내가 작성한 글"
+                        android:textSize="12sp" />
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/imageView16"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:id="@+id/imgMypageLike"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="center"
+                        android:tint="#7AD7E1"
                         tools:src="@drawable/ic_mypage_like" />
 
-                    <Button
-                        android:id="@+id/button7"
-                        android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/txtMypageLike"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:text="좋아요" />
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/nanum_square_b"
+                        android:gravity="center"
+                        android:text="좋아요"
+                        android:textSize="12sp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -159,64 +183,92 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/imageView17"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:id="@+id/imgMypageAnalysis"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="center"
-                        tools:src="@drawable/ic_mypage_search" />
+                        android:tint="#7AD7E1"
+                        tools:src="@drawable/ic_mypage_analysis" />
 
-                    <Button
-                        android:id="@+id/button8"
-                        android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/textView56"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:text="취향" />
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/nanum_square_b"
+                        android:gravity="center"
+                        android:text="취향분석"
+                        android:textSize="12sp" />
+
                 </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="10dp"
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/button10"
+                    android:id="@+id/btnMypageNotice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#FFFFFF"
+                    android:fontFamily="@font/nanum_square_b"
                     android:gravity="center|left"
-                    android:text="📌 공지사항                                                  V"
+                    android:text="📌 공지사항"
                     android:textColor="#434343" />
 
                 <Button
-                    android:id="@+id/button9"
+                    android:id="@+id/btnMypageFeedback"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
                     android:backgroundTint="#FFFFFF"
+                    android:fontFamily="@font/nanum_square_b"
                     android:gravity="center|left"
-                    android:text="📝 피드백 보내기                                           V"
+                    android:text="📝 피드백 보내기"
                     android:textColor="#434343" />
 
                 <Button
-                    android:id="@+id/button11"
+                    android:id="@+id/btnMypageApprating"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
                     android:backgroundTint="#FFFFFF"
+                    android:fontFamily="@font/nanum_square_b"
                     android:gravity="center|left"
-                    android:text="⭐ 앱 평점주기                                              V"
+                    android:text="⭐ 앱 평점주기"
                     android:textColor="#434343" />
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/txtLogout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="로그아웃" />
+            <Button
+                android:id="@+id/btnLogout"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="right"
+                android:layout_marginTop="50dp"
+                android:backgroundTint="#00FF0000"
+                android:gravity="right|top"
+                android:text="로그아웃"
+                android:textColor="#808080"
+                android:textSize="10sp" />
+
+            <Button
+                android:id="@+id/btnWithdrawal"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="right"
+                android:backgroundTint="#00FF0000"
+                android:gravity="right|top"
+                android:text="회원탈퇴"
+                android:textColor="#FF0000"
+                android:textSize="10sp" />
 
         </LinearLayout>
 

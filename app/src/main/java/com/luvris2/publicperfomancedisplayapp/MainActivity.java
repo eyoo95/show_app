@@ -68,20 +68,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        loadUserInfo();
-
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString("email", myEmail);
-        editor.apply();
-
-        editor.putString("nickname", myNickname);
-        editor.apply();
-
-        editor.putInt("age",myAge);
-        editor.apply();
-
-        editor.putInt("gender",myGender);
-        editor.apply();
+//        loadUserInfo();
 
 
         // 탭 메뉴 객체 생성
@@ -166,41 +153,41 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
     // 회원정보 불러오는 기능
-    private void loadUserInfo() {
-
-        Retrofit retrofit = NetworkClient.getRetrofitClient(MainActivity.this);
-        UserApi api = retrofit.create(UserApi.class);
-
-        SharedPreferences sp = MainActivity.this.getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
-        String accessToken = sp.getString("accessToken", "");
-
-        Call<UserRes> call = api.getUserInfo("Bearer " + accessToken);
-
-        call.enqueue(new Callback<UserRes>() {
-            @Override // 성공했을 때
-            public void onResponse(Call<UserRes> call, Response<UserRes> response) {
-
-                // 200 OK 일 때,
-                if (response.isSuccessful()) {
-
-                    //TODO: 회원정보 넣어야 됨
-
-                    UserRes data = response.body();
-                    User userInfo = data.getUserInfo();
-                    myEmail = userInfo.getEmail();
-                    myNickname = userInfo.getNickname();
-                    myAge = userInfo.getAge();
-                    myGender = userInfo.getGender();
-
-                } else {
-                    Toast.makeText(MainActivity.this, "에러 발생 : " + response.code(), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override // 실패했을 때
-            public void onFailure(Call<UserRes> call, Throwable t) {
-                // 네트워크 자체 문제로 실패!
-            }
-        });
-    }
+//    private void loadUserInfo() {
+//
+//        Retrofit retrofit = NetworkClient.getRetrofitClient(MainActivity.this);
+//        UserApi api = retrofit.create(UserApi.class);
+//
+//        SharedPreferences sp = MainActivity.this.getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
+//        String accessToken = sp.getString("accessToken", "");
+//
+//        Call<UserRes> call = api.getUserInfo("Bearer " + accessToken);
+//
+//        call.enqueue(new Callback<UserRes>() {
+//            @Override // 성공했을 때
+//            public void onResponse(Call<UserRes> call, Response<UserRes> response) {
+//
+//                // 200 OK 일 때,
+//                if (response.isSuccessful()) {
+//
+//                    //TODO: 회원정보 넣어야 됨
+//
+//                    UserRes data = response.body();
+//                    User userInfo = data.getUserInfo();
+//                    myEmail = userInfo.getEmail();
+//                    myNickname = userInfo.getNickname();
+//                    myAge = userInfo.getAge();
+//                    myGender = userInfo.getGender();
+//
+//                } else {
+//                    Toast.makeText(MainActivity.this, "에러 발생 : " + response.code(), Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override // 실패했을 때
+//            public void onFailure(Call<UserRes> call, Throwable t) {
+//                // 네트워크 자체 문제로 실패!
+//            }
+//        });
+//    }
 }
