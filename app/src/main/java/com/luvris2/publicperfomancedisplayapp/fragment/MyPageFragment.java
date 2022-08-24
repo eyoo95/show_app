@@ -102,11 +102,7 @@ public class MyPageFragment extends Fragment {
         txtNickname = rootView.findViewById(R.id.txtMyNickname);
         txtEmail = rootView.findViewById(R.id.txtMyEmail);
 
-
         loadUserInfo();
-
-        txtNickname.setText(myNickname);
-        txtEmail.setText(myEmail);
 
         // 로그아웃
         txtLogout.setOnClickListener(new View.OnClickListener() {
@@ -181,7 +177,9 @@ public class MyPageFragment extends Fragment {
                     myNickname = userInfo.getNickname();
                     myAge = userInfo.getAge();
                     myGender = userInfo.getGender();
-                    return;
+
+                    txtNickname.setText(myNickname);
+                    txtEmail.setText(myEmail);
 
                 } else {
                     Toast.makeText(getActivity(), "에러 발생 : " + response.code(), Toast.LENGTH_SHORT).show();

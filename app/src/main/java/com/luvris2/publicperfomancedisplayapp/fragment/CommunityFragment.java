@@ -1,21 +1,46 @@
 package com.luvris2.publicperfomancedisplayapp.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.luvris2.publicperfomancedisplayapp.R;
+import com.luvris2.publicperfomancedisplayapp.adapter.BoardAdapter;
+import com.luvris2.publicperfomancedisplayapp.model.Posting;
+import com.luvris2.publicperfomancedisplayapp.ui.BoardActivity;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link CommunityFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+
+// 커뮤니티 프래그먼트
+// 최지훈
 public class CommunityFragment extends Fragment {
+
+    TextView txtFragBoard;
+    ImageView imgFragBoard;
+    RecyclerView recyclerView;
+    TextView txtFragEditor;
+    ImageView imgBack;
+
+    BoardAdapter adapter;
+    ArrayList<Posting> postingList = new ArrayList<>();
+
+    // 페이징 처리를 위한 멤버변수
+    int offset = 0;
+    int limit = 25;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -61,6 +86,31 @@ public class CommunityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_community, container, false);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_community, container, false);
+
+        txtFragBoard = rootView.findViewById(R.id.txtFragBoard);
+        imgFragBoard = rootView.findViewById(R.id.imgFragBoard);
+        txtFragEditor = rootView.findViewById(R.id.txtFragEditor);
+        imgBack = rootView.findViewById(R.id.imgBack);
+        recyclerView = rootView.findViewById(R.id.recyclerView);
+//        recyclerView.setHasFixedSize(true);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        txtFragBoard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().startActivity(new Intent(getActivity(), BoardActivity.class));
+            }
+        });
+
+        imgFragBoard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().startActivity(new Intent(getActivity(), BoardActivity.class));
+            }
+        });
+
+
+        return rootView;
     }
 }

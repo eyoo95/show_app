@@ -1,8 +1,8 @@
 package com.luvris2.publicperfomancedisplayapp.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.luvris2.publicperfomancedisplayapp.R;
 

@@ -69,11 +69,6 @@ public class UserEditActivity extends AppCompatActivity {
 
         loadUserInfo();
 
-        editNickname.setText(myNickname+"");
-        editAge.setText(myAge+"");
-
-
-
         // 비밀번호 변경
         btnPassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -454,6 +449,10 @@ public class UserEditActivity extends AppCompatActivity {
                     myNickname = userInfo.getNickname();
                     myAge = userInfo.getAge();
                     myGender = userInfo.getGender();
+
+                    // 여기에 넣는 기능
+                    editNickname.setText(myNickname+"");
+                    editAge.setText(myAge+"");
 
                 } else {
                     Toast.makeText(UserEditActivity.this, "에러 발생 : " + response.code(), Toast.LENGTH_SHORT).show();
