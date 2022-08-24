@@ -17,8 +17,8 @@ import android.widget.Toast;
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
 import com.luvris2.publicperfomancedisplayapp.api.UserApi;
 import com.luvris2.publicperfomancedisplayapp.config.Config;
+import com.luvris2.publicperfomancedisplayapp.model.User;
 import com.luvris2.publicperfomancedisplayapp.model.UserRes;
-import com.luvris2.publicperfomancedisplayapp.model.Users;
 
 import java.util.regex.Pattern;
 
@@ -30,7 +30,6 @@ import retrofit2.Retrofit;
 public class RegisterActivity extends AppCompatActivity {
 
     EditText editNickname;
-    EditText editName;
     EditText editAge;
     EditText editEmail;
     EditText editPassword;
@@ -50,14 +49,14 @@ public class RegisterActivity extends AppCompatActivity {
         // 화면연결
         editEmail = findViewById(R.id.editEmail);
         editPassword = findViewById(R.id.editPassword);
-        editName = findViewById(R.id.editName);
         editNickname = findViewById(R.id.editNickname);
         editAge = findViewById(R.id.editAge);
         radioGender = findViewById(R.id.radioGender);
-        btnRegister = findViewById(R.id.btnLogin);
+        btnRegister = findViewById(R.id.btnRegister);
 
         txtLogin = findViewById(R.id.txtLogin);
 
+        // 로그인 이동
         txtLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,40 +82,33 @@ public class RegisterActivity extends AppCompatActivity {
 
                 // 비밀번호 - 길이체크
                 String password = editPassword.getText().toString().trim();
-                if (password.length() < 4 || password.length() > 12) {
-                    Toast.makeText(RegisterActivity.this, "비번길이는 4자이상 12자 이하로만 입력하세요.", Toast.LENGTH_SHORT).show();
+                if (password.length() < 4 || password.length() > 18) {
+                    Toast.makeText(RegisterActivity.this, "비밀번호의 길이는 4자이상 18자 이하로만 입력하세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                // 이름 - 빈 문자열인지만 체크
-                String name = editName.getText().toString().trim();
-                if (name.isEmpty()) {
-                    Toast.makeText(RegisterActivity.this, "이름을 입력하세요.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                // 닉네임 - 빈 문자열인지만 체크
+                // 닉네임 - 빈 문자열, 길이 체크
                 String nickname = editNickname.getText().toString().trim();
-                if (name.isEmpty()) {
-                    Toast.makeText(RegisterActivity.this, "닉네임을 입력하세요.", Toast.LENGTH_SHORT).show();
+                if (nickname.isEmpty() || nickname.length() < 2 || nickname.length() > 12) {
+                    Toast.makeText(RegisterActivity.this, "닉네임의 길이는 2자이상 12자 이하로만 입력하세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 // 성별
-                String gender;
+                int gender;
                 int checkedId = radioGender.getCheckedRadioButtonId();
                 if (checkedId == R.id.radioMale) {
-                    gender = "Male";
+                    gender = 1;
                 } else if (checkedId == R.id.radioFemale) {
-                    gender = "Female";
+                    gender = 0;
                 } else {
-                    Toast.makeText(RegisterActivity.this, "선택하세요", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "성별을 선택하세요", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 // 나이
                 int age = Integer.parseInt(editAge.getText().toString());
-                if (age >= 0) {
+                if (age <= 0) {
                     Toast.makeText(RegisterActivity.this, "나이를 입력하세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -127,7 +119,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Retrofit retrofit = NetworkClient.getRetrofitClient(RegisterActivity.this);
 
                 UserApi api = retrofit.create(UserApi.class);
-                Users user = new Users (email, password, name, nickname);
+                User user = new User (email, password, nickname, gender, age);
 
                 Call<UserRes> call = api.register(user);
                 call.enqueue(new Callback<UserRes>() {
@@ -138,16 +130,18 @@ public class RegisterActivity extends AppCompatActivity {
                         // 200 OK 일 때,
                         if (response.isSuccessful()){
 
-                            UserRes registerRes = response.body();
+                            UserRes usersRes = response.body();
+                            String accessToken = usersRes.getAccessToken();
 
                             SharedPreferences sp = getApplication().getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
                             SharedPreferences.Editor editor = sp.edit();
-                            editor.putString("accessToken", registerRes.getAccess_token());
+                            editor.putString("accessToken", accessToken);
                             editor.apply();
 
-                            finish();
+                            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                            startActivity(intent);
 
-                        } else if (response.code() == 400){
+                            finish();
 
                         } else {
                             Toast.makeText(RegisterActivity.this, "에러 발생 : "+response.code(), Toast.LENGTH_SHORT).show();

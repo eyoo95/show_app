@@ -10,6 +10,7 @@
         android:id="@+id/relative"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,24 +25,27 @@
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/nanum_square_eb"
                 android:text="취향 분석"
-                android:textSize="24sp" />
+                android:textSize="30sp" />
 
             <TextView
                 android:id="@+id/textView5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="100dp"
+                android:fontFamily="@font/nanum_square_r"
                 android:gravity="center"
                 android:text="마음에 드는 행사유형을 골라주세요"
-                android:textSize="18sp" />
+                android:textSize="20sp" />
 
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="70dp">
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp">
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -89,13 +93,13 @@
 
             <Button
                 android:id="@+id/btnAnalisysNext1"
-                android:layout_width="match_parent"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="100dp"
+                android:layout_gravity="center"
                 android:layout_marginTop="50dp"
-                android:layout_marginRight="100dp"
+                android:fontFamily="@font/nanum_square_b"
                 android:text="다음"
-                android:textSize="20sp" />
+                android:textSize="24sp" />
 
         </LinearLayout>
 

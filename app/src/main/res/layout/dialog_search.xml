@@ -13,15 +13,16 @@
             android:id="@+id/textView8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/TypeSelect"
+            android:text="유형 선택"
             android:textSize="32dp" />
 
-        <Spinner
-            android:id="@+id/spinner"
+        <TextView
+            android:id="@+id/textView7"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:contentDescription="@string/TypeSelect"
-            android:spinnerMode="dropdown"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="40"
+            android:text="스피너 콤보박스 사용?"
+            android:textSize="32dp" />
 
         <TextView
             android:id="@+id/textView6"
@@ -31,24 +32,10 @@
             android:textSize="32dp" />
 
         <TextView
-            android:id="@+id/textView29"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="데이트 픽커"
-            android:textSize="32sp" />
-
-        <TextView
-            android:id="@+id/textView28"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="지역(라디오 그룹 한 개만)"
-            android:textSize="32dp" />
-
-        <TextView
             android:id="@+id/textView9"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="라디오"
+            android:text="스피너 콤보박스 사용?"
             android:textSize="32sp" />
 
         <TextView

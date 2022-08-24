@@ -52,7 +52,8 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="게시글 제목"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                tools:ignore="TouchTargetSizeCheck" />
 
             <TextView
                 android:id="@+id/textView40"
@@ -76,7 +77,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:backgroundTint="#FFFFFF"
-            app:srcCompat="@drawable/ic_add_photo" />
+            app:srcCompat="@drawable/ic_add_photo"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <EditText
             android:id="@+id/editTextTextPersonName8"
@@ -84,7 +86,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="게시글수정"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:minHeight="48dp" />
 
         <Button
             android:id="@+id/button14"

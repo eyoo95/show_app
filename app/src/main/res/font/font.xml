@@ -7,7 +7,7 @@
 
     <font android:fontStyle="normal"
         android:fontWeight="400"
-        android:font="@font/nanum_square_ed"/>
+        android:font="@font/nanum_square_eb"/>
 
     <font android:fontStyle="normal"
         android:fontWeight="400"

@@ -1,22 +1,23 @@
 package com.luvris2.publicperfomancedisplayapp;
 
+import static java.lang.Thread.sleep;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
-import android.Manifest;
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.luvris2.publicperfomancedisplayapp.config.Config;
 import com.luvris2.publicperfomancedisplayapp.fragment.CommunityFragment;
 import com.luvris2.publicperfomancedisplayapp.fragment.HomeFragment;
 import com.luvris2.publicperfomancedisplayapp.fragment.MapFragment;
@@ -28,21 +29,28 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
 
     // 프래그먼트
-    Fragment homeFragment, mapFragment, communityFragment, myPageFragment;
-
-    Context mContext;
-
-    LocationManager locationManager;
-    LocationListener locationListener;
-    double gpsX;
-    double gpsY;
-    private String strGpsX;
-    private String strGpsY;
+    Fragment homeFragment;
+    Fragment mapFragment;
+    Fragment communityFragment;
+    Fragment myPageFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // 억세스 토큰 확인
+        SharedPreferences sp = getApplication().getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
+        String accessToken = sp.getString("accessToken","");
+
+        if (accessToken.isEmpty()){
+            Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+            startActivity(intent);
+
+            finish();
+            return;
+        }
 
         // 탭 메뉴 객체 생성
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -53,22 +61,15 @@ public class MainActivity extends AppCompatActivity {
         communityFragment = new CommunityFragment();
         myPageFragment = new MyPageFragment();
 
-
-
-        Log.i("myLocation create", "위도 : " + gpsX);
-        Log.i("myLocation create", "경도 : " + gpsY);
-
-        // 번들로 데이터 이동할 수 있도록 메소드 작성.
-        openFragment();
-
         // 탭 메뉴 클릭시 이벤트
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
                 // 메뉴 선택시 이동 할 프래그먼트의 이름을 저장 할 변수
                 Fragment fragment = null;
 
-                if (item.getItemId() == R.id.menuHome) {
+                if (itemId == R.id.menuHome) {
                     // 메뉴 선택시 지정된 프래그먼트로 이동
                     fragment = homeFragment;
                     // 프래그먼트의 액션바 타이틀 설정
@@ -109,32 +110,16 @@ public class MainActivity extends AppCompatActivity {
                     bottomNavigationView.getMenu().findItem(R.id.menuHome).setIcon(R.drawable.tap_menu_icon_home);
                     bottomNavigationView.getMenu().findItem(R.id.menuMap).setIcon(R.drawable.tap_menu_icon_map);
                     bottomNavigationView.getMenu().findItem(R.id.menuCommunity).setIcon(R.drawable.tap_menu_icon_community);
-                } return loadFragment(fragment);
+                }
+                return loadFragment(fragment);
             }
         });
 
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        // 마지막 위치 받아오기
 
-        // 퍼미션 체크 코드
-        if (ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this,
-                        Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        Location loc_Current = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
-        // 좌표 받아서 변수 지정
-        gpsX = loc_Current.getLatitude();
-        gpsY = loc_Current.getLongitude();
+
+        // todo : 이후 코드 작성
+
     }
 
     // 프래그먼트 이동 메소드
@@ -148,19 +133,4 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
-
-    private void openFragment(){
-        Bundle bundleX = new Bundle();
-        Bundle bundleY = new Bundle();
-
-        // 더블로 이동하는 방법을 못 찾아서 번거롭지만 문자열로 바꿨다가 다시 변환하는 방법 사용
-        // todo : 직접 옮길 수 있다면 코드 바꾸기
-        strGpsX = new Double(gpsX).toString();
-        strGpsY = new Double(gpsY).toString();
-
-        bundleX.putString("gpsX", strGpsX);
-        bundleY.putString("gpsY", strGpsY);
-    }
-
-
 }

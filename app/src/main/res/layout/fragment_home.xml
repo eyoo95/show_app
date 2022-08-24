@@ -56,18 +56,29 @@
                     android:layout_marginTop="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/frameSize">
-                    <androidx.viewpager2.widget.ViewPager2
-                        android:id="@+id/viewpager"
-                        android:clipToPadding="false"
-                        android:clipChildren="false"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/frameSize" />
 
-                    <me.relex.circleindicator.CircleIndicator3
-                        android:id="@+id/indicator"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:layout_gravity="bottom"/>
+                        android:layout_height="@dimen/frameSize"
+                        android:orientation="vertical">
+
+                        <androidx.viewpager2.widget.ViewPager2
+                            android:id="@+id/viewpager"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:clipChildren="false"
+                            android:clipToPadding="false" />
+
+                        <me.relex.circleindicator.CircleIndicator3
+                            android:id="@+id/indicator"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:layout_gravity="bottom"
+                            android:layout_weight="0.1"
+                            android:background="#7AD7E1" />
+
+                    </LinearLayout>
 
                 </FrameLayout>
 
@@ -173,7 +184,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
                             <TextView
@@ -211,68 +222,67 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=" 대전/충청" />
+
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:id="@+id/linear4"
+                        <Spinner
+                            android:id="@+id/spinner"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal">
+                            android:layout_height="wrap_content" />
 
-                            <TextView
-                                android:id="@+id/textView20"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="d" />
-                        </LinearLayout>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical" />
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/linear2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                    <!--                    <LinearLayout-->
+                    <!--                        android:id="@+id/linear2"-->
+                    <!--                        android:layout_width="match_parent"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:orientation="horizontal">-->
 
-                        <ImageView
-                            android:id="@+id/img1"
-                            android:layout_width="100dp"
-                            android:layout_height="150dp"
-                            android:layout_margin="15dp"
-                            android:layout_weight="1"
-                            tools:src="@tools:sample/avatars" />
+                    <!--                        <ImageView-->
+                    <!--                            android:id="@+id/img1"-->
+                    <!--                            android:layout_width="100dp"-->
+                    <!--                            android:layout_height="150dp"-->
+                    <!--                            android:layout_margin="15dp"-->
+                    <!--                            android:layout_weight="1"-->
+                    <!--                            tools:src="@tools:sample/avatars" />-->
 
-                        <ImageView
-                            android:id="@+id/img2"
-                            android:layout_width="100dp"
-                            android:layout_height="150dp"
-                            android:layout_margin="15dp"
-                            android:layout_weight="1"
-                            tools:src="@tools:sample/avatars" />
+                    <!--                        <ImageView-->
+                    <!--                            android:id="@+id/img2"-->
+                    <!--                            android:layout_width="100dp"-->
+                    <!--                            android:layout_height="150dp"-->
+                    <!--                            android:layout_margin="15dp"-->
+                    <!--                            android:layout_weight="1"-->
+                    <!--                            tools:src="@tools:sample/avatars" />-->
 
-                    </LinearLayout>
+                    <!--                    </LinearLayout>-->
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                    <!--                    <LinearLayout-->
+                    <!--                        android:layout_width="match_parent"-->
+                    <!--                        android:layout_height="match_parent"-->
+                    <!--                        android:orientation="horizontal">-->
 
-                        <ImageView
-                            android:id="@+id/img"
-                            android:layout_width="100dp"
-                            android:layout_height="150dp"
-                            android:layout_margin="15dp"
-                            android:layout_weight="1"
-                            tools:src="@tools:sample/avatars" />
+                    <!--                        <ImageView-->
+                    <!--                            android:id="@+id/img"-->
+                    <!--                            android:layout_width="100dp"-->
+                    <!--                            android:layout_height="150dp"-->
+                    <!--                            android:layout_margin="15dp"-->
+                    <!--                            android:layout_weight="1"-->
+                    <!--                            tools:src="@tools:sample/avatars" />-->
 
-                        <ImageView
-                            android:id="@+id/img3"
-                            android:layout_width="100dp"
-                            android:layout_height="150dp"
-                            android:layout_margin="15dp"
-                            android:layout_weight="1"
-                            tools:src="@tools:sample/avatars" />
-                    </LinearLayout>
+                    <!--                        <ImageView-->
+                    <!--                            android:id="@+id/img3"-->
+                    <!--                            android:layout_width="100dp"-->
+                    <!--                            android:layout_height="150dp"-->
+                    <!--                            android:layout_margin="15dp"-->
+                    <!--                            android:layout_weight="1"-->
+                    <!--                            tools:src="@tools:sample/avatars" />-->
+                    <!--                    </LinearLayout>-->
 
                 </LinearLayout>
 

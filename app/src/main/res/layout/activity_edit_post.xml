@@ -42,7 +42,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="제목 입력"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:minHeight="48dp" />
 
         <ImageButton
             android:id="@+id/imageButton"
@@ -50,7 +51,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:backgroundTint="#00FFFFFF"
-            app:srcCompat="@drawable/ic_add_photo" />
+            app:srcCompat="@drawable/ic_add_photo"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <EditText
             android:id="@+id/editTextTextPersonName7"
@@ -58,7 +60,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="게시글수정"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:minHeight="48dp" />
 
         <Button
             android:id="@+id/button13"

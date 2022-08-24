@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="20dp"
+        android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,7 +22,6 @@
             android:id="@+id/imgLogo"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:layout_marginTop="100dp"
             app:srcCompat="@drawable/title_logo" />
 
         <FrameLayout
@@ -35,7 +35,7 @@
                 android:id="@+id/imgLoginEmail"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                app:srcCompat="@drawable/login_email" />
+                app:srcCompat="@drawable/login_email2" />
 
             <EditText
                 android:id="@+id/editTxtLoginEmail"
@@ -62,7 +62,7 @@
                 android:id="@+id/imgLoginPassword"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                app:srcCompat="@drawable/login_password" />
+                app:srcCompat="@drawable/login_password2" />
 
             <EditText
                 android:id="@+id/editTxtRegisterPassword"
