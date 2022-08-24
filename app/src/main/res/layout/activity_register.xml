@@ -21,34 +21,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
-            android:layout_marginBottom="50dp"
             android:gravity="center"
             android:text="회원가입"
+            android:fontFamily="@font/nanum_square_eb"
             android:textSize="30sp" />
 
-        <EditText
-            android:id="@+id/editEmail"
+        <TextView
+            android:id="@+id/textView34"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:ems="10"
-            android:hint="이메일을 입력해주세요."
-            android:inputType="textEmailAddress"
-            android:minHeight="48dp" />
-
-        <EditText
-            android:id="@+id/editPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:ems="10"
-            android:hint="비밀번호를 입력해주세요."
-            android:inputType="textPassword"
-            android:minHeight="48dp" />
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="20dp"
+            android:fontFamily="@font/nanum_square_b"
+            android:text="닉네임"
+            android:textColor="#74A1ED"
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/editNickname"
@@ -57,10 +45,25 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
+            android:background="@drawable/round_layout"
             android:ems="10"
+            android:fontFamily="@font/nanum_square_r"
             android:hint="닉네임을 입력해주세요."
             android:inputType="textPersonName"
-            android:minHeight="48dp" />
+            android:minHeight="48dp"
+            android:paddingLeft="20dp" />
+
+        <TextView
+            android:id="@+id/textView40"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:fontFamily="@font/nanum_square_b"
+            android:text="나이"
+            android:textColor="#74A1ED"
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/editAge"
@@ -69,10 +72,67 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
+            android:background="@drawable/round_layout"
             android:ems="10"
+            android:fontFamily="@font/nanum_square_r"
             android:hint="나이를 입력해주세요."
             android:inputType="number"
-            android:minHeight="48dp" />
+            android:minHeight="48dp"
+            android:paddingLeft="20dp" />
+
+        <TextView
+            android:id="@+id/textView41"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:text="이메일"
+            android:fontFamily="@font/nanum_square_b"
+            android:textColor="#74A1ED"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/editEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/round_layout"
+            android:ems="10"
+            android:fontFamily="@font/nanum_square_r"
+            android:hint="이메일을 입력해주세요."
+            android:inputType="textEmailAddress"
+            android:minHeight="48dp"
+            android:paddingLeft="20dp" />
+
+        <TextView
+            android:id="@+id/textView46"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:text="비밀번호"
+            android:fontFamily="@font/nanum_square_b"
+            android:textColor="#74A1ED"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/editPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/round_layout"
+            android:ems="10"
+            android:fontFamily="@font/nanum_square_r"
+            android:hint="비밀번호를 입력해주세요."
+            android:inputType="textPassword"
+            android:minHeight="48dp"
+            android:paddingLeft="20dp" />
 
         <RadioGroup
             android:id="@+id/radioGender"
@@ -86,33 +146,38 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="남자" />
+                android:text="남자"
+                android:fontFamily="@font/nanum_square_r"/>
 
             <RadioButton
                 android:id="@+id/radioFemale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="여자" />
+                android:text="여자"
+                android:fontFamily="@font/nanum_square_r"/>
         </RadioGroup>
 
         <Button
             android:id="@+id/btnRegister"
-            android:layout_width="match_parent"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="20dp"
+            android:fontFamily="@font/nanum_square_b"
             android:text="회원가입"
             android:textSize="24sp" />
 
         <TextView
             android:id="@+id/txtLogin"
             android:layout_width="match_parent"
-            android:layout_height="91dp"
-            android:layout_margin="10dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/nanum_square_r"
             android:gravity="center"
             android:text="@string/txt_login_btn"
             android:textColor="#0579F4"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 

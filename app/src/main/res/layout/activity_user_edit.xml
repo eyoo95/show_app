@@ -21,96 +21,164 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="30dp"
+            android:fontFamily="@font/nanum_square_eb"
             android:gravity="center"
             android:text="내 정보수정"
             android:textSize="30sp" />
 
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="30dp"
+            android:text="비밀번호"
+            android:fontFamily="@font/nanum_square_b"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
             android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/editPassword"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="8"
+                android:background="@drawable/round_layout"
                 android:ems="10"
+                android:fontFamily="@font/nanum_square_r"
                 android:hint="변경할 비밀번호"
-                android:inputType="none|textPassword"
+                android:inputType="textPassword"
                 android:maxLength="12"
-                android:minHeight="48dp" />
+                android:minHeight="48dp"
+                android:paddingLeft="20dp"
+                android:textSize="14sp" />
 
             <Button
                 android:id="@+id/btnPassword"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
+                android:fontFamily="@font/nanum_square_b"
                 android:text="비밀번호 수정" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="30dp"
+            android:text="닉네임"
+            android:fontFamily="@font/nanum_square_b"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
             android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/editNickname"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="8"
+                android:background="@drawable/round_layout"
                 android:ems="10"
+                android:fontFamily="@font/nanum_square_r"
                 android:hint="변경할 닉네임"
                 android:inputType="textPersonName"
                 android:maxLength="12"
-                android:minHeight="48dp" />
+                android:minHeight="48dp"
+                android:paddingLeft="20dp"
+                android:textSize="14sp" />
 
             <Button
                 android:id="@+id/btnNickname"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
+                android:fontFamily="@font/nanum_square_b"
                 android:text="닉네임 수정" />
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="30dp"
+            android:text="나이"
+            android:fontFamily="@font/nanum_square_b"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
             android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/editAge"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="8"
+                android:background="@drawable/round_layout"
                 android:ems="10"
+                android:fontFamily="@font/nanum_square_r"
                 android:hint="변경할 나이"
                 android:inputType="none|number"
                 android:maxLength="12"
-                android:minHeight="48dp" />
+                android:minHeight="48dp"
+                android:paddingLeft="20dp"
+                android:textSize="14sp" />
 
             <Button
                 android:id="@+id/btnAge"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
+                android:fontFamily="@font/nanum_square_b"
                 android:text="나이 변경" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="30dp"
+            android:text="성별"
+            android:fontFamily="@font/nanum_square_b"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
             android:orientation="horizontal">
 
             <RadioGroup
@@ -126,6 +194,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
+                    android:fontFamily="@font/nanum_square_b"
                     android:text="남자" />
 
                 <RadioButton
@@ -133,6 +202,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
+                    android:fontFamily="@font/nanum_square_b"
                     android:text="여자" />
             </RadioGroup>
 
@@ -142,6 +212,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="4"
+                android:fontFamily="@font/nanum_square_b"
                 android:text="성별 수정" />
         </LinearLayout>
 
@@ -149,8 +220,10 @@
             android:id="@+id/btnWithdrawal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="80dp"
             android:backgroundTint="#D61414"
+            android:fontFamily="@font/nanum_square_b"
+            android:minHeight="48dp"
             android:text="회원탈퇴"
             android:textSize="20sp" />
 
