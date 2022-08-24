@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.luvris2.publicperfomancedisplayapp.MainActivity;
 import com.luvris2.publicperfomancedisplayapp.R;
 
 public class LogoActivity extends AppCompatActivity {

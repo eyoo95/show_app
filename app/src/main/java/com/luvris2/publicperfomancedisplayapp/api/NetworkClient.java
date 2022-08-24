@@ -36,6 +36,28 @@ public class NetworkClient {
         }
         return retrofit;
     }
+
+    public static Retrofit getRetrofitGoogleMaps(Context context){
+        if(retrofit == null){
+            // 네트워크 통신 로그
+            HttpLoggingInterceptor loggingInterceptor =
+                    new HttpLoggingInterceptor();
+            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
+            // 네트워크 연결
+            OkHttpClient httpClient = new OkHttpClient.Builder()
+                    .connectTimeout(1, TimeUnit.MINUTES)
+                    .readTimeout(1, TimeUnit.MINUTES)
+                    .writeTimeout(1, TimeUnit.MINUTES)
+                    .addInterceptor(loggingInterceptor)
+                    .build();
+            // 네트워크 설정
+            retrofit = new Retrofit.Builder().baseUrl(Config.GOOGLE_MAPS_BASE_URL)
+                    .client(httpClient)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        return retrofit;
+    }
 }
 
 

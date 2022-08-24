@@ -3,6 +3,7 @@ package com.luvris2.publicperfomancedisplayapp.fragment;
 import static android.content.Context.LOCATION_SERVICE;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -18,14 +19,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.luvris2.publicperfomancedisplayapp.R;
+import com.luvris2.publicperfomancedisplayapp.ui.MainActivity;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link MapFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MapFragment extends Fragment {
+public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,8 +45,14 @@ public class MapFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-//    LocationManager locationManager;
-//    LocationListener locationListener;
+    // GPS 사용을 위한 멤버 변수 선언
+    LatLng myPosition;
+
+    // 플로팅 액션바
+    FloatingActionButton fab;
+
+    // GPS 위치 정보 수신의 알림을 위한 프로그레스 바
+    ProgressDialog progressDialog;
 
     public MapFragment() {
         // Required empty public constructor
@@ -74,55 +89,84 @@ public class MapFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_community, container, false);
-//        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_my_page, container, false);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_map, container, false);
 
-//        locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
-//        locationListener = new LocationListener() {
-//            @Override
-//            public void onLocationChanged(@NonNull Location location) {
-//                Log.i("MyApp", "위도 " + location.getLatitude());
-//                Log.i("MyApp", "경도 " + location.getLongitude());
-//            }
-//        };
-//
-//
-//        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//
-//            ActivityCompat.requestPermissions(getActivity(),
-//                    new String[]{ Manifest.permission.ACCESS_FINE_LOCATION,
-//                            Manifest.permission.ACCESS_COARSE_LOCATION}, 100);
-//            return rootView;
-//        }
-//
-//        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-//                3000, 3, locationListener);
+        fab = rootView.findViewById(R.id.floatingActionButton);
+
+        showProgressBar();
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        assert mapFragment != null;
+        mapFragment.getMapAsync(this);
 
 
-//        return rootView;
+        return rootView;
     }
 
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//
-//        if(requestCode == 100){
-//            if(ActivityCompat.checkSelfPermission(getActivity(),
-//                    Manifest.permission.ACCESS_FINE_LOCATION) !=
-//                    PackageManager.PERMISSION_GRANTED &&
-//                    ActivityCompat.checkSelfPermission(getActivity(),
-//                            Manifest.permission.ACCESS_FINE_LOCATION) !=
-//                            PackageManager.PERMISSION_GRANTED){
-//
-//                ActivityCompat.requestPermissions(getActivity(),
-//                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-//                                Manifest.permission.ACCESS_COARSE_LOCATION}, 100);
-//                return;
+    @Override
+    public void onMapReady(@NonNull final GoogleMap googleMap) {
+        myPosition = ((MainActivity)getActivity()).getLocation();
+        dismissProgressBar();
+        Log.i("MyTest onMapReady", "" + myPosition);
+
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myPosition, 18));
+        googleMap.addMarker(new MarkerOptions().position(myPosition).title("내 위치"));
+
+        // 플로팅 액션 바 클릭시 내 위치 정보를 찾고 해당 위치로 이동
+        fab.setOnClickListener(view -> {
+            showProgressBar();
+            myPosition = ((MainActivity)getActivity()).getLocation();
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myPosition, 18));
+            googleMap.addMarker(new MarkerOptions().position(myPosition).title("내 위치"));
+            dismissProgressBar();
+        });
+
+
+
+//        MarkerOptions markerOptions = new MarkerOptions();
+//        markerOptions.position(myPosition);
+//        markerOptions.title("현재 위치");
+//        markerOptions.snippet("내 위치");
+//        googleMap.addMarker(markerOptions);
+//        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+//            @Override
+//            public void onMapClick(LatLng latLng) {
+//                //마커 지우고 클릭한 위치로 마커 옮기기 위한 문장
+//                //googleMap.clear();
+//                markerOptions.position(latLng);
+//                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 19));
+//                googleMap.addMarker(markerOptions);
 //            }
-//
-//            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-//                    3000, 3, locationListener);
-//        }
-//
+//        });
+    }
+
+
+//    // [START maps_current_place_get_device_location]
+//    private void getDeviceLocation() {
+//        myPosition = ((MainActivity)getActivity()).getLocation();
+//        locationResult.addOnCompleteListener(this, new OnCompleteListener<Location>() {
+//            @Override
+//            public void onComplete(@NonNull Task<Location> task) {
+//                if (task.isSuccessful()) {
+//                    // Set the map's camera position to the current location of the device.
+//                    lastKnownLocation = task.getResult();
+//                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myPosition, 18));
+//        });
+//            }
 //    }
+//                        }
+//    }
+
+    // 위치 정보 수신 대기를 위한 프로그레스 다이얼로그
+    public void showProgressBar() {
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(false);
+        progressDialog.setTitle("GPS 정보 수신 중...");
+        progressDialog.setMessage("위치 정보를 확인중입니다. 잠시만 기다려주세요.");
+        progressDialog.show();
+    }
+    public void dismissProgressBar() {
+        progressDialog.dismiss();
+    }
 }

@@ -20,6 +20,7 @@ import com.luvris2.publicperfomancedisplayapp.api.UserApi;
 import com.luvris2.publicperfomancedisplayapp.config.Config;
 import com.luvris2.publicperfomancedisplayapp.model.User;
 import com.luvris2.publicperfomancedisplayapp.model.UserRes;
+import com.luvris2.publicperfomancedisplayapp.ui.MainActivity;
 
 import java.util.regex.Pattern;
 

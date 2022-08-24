@@ -102,6 +102,7 @@ public class MyPageFragment extends Fragment {
         txtNickname = rootView.findViewById(R.id.txtMyNickname);
         txtEmail = rootView.findViewById(R.id.txtMyEmail);
 
+
         loadUserInfo();
 
         txtNickname.setText(myNickname);
