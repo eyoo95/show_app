@@ -16,11 +16,15 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.luvris2.publicperfomancedisplayapp.R;
+import com.luvris2.publicperfomancedisplayapp.adapter.MyAdapter;
 import com.luvris2.publicperfomancedisplayapp.adapter.PerformanceSearchAdapter;
 import com.luvris2.publicperfomancedisplayapp.api.KopisPerformanceApi;
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
@@ -30,6 +34,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import me.relex.circleindicator.CircleIndicator3;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,6 +43,12 @@ import retrofit2.Retrofit;
 public class HomeFragment extends Fragment {
 
     TextView txtPlace, txtType;
+
+    // 뷰페이저2 관련 변수
+    private ViewPager2 mPager;
+    private FragmentStateAdapter pagerAdapter;
+    private int num_page = 4;
+    private CircleIndicator3 mIndicator;
 
     // 리사이클러 뷰 관련 변수
     RecyclerView recyclerView;
@@ -77,59 +88,117 @@ public class HomeFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_home, container, false);
 
         // UI 객체 생성
-        txtPlace = rootView.findViewById(R.id.txtPlace);
-        txtType = rootView.findViewById(R.id.txtType);
+        txtPlace = rootView.findViewById(R.id.txtHomeSortRegion);
+        txtType = rootView.findViewById(R.id.txtHomeSortType);
         txtPlace.setBackgroundColor(Color.parseColor("#DAFBFF"));
-        imgSearch = rootView.findViewById(R.id.imgSearch);
+        imgSearch = rootView.findViewById(R.id.imgHomeSearch);
 
         // 리사이클러뷰 화면 설정
         recyclerView = rootView.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
 
-        // 지역 선택을 위한 스피너 설정
-        spinner = rootView.findViewById(R.id.spinner);
 
-        // 지역별 스피너 설정
-        ArrayAdapter<String> placeArrayAdapter = new ArrayAdapter<>
-                (getActivity(), android.R.layout.simple_spinner_dropdown_item, signguList);
-        placeArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // 유형별 스피너 설정
-        ArrayAdapter<String> typeArrayAdapter = new ArrayAdapter<>
-                (getActivity(), android.R.layout.simple_spinner_dropdown_item, genreList);
-        typeArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // 스피너 화면 설정
-        spinner.setAdapter(placeArrayAdapter);
 
-        // 지역 선택에 따른 지역코드 입력
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+        // ViewPager2 구현
+        //ViewPager2 연결
+        mPager = rootView.findViewById(R.id.viewpager);
+        //Adapter 연결
+        pagerAdapter = new MyAdapter(getActivity(), num_page);
+        mPager.setAdapter(pagerAdapter);
+        //Indicator 연결
+        mIndicator = rootView.findViewById(R.id.indicator);
+        mIndicator.setViewPager(mPager);
+        mIndicator.createIndicators(num_page,0);
+        //ViewPager Setting
+        mPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
+        mPager.setCurrentItem(1000);
+        mPager.setOffscreenPageLimit(3);
+
+
+        mPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (spinnerNumber == 0) { selectedPlaceData(i);
-                } else if (spinnerNumber == 1 ) { selectedTypeData(i); }
-
-                // 조건에 따른 공연 검색
-                getPerformanceData( prfName, prfPlace, prfGenre, signgucode, 2);
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+                if (positionOffsetPixels == 0) {
+                    mPager.setCurrentItem(position);
+                }
             }
+
+            // 페이지 클릭했을 때
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) { }
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                mIndicator.animatePageSelected(position%num_page);
+            }
+
         });
 
-        // todo : 지역별 공연 검색
-        txtPlace.setOnClickListener(view -> {
-            spinnerNumber = 0 ;
-            txtPlace.setBackgroundColor(Color.parseColor("#DAFBFF"));
-            txtType.setBackgroundColor(Color.parseColor("#ffffff"));
-            spinner.setAdapter(placeArrayAdapter);
+        final float pageMargin= getResources().getDimensionPixelOffset(R.dimen.pageMargin);
+        final float pageOffset = getResources().getDimensionPixelOffset(R.dimen.offset);
+
+        // 슬라이드 반복되도록
+        mPager.setPageTransformer(new ViewPager2.PageTransformer() {
+            @Override
+            public void transformPage(@NonNull View page, float position) {
+                float myOffset = position * -(2 * pageOffset + pageMargin);
+                if (mPager.getOrientation() == ViewPager2.ORIENTATION_HORIZONTAL) {
+                    if (ViewCompat.getLayoutDirection(mPager) == ViewCompat.LAYOUT_DIRECTION_RTL) {
+                        page.setTranslationX(-myOffset);
+                    } else {
+                        page.setTranslationX(myOffset);
+                    }
+                } else {
+                    page.setTranslationY(myOffset);
+                }
+            }
         });
 
-        // todo : 유형별 공연 검색
-        txtType.setOnClickListener(view -> {
-            spinnerNumber = 1 ;
-            txtType.setBackgroundColor(Color.parseColor("#DAFBFF"));
-            txtPlace.setBackgroundColor(Color.parseColor("#ffffff"));
-            spinner.setAdapter(typeArrayAdapter);
-        });
+//        // 지역 선택을 위한 스피너 설정
+//        spinner = rootView.findViewById(R.id.spinner);
+//
+//        // 지역별 스피너 설정
+//        ArrayAdapter<String> placeArrayAdapter = new ArrayAdapter<>
+//                (getActivity(), android.R.layout.simple_spinner_dropdown_item, signguList);
+//        placeArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        // 유형별 스피너 설정
+//        ArrayAdapter<String> typeArrayAdapter = new ArrayAdapter<>
+//                (getActivity(), android.R.layout.simple_spinner_dropdown_item, genreList);
+//        typeArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        // 스피너 화면 설정
+//        spinner.setAdapter(placeArrayAdapter);
+//
+//
+//        // 지역 선택에 따른 지역코드 입력
+//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                if (spinnerNumber == 0) { selectedPlaceData(i);
+//                } else if (spinnerNumber == 1 ) { selectedTypeData(i); }
+//
+//                // 조건에 따른 공연 검색
+//                getPerformanceData( prfName, prfPlace, prfGenre, signgucode, 2);
+//            }
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) { }
+//        });
+//
+//        // todo : 지역별 공연 검색
+//        txtPlace.setOnClickListener(view -> {
+//            spinnerNumber = 0 ;
+//            txtPlace.setBackgroundColor(Color.parseColor("#DAFBFF"));
+//            txtType.setBackgroundColor(Color.parseColor("#ffffff"));
+//            spinner.setAdapter(placeArrayAdapter);
+//        });
+//
+//        // todo : 유형별 공연 검색
+//        txtType.setOnClickListener(view -> {
+//            spinnerNumber = 1 ;
+//            txtType.setBackgroundColor(Color.parseColor("#DAFBFF"));
+//            txtPlace.setBackgroundColor(Color.parseColor("#ffffff"));
+//            spinner.setAdapter(typeArrayAdapter);
+//        });
 
 
         imgSearch.setOnClickListener(view -> {
