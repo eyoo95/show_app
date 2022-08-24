@@ -25,18 +25,15 @@
                 android:id="@+id/textView24"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
-                android:fontFamily="@font/nanum_square_b"
                 android:text="내 정보"
+                android:fontFamily="@font/nanum_square_b"
+                android:textColor="#000000"
                 android:textSize="24sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginRight="10dp"
+                android:layout_margin="10dp"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -44,7 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     app:srcCompat="@drawable/tap_menu_icon_my_page_fill"
                     tools:src="@tools:sample/avatars" />
 
@@ -82,99 +79,77 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_baseline_settings_24"
-                    android:tint="#E1E1E1" />
+                    android:src="@drawable/ic_baseline_settings_24" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
+                android:layout_margin="10dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/imgMypageRating"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center"
-                        android:tint="#7AD7E1"
-                        tools:src="@drawable/ic_mypage_rating" />
-
-                    <TextView
-                        android:id="@+id/textView53"
-                        android:layout_width="match_parent"
+                        android:id="@+id/imageView14"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/nanum_square_b"
-                        android:gravity="center"
-                        android:text="내 별점"
-                        android:textSize="12sp" />
+                        android:layout_gravity="center"
+                        tools:src="@drawable/ic_mypage_star" />
 
+                    <Button
+                        android:id="@+id/button5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="별점" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/imgMypageBoard"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center"
-                        android:tint="#7AD7E1"
-                        tools:src="@drawable/ic_mypage_board" />
-
-                    <TextView
-                        android:id="@+id/textView54"
-                        android:layout_width="match_parent"
+                        android:id="@+id/imageView15"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/nanum_square_b"
-                        android:gravity="center"
-                        android:text="내가 작성한 글"
-                        android:textSize="12sp" />
+                        android:layout_gravity="center"
+                        tools:src="@drawable/ic_mypage_note" />
 
+                    <Button
+                        android:id="@+id/button6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="내 글" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/imgMypageLike"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:id="@+id/imageView16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:tint="#7AD7E1"
                         tools:src="@drawable/ic_mypage_like" />
 
-                    <TextView
-                        android:id="@+id/txtMypageLike"
-                        android:layout_width="match_parent"
+                    <Button
+                        android:id="@+id/button7"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/nanum_square_b"
-                        android:gravity="center"
-                        android:text="좋아요"
-                        android:textSize="12sp" />
-
+                        android:layout_margin="5dp"
+                        android:text="좋아요" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -184,32 +159,25 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/imgMypageAnalysis"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center"
-                        android:tint="#7AD7E1"
-                        tools:src="@drawable/ic_mypage_analysis" />
-
-                    <TextView
-                        android:id="@+id/textView56"
-                        android:layout_width="match_parent"
+                        android:id="@+id/imageView17"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/nanum_square_b"
-                        android:gravity="center"
-                        android:text="취향분석"
-                        android:textSize="12sp" />
+                        android:layout_gravity="center"
+                        tools:src="@drawable/ic_mypage_search" />
 
+                    <Button
+                        android:id="@+id/button8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="취향" />
                 </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginRight="10dp"
+                android:layout_margin="10dp"
                 android:orientation="vertical">
 
                 <Button
@@ -218,7 +186,7 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="#FFFFFF"
                     android:gravity="center|left"
-                    android:text="📌 공지사항"
+                    android:text="📌 공지사항                                                  V"
                     android:textColor="#434343" />
 
                 <Button
@@ -228,7 +196,7 @@
                     android:layout_marginTop="5dp"
                     android:backgroundTint="#FFFFFF"
                     android:gravity="center|left"
-                    android:text="📝 피드백 보내기"
+                    android:text="📝 피드백 보내기                                           V"
                     android:textColor="#434343" />
 
                 <Button
@@ -238,7 +206,7 @@
                     android:layout_marginTop="5dp"
                     android:backgroundTint="#FFFFFF"
                     android:gravity="center|left"
-                    android:text="⭐ 앱 평점주기"
+                    android:text="⭐ 앱 평점주기                                              V"
                     android:textColor="#434343" />
 
             </LinearLayout>
@@ -247,8 +215,7 @@
                 android:id="@+id/txtLogout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
-                android:gravity="right|center_horizontal"
+                android:gravity="center"
                 android:text="로그아웃" />
 
         </LinearLayout>
