@@ -1,7 +1,5 @@
 package com.luvris2.publicperfomancedisplayapp.ui;
 
-import static java.lang.Thread.sleep;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
