@@ -99,9 +99,6 @@ public class HomeFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
 
-
-
-
         // ViewPager2 구현
         //ViewPager2 연결
         mPager = rootView.findViewById(R.id.viewpager);
@@ -156,50 +153,51 @@ public class HomeFragment extends Fragment {
             }
         });
 
-//        // 지역 선택을 위한 스피너 설정
-//        spinner = rootView.findViewById(R.id.spinner);
-//
-//        // 지역별 스피너 설정
-//        ArrayAdapter<String> placeArrayAdapter = new ArrayAdapter<>
-//                (getActivity(), android.R.layout.simple_spinner_dropdown_item, signguList);
-//        placeArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        // 유형별 스피너 설정
-//        ArrayAdapter<String> typeArrayAdapter = new ArrayAdapter<>
-//                (getActivity(), android.R.layout.simple_spinner_dropdown_item, genreList);
-//        typeArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        // 스피너 화면 설정
-//        spinner.setAdapter(placeArrayAdapter);
-//
-//
-//        // 지역 선택에 따른 지역코드 입력
-//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                if (spinnerNumber == 0) { selectedPlaceData(i);
-//                } else if (spinnerNumber == 1 ) { selectedTypeData(i); }
-//
-//                // 조건에 따른 공연 검색
-//                getPerformanceData( prfName, prfPlace, prfGenre, signgucode, 2);
-//            }
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) { }
-//        });
-//
-//        // todo : 지역별 공연 검색
-//        txtPlace.setOnClickListener(view -> {
-//            spinnerNumber = 0 ;
-//            txtPlace.setBackgroundColor(Color.parseColor("#DAFBFF"));
-//            txtType.setBackgroundColor(Color.parseColor("#ffffff"));
-//            spinner.setAdapter(placeArrayAdapter);
-//        });
-//
-//        // todo : 유형별 공연 검색
-//        txtType.setOnClickListener(view -> {
-//            spinnerNumber = 1 ;
-//            txtType.setBackgroundColor(Color.parseColor("#DAFBFF"));
-//            txtPlace.setBackgroundColor(Color.parseColor("#ffffff"));
-//            spinner.setAdapter(typeArrayAdapter);
-//        });
+        // 지역 선택을 위한 스피너 설정
+        spinner = rootView.findViewById(R.id.spinner);
+
+        // 지역별 스피너 설정
+        ArrayAdapter<String> placeArrayAdapter = new ArrayAdapter<>
+                (getActivity(), android.R.layout.simple_spinner_dropdown_item, signguList);
+        placeArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // 유형별 스피너 설정
+        ArrayAdapter<String> typeArrayAdapter = new ArrayAdapter<>
+                (getActivity(), android.R.layout.simple_spinner_dropdown_item, genreList);
+        typeArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // 스피너 화면 설정
+        spinner.setAdapter(placeArrayAdapter);
+
+        // 지역 선택에 따른 지역코드 입력
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (spinnerNumber == 0) { selectedPlaceData(i);
+                } else if (spinnerNumber == 1 ) { selectedTypeData(i); }
+
+                // 조건에 따른 공연 검색
+                getPerformanceData( prfName, prfPlace, prfGenre, signgucode, 2);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) { }
+        });
+
+        // todo : 지역별 공연 검색
+        txtPlace.setOnClickListener(view -> {
+            spinnerNumber = 0 ;
+            txtPlace.setBackgroundColor(Color.parseColor("#DAFBFF"));
+            txtType.setBackgroundColor(Color.parseColor("#ffffff"));
+            spinner.setAdapter(placeArrayAdapter);
+        });
+
+        // todo : 유형별 공연 검색
+        txtType.setOnClickListener(view -> {
+            spinnerNumber = 1 ;
+            txtType.setBackgroundColor(Color.parseColor("#DAFBFF"));
+            txtPlace.setBackgroundColor(Color.parseColor("#ffffff"));
+            spinner.setAdapter(typeArrayAdapter);
+        });
 
 
         imgSearch.setOnClickListener(view -> {
