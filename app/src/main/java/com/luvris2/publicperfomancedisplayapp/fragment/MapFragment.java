@@ -1,18 +1,10 @@
 package com.luvris2.publicperfomancedisplayapp.fragment;
 
-import static android.content.Context.LOCATION_SERVICE;
-
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -49,22 +41,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MapFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class MapFragment extends Fragment implements OnMapReadyCallback {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     // GPS 사용을 위한 멤버 변수 선언
     LatLng myPosition;
     String mySidoCode;
@@ -81,6 +58,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     // 공연 검색 결과를 저장 할 배열
     ArrayList<KopisApiPerformance> performanceList = new ArrayList<>();
+    KopisApiPerformance performanceObject;
     KopisApiPerformance nearByPerformance;
 
     // 공연 시설의 위도 경도를 저장 할 배열
@@ -88,33 +66,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     public MapFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MapFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MapFragment newInstance(String param1, String param2) {
-        MapFragment fragment = new MapFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -130,7 +81,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
-
 
         return rootView;
     }
@@ -217,7 +167,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         // API 응답에 따른 약간의 대기 시간 설정
         try {
-            Thread.sleep(5000);
+            Thread.sleep(2000);
             dismissProgressBar();
         } catch (InterruptedException e) {
             e.printStackTrace();

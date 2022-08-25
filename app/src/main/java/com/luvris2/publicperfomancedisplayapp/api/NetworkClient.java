@@ -30,7 +30,7 @@ public class NetworkClient {
                     .addInterceptor(loggingInterceptor)
                     .build();
 
-            retrofit = new Retrofit.Builder().baseUrl(Config.BASE_URL)
+            retrofit = new Retrofit.Builder().baseUrl(Config.BASE_URL_KO)
                     .client(httpClient)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();

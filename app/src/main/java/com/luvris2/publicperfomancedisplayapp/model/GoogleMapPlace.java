@@ -1,41 +1,27 @@
 package com.luvris2.publicperfomancedisplayapp.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class GoogleMapPlace implements Serializable {
 
-    public GoogleMapPlace(List<GoogleMapPlace> results) {
-        this.results = results;
+    public GoogleMapPlace(Object plus_code) {
+        this.plus_code = plus_code;
     }
 
-    private String long_name;
+    private Object plus_code;
+    private String compound_code;
 
-    public String getLong_name() {
-        return long_name;
+
+    public String getCompound_code() {
+        return compound_code;
     }
-
-    public void setLong_name(String long_name) {
-        this.long_name = long_name;
+    public void setCompound_code(String compound_code) {
+        this.compound_code = compound_code;
     }
-
-    private List<GoogleMapPlace> address_components;
-
-    public List<GoogleMapPlace> getAddress_components() {
-        return address_components;
+    public Object getPlus_code() {
+        return plus_code;
     }
-
-    private List<GoogleMapPlace> results;
-
-    public List<GoogleMapPlace> getResults() {
-        return results;
-    }
-
-    public void setResults(List<GoogleMapPlace> results) {
-        this.results = results;
-    }
-
-    public void setAddress_components(List<GoogleMapPlace> address_components) {
-        this.address_components = address_components;
+    public void setPlus_code(Object plus_code) {
+        this.plus_code = plus_code;
     }
 }

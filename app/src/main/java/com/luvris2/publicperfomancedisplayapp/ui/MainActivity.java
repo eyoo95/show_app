@@ -26,9 +26,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.luvris2.publicperfomancedisplayapp.R;
-import com.luvris2.publicperfomancedisplayapp.RegisterActivity;
 import com.luvris2.publicperfomancedisplayapp.api.GoogleMapApi;
-import com.luvris2.publicperfomancedisplayapp.api.GoogleMapGeocodeApi;
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
 import com.luvris2.publicperfomancedisplayapp.config.Config;
 import com.luvris2.publicperfomancedisplayapp.fragment.CommunityFragment;
@@ -63,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     LocationListener locationListener;
     Location location;
     double gpsX, gpsY;
-    String mySidoLocation;
+    Object mySidoLocation;
 
     // 프로그레스 다이얼로그
     ProgressDialog progressDialog;
@@ -202,8 +200,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 if (isNetworkEnabled) {
                     Log.i("MyTestMainActivity", "In getLocation Method NetworkProvider");
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, locationListener);
-//                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, locationListener);
+                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, locationListener);
                 } else {
                     if (location == null) {
                         Log.i("MyTestMainActivity", "In getLocation Method GpsProvider");
@@ -225,21 +222,18 @@ public class MainActivity extends AppCompatActivity {
                 location.latitude+","+location.longitude, "ko", Config.GOOGLE_MAPS_API_KEY);
 
         // Retrofit 값을 바로 저장하기 위한 동기 처리
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    mySidoLocation = call.execute().body().getResults().get(0).getAddress_components().get(3).getLong_name();
-                    Log.i("MyTest Location Geocode", "" + mySidoLocation );
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        new Thread(() -> {
+            try {
+                mySidoLocation = call.execute().body().getPlus_code();
+                Log.i("MyTest Location Geocode", "" + mySidoLocation );
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }).start();
 
         // API 응답에 따른 약간의 대기 시간 설정
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
             dismissProgressBar();
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -247,41 +241,40 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // 지역 확인 후 지역 코드 변환
-        switch (mySidoLocation) {
-            case "서울특별시":
-                return "11";
-            case "부산광역시":
-                return "26";
-            case "대구광역시":
-                return "27";
-            case "인천광역시":
-                return "28";
-            case "광주광역시":
-                return "29";
-            case "대전광역시":
-                return "30";
-            case "울산광역시":
-                return "31";
-            case "세종특별자치시":
-                return "36";
-            case "경기도":
-                return "41";
-            case "강원도":
-                return "42";
-            case "충청북도":
-                return "43";
-            case "충청남도":
-                return "44";
-            case "전라북도":
-                return "45";
-            case "전라남도":
-                return "46";
-            case "경상북도":
-                return "47";
-            case "경상남도":
-                return "48";
-            case "제주특별자치도":
-                return "50";
+        if (mySidoLocation.toString().contains("서울특별시")) {
+            return "11";
+        } else if (mySidoLocation.toString().contains("부산광역시")) {
+            return "26";
+        } else if (mySidoLocation.toString().contains("대구광역시")) {
+            return "27";
+        } else if (mySidoLocation.toString().contains("인천광역시")) {
+            return "28";
+        } else if (mySidoLocation.toString().contains("광주광역시")) {
+            return "29";
+        } else if (mySidoLocation.toString().contains("대전광역시")) {
+            return "30";
+        } else if (mySidoLocation.toString().contains("울산광역시")) {
+            return "31";
+        } else if (mySidoLocation.toString().contains("세종특별자치시")) {
+            return "36";
+        } else if (mySidoLocation.toString().contains("경기도")) {
+            return "41";
+        } else if (mySidoLocation.toString().contains("강원도")) {
+            return "42";
+        } else if (mySidoLocation.toString().contains("충청북도")) {
+            return "43";
+        } else if (mySidoLocation.toString().contains("충청남도")) {
+            return "44";
+        } else if (mySidoLocation.toString().contains("전라북도")) {
+            return "45";
+        } else if (mySidoLocation.toString().contains("전라남도")) {
+            return "46";
+        } else if (mySidoLocation.toString().contains("경상북도")) {
+            return "47";
+        } else if (mySidoLocation.toString().contains("경상남도")) {
+            return "48";
+        } else if (mySidoLocation.toString().contains("제주특별자치도")) {
+            return "50";
         }
         return "error";
     }

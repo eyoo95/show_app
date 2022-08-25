@@ -1,4 +1,4 @@
-package com.luvris2.publicperfomancedisplayapp;
+package com.luvris2.publicperfomancedisplayapp.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.luvris2.publicperfomancedisplayapp.R;
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
 import com.luvris2.publicperfomancedisplayapp.api.UserApi;
 import com.luvris2.publicperfomancedisplayapp.config.Config;

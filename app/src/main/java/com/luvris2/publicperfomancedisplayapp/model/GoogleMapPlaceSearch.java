@@ -7,14 +7,10 @@ public class GoogleMapPlaceSearch {
     public GoogleMapPlaceSearch() {
     }
 
-//    public GoogleMapPlaceSearch(List<GoogleMapPlaceSearch> results) {
-//        this.results = results;
-//    }
-
     private List<GoogleMapPlaceSearch> results;
 
     private GoogleMapPlaceSearch geometry;
-    
+
     private GoogleMapPlaceSearch location;
 
     private double lat, lng;

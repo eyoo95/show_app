@@ -18,16 +18,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.luvris2.publicperfomancedisplayapp.LoginActivity;
+import com.luvris2.publicperfomancedisplayapp.ui.LoginActivity;
 import com.luvris2.publicperfomancedisplayapp.R;
-import com.luvris2.publicperfomancedisplayapp.UserEditActivity;
-import com.luvris2.publicperfomancedisplayapp.adapter.BoardMyAdapter;
+import com.luvris2.publicperfomancedisplayapp.ui.UserEditActivity;
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
 import com.luvris2.publicperfomancedisplayapp.api.UserApi;
 import com.luvris2.publicperfomancedisplayapp.config.Config;
 import com.luvris2.publicperfomancedisplayapp.model.User;
 import com.luvris2.publicperfomancedisplayapp.model.UserRes;
-import com.luvris2.publicperfomancedisplayapp.ui.BoardActivity;
 import com.luvris2.publicperfomancedisplayapp.ui.BoardMyActivity;
 import com.luvris2.publicperfomancedisplayapp.ui.LikeActivity;
 
