@@ -58,8 +58,6 @@ public class BoardActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(BoardActivity.this, BoardPostingActivity.class);
                 startActivity(intent);
-
-                finish();
             }
         });
 
