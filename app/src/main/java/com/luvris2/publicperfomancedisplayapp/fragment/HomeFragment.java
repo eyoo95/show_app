@@ -44,6 +44,7 @@ public class HomeFragment extends Fragment {
 
     TextView txtPlace, txtType;
 
+
     // 뷰페이저2 관련 변수
     private ViewPager2 mPager;
     private FragmentStateAdapter pagerAdapter;
