@@ -25,9 +25,9 @@ import android.widget.Toast;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
-import com.google.gson.Gson;
 import com.luvris2.publicperfomancedisplayapp.R;
 import com.luvris2.publicperfomancedisplayapp.RegisterActivity;
+import com.luvris2.publicperfomancedisplayapp.api.GoogleMapApi;
 import com.luvris2.publicperfomancedisplayapp.api.GoogleMapGeocodeApi;
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
 import com.luvris2.publicperfomancedisplayapp.config.Config;
@@ -37,9 +37,9 @@ import com.luvris2.publicperfomancedisplayapp.fragment.MapFragment;
 import com.luvris2.publicperfomancedisplayapp.fragment.MyPageFragment;
 import com.luvris2.publicperfomancedisplayapp.model.GoogleMapPlace;
 
+import java.io.IOException;
+
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
@@ -85,9 +85,6 @@ public class MainActivity extends AppCompatActivity {
             finish();
             return;
         }
-
-//        loadUserInfo();
-
 
         // 탭 메뉴 객체 생성
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -152,9 +149,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-
         Log.i("MyTestMainActivity", "getLocation");
         getLocation();
         // todo : onLocationChanged
@@ -168,7 +162,6 @@ public class MainActivity extends AppCompatActivity {
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
                     100);
         }
-
     }
 
     // GPS 내 위치 정보 받아오는 메소드
@@ -190,16 +183,6 @@ public class MainActivity extends AppCompatActivity {
                     // 내 위치 경도, 위도 저장
                     gpsX = location.getLatitude();
                     gpsY = location.getLongitude();
-
-                    // 프래그먼트간 데이터 이동을 위한 위도 경도 데이터가 담긴 번들 설정
-                    Bundle gpsLatLng = new Bundle();
-                    gpsLatLng.putDouble("gpsLat", gpsX);
-                    gpsLatLng.putDouble("gpsLng", gpsY);
-                    getSupportFragmentManager().setFragmentResult("requestKey", gpsLatLng);
-                    Log.i("MyTestMainActivity", "onLocationChanged " + gpsX+", "+gpsY);
-
-                    getMySidoLocation();
-
                     locationManager.removeUpdates(locationListener);
                 }
                 @Override
@@ -219,7 +202,8 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 if (isNetworkEnabled) {
                     Log.i("MyTestMainActivity", "In getLocation Method NetworkProvider");
-                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, locationListener);
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, locationListener);
+//                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, locationListener);
                 } else {
                     if (location == null) {
                         Log.i("MyTestMainActivity", "In getLocation Method GpsProvider");
@@ -231,31 +215,75 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Google Maps API를 통한 내 현재 위치의 지역 정보 추출
-    private void getMySidoLocation() {
-        showProgressBar();
+    public String getMySidoLocation(LatLng location) {
+        showProgressBar("내 지역 정보를 확인중입니다. 잠시만 기다려주세요.");
 
         Retrofit retrofit = NetworkClient.getRetrofitGoogleMaps(MainActivity.this);
-        GoogleMapGeocodeApi api = retrofit.create(GoogleMapGeocodeApi.class);
-        Call<GoogleMapPlace> call = api.getMyLocation(
-                gpsX+","+gpsY, "ko", Config.GOOGLE_MAPS_API_KEY);
+        GoogleMapApi api = retrofit.create(GoogleMapApi.class);
 
-        call.enqueue(new Callback<GoogleMapPlace>() {
+        Call<GoogleMapPlace> call = api.getMyLocation(
+                location.latitude+","+location.longitude, "ko", Config.GOOGLE_MAPS_API_KEY);
+
+        // Retrofit 값을 바로 저장하기 위한 동기 처리
+        new Thread(new Runnable() {
             @Override
-            public void onResponse(@NonNull Call<GoogleMapPlace> call, @NonNull Response<GoogleMapPlace> response) {
-                dismissProgressBar();
-                if(response.isSuccessful()) {
-                    if (response.body() != null) {
-                        mySidoLocation = new Gson().toJson( response.body().getResults().get(0).getAddress_components().get(3).getLong_name() );
-                    }
+            public void run() {
+                try {
+                    mySidoLocation = call.execute().body().getResults().get(0).getAddress_components().get(3).getLong_name();
+                    Log.i("MyTest Location Geocode", "" + mySidoLocation );
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                Log.i("MyTest Geocode", "" + mySidoLocation );
             }
-            @Override
-            public void onFailure(@NonNull Call<GoogleMapPlace> call, @NonNull Throwable t) {
-                dismissProgressBar();
-                Log.i("MyTest Geocode Failure", ""+t );
-            }
-        });
+        }).start();
+
+        // API 응답에 따른 약간의 대기 시간 설정
+        try {
+            Thread.sleep(2000);
+            dismissProgressBar();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            dismissProgressBar();
+        }
+
+        // 지역 확인 후 지역 코드 변환
+        switch (mySidoLocation) {
+            case "서울특별시":
+                return "11";
+            case "부산광역시":
+                return "26";
+            case "대구광역시":
+                return "27";
+            case "인천광역시":
+                return "28";
+            case "광주광역시":
+                return "29";
+            case "대전광역시":
+                return "30";
+            case "울산광역시":
+                return "31";
+            case "세종특별자치시":
+                return "36";
+            case "경기도":
+                return "41";
+            case "강원도":
+                return "42";
+            case "충청북도":
+                return "43";
+            case "충청남도":
+                return "44";
+            case "전라북도":
+                return "45";
+            case "전라남도":
+                return "46";
+            case "경상북도":
+                return "47";
+            case "경상남도":
+                return "48";
+            case "제주특별자치도":
+                return "50";
+        }
+        return "error";
     }
 
     // GPS 기능 설정 대화 상자 출력
@@ -307,12 +335,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // 위치 정보 수신 대기를 위한 프로그레스 다이얼로그
-    public void showProgressBar() {
+    public void showProgressBar(String message) {
         progressDialog = new ProgressDialog(MainActivity.this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCancelable(false);
-        progressDialog.setTitle("GPS 정보 수신 중...");
-        progressDialog.setMessage("위치 정보를 확인중입니다. 잠시만 기다려주세요.");
+        progressDialog.setTitle("정보 수신 중...");
+        progressDialog.setMessage(message);
         progressDialog.show();
     }
     public void dismissProgressBar() {

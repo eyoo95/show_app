@@ -83,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:src="@drawable/ic_baseline_settings_24"
-                    android:tint="#E1E1E1" />
+                    app:tint="#E1E1E1" />
 
             </LinearLayout>
 
@@ -108,8 +108,8 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
-                        android:tint="#7AD7E1"
-                        tools:src="@drawable/ic_mypage_rating" />
+                        tools:src="@drawable/ic_mypage_rating"
+                        app:tint="#7AD7E1" />
 
                     <TextView
                         android:id="@+id/textView53"
@@ -135,8 +135,8 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
-                        android:tint="#7AD7E1"
-                        tools:src="@drawable/ic_mypage_board" />
+                        tools:src="@drawable/ic_mypage_board"
+                        app:tint="#7AD7E1" />
 
                     <TextView
                         android:id="@+id/textView54"
@@ -162,8 +162,8 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
-                        android:tint="#7AD7E1"
-                        tools:src="@drawable/ic_mypage_like" />
+                        tools:src="@drawable/ic_mypage_like"
+                        app:tint="#7AD7E1" />
 
                     <TextView
                         android:id="@+id/txtMypageLike"
@@ -188,8 +188,8 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
-                        android:tint="#7AD7E1"
-                        tools:src="@drawable/ic_mypage_analysis" />
+                        tools:src="@drawable/ic_mypage_analysis"
+                        app:tint="#7AD7E1" />
 
                     <TextView
                         android:id="@+id/textView56"
@@ -249,7 +249,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="100dp"
                 android:gravity="right|center_horizontal"
-                android:text="로그아웃 테스트" />
+                android:text="로그아웃" />
 
         </LinearLayout>
 

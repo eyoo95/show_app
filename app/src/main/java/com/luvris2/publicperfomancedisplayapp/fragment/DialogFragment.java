@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment;
 
 import com.luvris2.publicperfomancedisplayapp.R;
 
-public class dialogFragment extends Fragment {
+public class DialogFragment extends Fragment {
 
     DatePicker datePicker;
     EditText editText;

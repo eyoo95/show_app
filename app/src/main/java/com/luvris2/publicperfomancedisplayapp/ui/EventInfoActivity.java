@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.luvris2.publicperfomancedisplayapp.R;
 
-public class eventInfoActivity extends AppCompatActivity {
+public class EventInfoActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -14,6 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class NetworkClient {
 
     public static Retrofit retrofit;
+    public static Retrofit retrofitGoogleMaps;
 
     public static Retrofit getRetrofitClient(Context context){
         if(retrofit == null){
@@ -38,7 +39,7 @@ public class NetworkClient {
     }
 
     public static Retrofit getRetrofitGoogleMaps(Context context){
-        if(retrofit == null){
+        if(retrofitGoogleMaps == null){
             // 네트워크 통신 로그
             HttpLoggingInterceptor loggingInterceptor =
                     new HttpLoggingInterceptor();
@@ -51,12 +52,12 @@ public class NetworkClient {
                     .addInterceptor(loggingInterceptor)
                     .build();
             // 네트워크 설정
-            retrofit = new Retrofit.Builder().baseUrl(Config.GOOGLE_MAPS_BASE_URL)
+            retrofitGoogleMaps = new Retrofit.Builder().baseUrl(Config.GOOGLE_MAPS_BASE_URL)
                     .client(httpClient)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
-        return retrofit;
+        return retrofitGoogleMaps;
     }
 }
 
