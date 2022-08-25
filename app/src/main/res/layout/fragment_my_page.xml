@@ -41,7 +41,7 @@
 
                 <ImageView
                     android:id="@+id/imageView12"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="2"
@@ -49,9 +49,9 @@
                     tools:src="@tools:sample/avatars" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="4"
                     android:orientation="vertical">
 
                     <TextView
@@ -62,7 +62,6 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="10dp"
                         android:layout_marginBottom="5dp"
-                        android:text="User"
                         android:textSize="24sp" />
 
                     <TextView
@@ -72,14 +71,13 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="10dp"
-                        android:layout_marginBottom="5dp"
-                        android:text="000@gmail.com" />
+                        android:layout_marginBottom="5dp" />
 
                 </LinearLayout>
 
                 <ImageView
                     android:id="@+id/imgEditUser"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:src="@drawable/ic_baseline_settings_24"
@@ -188,8 +186,8 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
-                        tools:src="@drawable/ic_mypage_analysis"
-                        app:tint="#7AD7E1" />
+                        app:tint="#7AD7E1"
+                        tools:src="@drawable/ic_mypage_analysis" />
 
                     <TextView
                         android:id="@+id/textView56"

@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -59,7 +60,6 @@ public class MyPageFragment extends Fragment {
     ImageView imgMypageBoard; // 내가 쓴 글 (자유게시판)
     ImageView imgMypageLike; // 좋아요
     ImageView imgMypageAnalysis; // 취향분석
-
 
     // 프로그레스 다이얼로그
     private ProgressDialog dialog;
@@ -115,6 +115,11 @@ public class MyPageFragment extends Fragment {
         imgMypageLike = rootView.findViewById(R.id.imgMypageLike);
         imgMypageAnalysis = rootView.findViewById(R.id.imgMypageAnalysis);
 
+        // 버튼 색 리셋
+        imgEditUser.setColorFilter(Color.parseColor("#E1E1E1"));
+
+        // 우저정보 화면에 보여주기
+
         loadUserInfo();
 
         // 로그아웃
@@ -141,8 +146,12 @@ public class MyPageFragment extends Fragment {
         imgEditUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                imgEditUser.setColorFilter(Color.parseColor("#378C95"));
+
                 Intent intent = new Intent(getActivity(), UserEditActivity.class);
                 startActivity(intent);
+
             }
         });
 

@@ -26,11 +26,14 @@
             android:name=".ui.EditorRecommActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.PostingActivity"
+            android:name=".ui.MyWritingEditActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.PostingEditActivity"
-            android:exported="false"/>
+            android:name=".ui.MyWritingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.PostingActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.PostingMyActivity"
             android:exported="false" />
