@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                // 이메일 - 형식체크
+                // 이메일 - 형식체크임
                 String email = editEmail.getText().toString().trim();
                 Pattern pattern = Patterns.EMAIL_ADDRESS;
                 if(pattern.matcher(email).matches() == false){
