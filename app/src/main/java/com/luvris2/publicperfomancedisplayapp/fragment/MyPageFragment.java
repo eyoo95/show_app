@@ -60,6 +60,8 @@ public class MyPageFragment extends Fragment {
     ImageView imgMypageLike; // 좋아요
     ImageView imgMypageAnalysis; // 취향분석
 
+    // 닉네임, 이메일 화면 표시 여부
+    int isInfoOnScrean = 0;
 
     // 프로그레스 다이얼로그
     private ProgressDialog dialog;
@@ -115,7 +117,12 @@ public class MyPageFragment extends Fragment {
         imgMypageLike = rootView.findViewById(R.id.imgMypageLike);
         imgMypageAnalysis = rootView.findViewById(R.id.imgMypageAnalysis);
 
-        loadUserInfo();
+        // 우저정보 화면에 보여주기
+        if (isInfoOnScrean!=1){
+            loadUserInfo();
+            isInfoOnScrean = 1;
+        }
+
 
         // 로그아웃
         txtLogout.setOnClickListener(new View.OnClickListener() {
