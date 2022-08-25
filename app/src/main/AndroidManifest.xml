@@ -32,16 +32,16 @@
             android:name=".ui.MyWritingActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.BoardActivity"
+            android:name=".ui.PostingActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.BoardMyActivity"
+            android:name=".ui.PostingMyActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.BoardReadActivity"
+            android:name=".ui.PostingReadActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.BoardPostingActivity"
+            android:name=".ui.PostingWriteActivity"
             android:exported="false" />
         <activity
             android:name=".ui.EditReviewActivity"

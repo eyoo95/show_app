@@ -27,7 +27,7 @@ import retrofit2.Retrofit;
 
 // 자유게시판 - 게시글 작성
 // 최지훈
-public class BoardPostingActivity extends AppCompatActivity {
+public class PostingWriteActivity extends AppCompatActivity {
 
     ImageView imgBack;
     EditText editTxtBoardTitle;
@@ -41,7 +41,7 @@ public class BoardPostingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_board_posting);
+        setContentView(R.layout.activity_posting_write);
 
         imgBack = findViewById(R.id.imgBack);
         editTxtBoardTitle = findViewById(R.id.editTxtBoardTitle);
@@ -62,7 +62,7 @@ public class BoardPostingActivity extends AppCompatActivity {
                 String title = editTxtBoardTitle.getText().toString().trim();
                 String content = editTxtBoard.getText().toString().trim();
 
-                Retrofit retrofit = NetworkClient.getRetrofitClient(BoardPostingActivity.this);
+                Retrofit retrofit = NetworkClient.getRetrofitClient(PostingWriteActivity.this);
                 PostingApi api = retrofit.create(PostingApi.class);
 
                 Posting posting = new Posting(title, content);
@@ -82,7 +82,7 @@ public class BoardPostingActivity extends AppCompatActivity {
                     public void onResponse(Call<PostingList> call, Response<PostingList> response) {
                         if(response.isSuccessful()){
 
-                            Intent intent = new Intent(BoardPostingActivity.this, BoardActivity.class);
+                            Intent intent = new Intent(PostingWriteActivity.this, PostingActivity.class);
                             startActivity(intent);
 
                             finish();

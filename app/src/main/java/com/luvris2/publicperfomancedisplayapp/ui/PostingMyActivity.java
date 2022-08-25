@@ -24,7 +24,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class BoardMyActivity extends AppCompatActivity {
+public class PostingMyActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     ImageView imgBoardMyBack;
@@ -41,12 +41,12 @@ public class BoardMyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_board_my);
+        setContentView(R.layout.activity_posting_my);
 
         imgBoardMyBack = findViewById(R.id.imgBoardMyBack);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(BoardMyActivity.this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(PostingMyActivity.this));
 
         imgBoardMyBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +64,7 @@ public class BoardMyActivity extends AppCompatActivity {
         offset = 0;
         limit = 25;
 
-        Retrofit retrofit = NetworkClient.getRetrofitClient(BoardMyActivity.this);
+        Retrofit retrofit = NetworkClient.getRetrofitClient(PostingMyActivity.this);
         PostingApi api = retrofit.create(PostingApi.class);
 
         SharedPreferences sp = getApplication().getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
@@ -81,7 +81,7 @@ public class BoardMyActivity extends AppCompatActivity {
 
                     postingList.addAll( response.body().getResultList() );
 
-                    adapter = new BoardMyAdapter(BoardMyActivity.this, postingList);
+                    adapter = new BoardMyAdapter(PostingMyActivity.this, postingList);
 
                     adapter.notifyDataSetChanged();
 

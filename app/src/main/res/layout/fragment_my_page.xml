@@ -186,8 +186,8 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
-                        tools:src="@drawable/ic_mypage_analysis"
-                        app:tint="#7AD7E1" />
+                        app:tint="#7AD7E1"
+                        tools:src="@drawable/ic_mypage_analysis" />
 
                     <TextView
                         android:id="@+id/textView56"

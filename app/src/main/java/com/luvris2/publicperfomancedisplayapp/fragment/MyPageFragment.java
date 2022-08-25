@@ -27,7 +27,7 @@ import com.luvris2.publicperfomancedisplayapp.api.UserApi;
 import com.luvris2.publicperfomancedisplayapp.config.Config;
 import com.luvris2.publicperfomancedisplayapp.model.User;
 import com.luvris2.publicperfomancedisplayapp.model.UserRes;
-import com.luvris2.publicperfomancedisplayapp.ui.BoardMyActivity;
+import com.luvris2.publicperfomancedisplayapp.ui.PostingMyActivity;
 import com.luvris2.publicperfomancedisplayapp.ui.LikeActivity;
 
 import retrofit2.Call;
@@ -161,7 +161,7 @@ public class MyPageFragment extends Fragment {
         imgMypageBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), BoardMyActivity.class);
+                Intent intent = new Intent(getActivity(), PostingMyActivity.class);
                 startActivity(intent);
             }
         });

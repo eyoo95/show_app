@@ -6,11 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.luvris2.publicperfomancedisplayapp.R;
 
-public class MyPostActivity extends AppCompatActivity {
+public class EditPostingActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_post);
+        setContentView(R.layout.activity_edit_posting);
     }
 }

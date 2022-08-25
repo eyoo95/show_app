@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.luvris2.publicperfomancedisplayapp.R;
 import com.luvris2.publicperfomancedisplayapp.adapter.BoardAdapter;
 import com.luvris2.publicperfomancedisplayapp.model.Posting;
-import com.luvris2.publicperfomancedisplayapp.ui.BoardActivity;
+import com.luvris2.publicperfomancedisplayapp.ui.PostingActivity;
 
 import java.util.ArrayList;
 
@@ -99,14 +99,14 @@ public class CommunityFragment extends Fragment {
         txtFragBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().startActivity(new Intent(getActivity(), BoardActivity.class));
+                getActivity().startActivity(new Intent(getActivity(), PostingActivity.class));
             }
         });
 
         imgFragBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().startActivity(new Intent(getActivity(), BoardActivity.class));
+                getActivity().startActivity(new Intent(getActivity(), PostingActivity.class));
             }
         });
 
