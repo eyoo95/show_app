@@ -35,6 +35,9 @@
             android:name=".ui.BoardActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.BoardMyActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.BoardReadActivity"
             android:exported="false" />
         <activity
