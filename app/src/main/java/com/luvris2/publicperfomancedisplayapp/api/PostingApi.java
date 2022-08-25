@@ -40,7 +40,7 @@ public interface PostingApi {
                                      @Query("limit") int limit);
 
     // 내 게시물 보기
-    @GET("/posting/myposting/{userId}")
+    @GET("/posting/myposting")
     Call<PostingList> getMyPosting(@Header("Authorization") String token,
                                    @Query("offset") int offset,
                                    @Query("limit") int limit);

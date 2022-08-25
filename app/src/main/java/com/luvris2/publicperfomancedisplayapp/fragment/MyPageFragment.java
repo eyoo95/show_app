@@ -21,12 +21,14 @@ import android.widget.Toast;
 import com.luvris2.publicperfomancedisplayapp.LoginActivity;
 import com.luvris2.publicperfomancedisplayapp.R;
 import com.luvris2.publicperfomancedisplayapp.UserEditActivity;
+import com.luvris2.publicperfomancedisplayapp.adapter.BoardMyAdapter;
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
 import com.luvris2.publicperfomancedisplayapp.api.UserApi;
 import com.luvris2.publicperfomancedisplayapp.config.Config;
 import com.luvris2.publicperfomancedisplayapp.model.User;
 import com.luvris2.publicperfomancedisplayapp.model.UserRes;
 import com.luvris2.publicperfomancedisplayapp.ui.BoardActivity;
+import com.luvris2.publicperfomancedisplayapp.ui.BoardMyActivity;
 import com.luvris2.publicperfomancedisplayapp.ui.LikeActivity;
 
 import retrofit2.Call;
@@ -152,7 +154,7 @@ public class MyPageFragment extends Fragment {
         imgMypageBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), BoardActivity.class);
+                Intent intent = new Intent(getActivity(), BoardMyActivity.class);
                 startActivity(intent);
             }
         });
