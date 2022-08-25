@@ -28,7 +28,10 @@
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
-
+        <activity android:name=".ui.eventInfoActivity"
+            android:exported="false" />
+        <activity android:name=".ui.EditReviewActivity"
+            android:exported="false"/>
 <!--        <meta-data-->
 <!--            android:name="com.google.android.geo.API_KEY"-->
 <!--            android:value="${MAPS_API_KEY}" />-->

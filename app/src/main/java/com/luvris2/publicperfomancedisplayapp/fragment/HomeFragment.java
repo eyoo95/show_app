@@ -2,8 +2,10 @@ package com.luvris2.publicperfomancedisplayapp.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +20,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -29,6 +30,7 @@ import com.luvris2.publicperfomancedisplayapp.adapter.MyAdapter;
 import com.luvris2.publicperfomancedisplayapp.adapter.PerformanceSearchAdapter;
 import com.luvris2.publicperfomancedisplayapp.api.KopisPerformanceApi;
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
+import com.luvris2.publicperfomancedisplayapp.ui.eventInfoActivity;
 import com.luvris2.publicperfomancedisplayapp.model.KopisApiPerformance;
 
 import java.text.SimpleDateFormat;
@@ -73,6 +75,7 @@ public class HomeFragment extends Fragment {
     // 공연 검색을 위한 스피너
     Spinner spinner;
     int spinnerNumber = 0; // 0=지역별, 1=유형별
+    public String poster;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -125,7 +128,7 @@ public class HomeFragment extends Fragment {
                 }
             }
 
-            // 페이지 클릭했을 때
+
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
@@ -367,24 +370,6 @@ public class HomeFragment extends Fragment {
         // 헤더에 설정 할 데이터 확인, 공유 저장소에 저장되어있는 토큰 호출
         // API 요청
         Call<KopisApiPerformance> call = api.getPlaceSearch(currentTime, currentTime, cpage, rows, prfName, prfPlace, prfGenre, signgucode, prfState);
-
-        Bundle bundle = new Bundle(); // 번들을 통해 값 전달
-        bundle.putString("prfName",prfName);//번들에 넘길 값 저장
-        bundle.putString("prfPlace",prfPlace);
-        bundle.putString("prfGenre",prfGenre);
-        bundle.putString("signgucode",signgucode);
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        HomePagerFirst HomePagerFirst = new HomePagerFirst();//홈프래그먼트1 선언
-        HomePagerSecond HomePagerSecond = new HomePagerSecond();//홈프래그먼트2 선언
-        HomePagerThird HomePagerThird = new HomePagerThird();//홈프래그먼트3 선언
-        HomePagerFourth HomePagerFourth = new HomePagerFourth();//홈프래그먼트4 선언
-        HomePagerFirst.setArguments(bundle);//번들을 프래그먼트2로 보낼 준비
-        transaction.replace(R.id.frame1, HomePagerFirst);
-        transaction.replace(R.id.frame2, HomePagerSecond);
-        transaction.replace(R.id.frame3, HomePagerThird);
-        transaction.replace(R.id.frame4, HomePagerFourth);
-        transaction.commit();
-
         call.enqueue(new Callback<KopisApiPerformance>() {
             @Override
             public void onResponse(@NonNull Call<KopisApiPerformance> call, @NonNull Response<KopisApiPerformance> response) {
@@ -399,7 +384,10 @@ public class HomeFragment extends Fragment {
                     else { performanceList.clear(); }
                     adapter = new PerformanceSearchAdapter(getActivity(), performanceList);
                     recyclerView.setAdapter(adapter);
+
+
                 }
+
                 // 진행중인 공연이 없을 경우 메시지 출력
                 else if(response.code() == 500) {
                     Toast.makeText(getActivity(), "현재 진행중인 공연이 없습니다.", Toast.LENGTH_LONG).show();
