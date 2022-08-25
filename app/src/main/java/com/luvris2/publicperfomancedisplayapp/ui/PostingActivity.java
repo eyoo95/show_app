@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.luvris2.publicperfomancedisplayapp.R;
-import com.luvris2.publicperfomancedisplayapp.adapter.BoardAdapter;
+import com.luvris2.publicperfomancedisplayapp.adapter.PostingAdapter;
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
 import com.luvris2.publicperfomancedisplayapp.api.PostingApi;
 import com.luvris2.publicperfomancedisplayapp.model.Posting;
@@ -34,7 +34,7 @@ public class PostingActivity extends AppCompatActivity {
     RecyclerView recyclerView;
 
     // 어댑터, 리스트
-    BoardAdapter adapter;
+    PostingAdapter adapter;
     ArrayList<Posting>postingList = new ArrayList<>();
 
     // 페이징에 필요한 멤버변수
@@ -92,7 +92,7 @@ public class PostingActivity extends AppCompatActivity {
 
                     postingList.addAll( response.body().getResultList() );
 
-                    adapter = new BoardAdapter(PostingActivity.this, postingList);
+                    adapter = new PostingAdapter(PostingActivity.this, postingList);
 
                     adapter.notifyDataSetChanged();
 

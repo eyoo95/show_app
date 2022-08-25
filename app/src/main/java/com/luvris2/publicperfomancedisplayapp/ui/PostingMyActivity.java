@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.luvris2.publicperfomancedisplayapp.R;
-import com.luvris2.publicperfomancedisplayapp.adapter.BoardMyAdapter;
+import com.luvris2.publicperfomancedisplayapp.adapter.PostingMyAdapter;
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
 import com.luvris2.publicperfomancedisplayapp.api.PostingApi;
 import com.luvris2.publicperfomancedisplayapp.config.Config;
@@ -30,7 +30,7 @@ public class PostingMyActivity extends AppCompatActivity {
     ImageView imgBoardMyBack;
 
     // 어댑터, 리스트
-    BoardMyAdapter adapter;
+    PostingMyAdapter adapter;
     ArrayList<Posting> postingList = new ArrayList<>();
 
     // 페이징에 필요한 멤버변수
@@ -54,7 +54,14 @@ public class PostingMyActivity extends AppCompatActivity {
                 finish();
             }
         });
+//
+//        // 네트워크 데이터를 받아온다.
+//        getNetworkData();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         // 네트워크 데이터를 받아온다.
         getNetworkData();
     }
@@ -81,7 +88,7 @@ public class PostingMyActivity extends AppCompatActivity {
 
                     postingList.addAll( response.body().getResultList() );
 
-                    adapter = new BoardMyAdapter(PostingMyActivity.this, postingList);
+                    adapter = new PostingMyAdapter(PostingMyActivity.this, postingList);
 
                     adapter.notifyDataSetChanged();
 
