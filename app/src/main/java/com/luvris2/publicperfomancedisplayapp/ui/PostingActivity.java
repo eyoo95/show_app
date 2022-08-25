@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.luvris2.publicperfomancedisplayapp.R;
-import com.luvris2.publicperfomancedisplayapp.adapter.BoardAdapter;
+import com.luvris2.publicperfomancedisplayapp.adapter.PostingAdapter;
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
 import com.luvris2.publicperfomancedisplayapp.api.PostingApi;
 import com.luvris2.publicperfomancedisplayapp.model.Posting;
@@ -26,7 +26,7 @@ import retrofit2.Retrofit;
 
 // 자유게시판 - 전체 게시글
 // 최지훈
-public class BoardActivity extends AppCompatActivity {
+public class PostingActivity extends AppCompatActivity {
 
     ImageView imgBoardPosting;
     ImageView imgBack;
@@ -34,7 +34,7 @@ public class BoardActivity extends AppCompatActivity {
     RecyclerView recyclerView;
 
     // 어댑터, 리스트
-    BoardAdapter adapter;
+    PostingAdapter adapter;
     ArrayList<Posting>postingList = new ArrayList<>();
 
     // 페이징에 필요한 멤버변수
@@ -44,19 +44,19 @@ public class BoardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_board);
+        setContentView(R.layout.activity_posting);
 
         imgBoardPosting = findViewById(R.id.imgBoardPosting);
         imgBack = findViewById(R.id.imgBack);
         txtEventTitle = findViewById(R.id.txtEventTitle);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(BoardActivity.this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(PostingActivity.this));
 
         imgBoardPosting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(BoardActivity.this, BoardPostingActivity.class);
+                Intent intent = new Intent(PostingActivity.this, PostingWriteActivity.class);
                 startActivity(intent);
             }
         });
@@ -79,7 +79,7 @@ public class BoardActivity extends AppCompatActivity {
         offset = 0;
         limit = 25;
 
-        Retrofit retrofit = NetworkClient.getRetrofitClient(BoardActivity.this);
+        Retrofit retrofit = NetworkClient.getRetrofitClient(PostingActivity.this);
         PostingApi api = retrofit.create(PostingApi.class);
 
         Call<PostingList> call = api.getPostingList(offset, limit);
@@ -92,7 +92,7 @@ public class BoardActivity extends AppCompatActivity {
 
                     postingList.addAll( response.body().getResultList() );
 
-                    adapter = new BoardAdapter(BoardActivity.this, postingList);
+                    adapter = new PostingAdapter(PostingActivity.this, postingList);
 
                     adapter.notifyDataSetChanged();
 

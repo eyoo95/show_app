@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BoardReadActivity">
+    tools:context=".ui.PostingReadActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,7 +36,24 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_back" />
+
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/border"
+            android:ems="10"
+            android:gravity="top"
+            android:hint="텍스트 제목 부분"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            android:padding="10dp" />
 
         <ImageView
             android:id="@+id/imgBoardRead"
@@ -48,21 +65,23 @@
             android:layout_marginRight="30dp"
             tools:src="@tools:sample/avatars" />
 
-        <EditText
-            android:id="@+id/txtBoardContent"
+        <TextView
+            android:id="@+id/txtContent"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="30dp"
             android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/border"
             android:ems="10"
             android:gravity="top"
+            android:hint="텍스트 내용 부분"
             android:inputType="textPersonName"
             android:minHeight="48dp"
             android:padding="10dp"
-            android:text="텍스트 내용 부분" />
+            android:textColorHint="#757575" />
 
     </LinearLayout>
 

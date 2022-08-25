@@ -10,6 +10,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 // 최지훈
@@ -28,7 +29,9 @@ public interface PostingApi {
 
     // 게시물 수정 API
     @PUT("/posting/{postingId}")
-    Call<PostingList> updatePosting(@Header("Authorization") String token);
+    Call<PostingList> updatePosting(@Header("Authorization") String token,
+                                    @Path("postingId") int postingId,
+                                    @Body Posting posting);
 
     // 게시물 삭제 API
     @DELETE("/posting/{postingId}")

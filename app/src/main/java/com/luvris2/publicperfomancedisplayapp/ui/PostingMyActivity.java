@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.luvris2.publicperfomancedisplayapp.R;
-import com.luvris2.publicperfomancedisplayapp.adapter.BoardMyAdapter;
+import com.luvris2.publicperfomancedisplayapp.adapter.PostingMyAdapter;
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
 import com.luvris2.publicperfomancedisplayapp.api.PostingApi;
 import com.luvris2.publicperfomancedisplayapp.config.Config;
@@ -24,13 +24,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class BoardMyActivity extends AppCompatActivity {
+public class PostingMyActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     ImageView imgBoardMyBack;
 
     // 어댑터, 리스트
-    BoardMyAdapter adapter;
+    PostingMyAdapter adapter;
     ArrayList<Posting> postingList = new ArrayList<>();
 
     // 페이징에 필요한 멤버변수
@@ -41,12 +41,12 @@ public class BoardMyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_board_my);
+        setContentView(R.layout.activity_posting_my);
 
         imgBoardMyBack = findViewById(R.id.imgBoardMyBack);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(BoardMyActivity.this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(PostingMyActivity.this));
 
         imgBoardMyBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +54,14 @@ public class BoardMyActivity extends AppCompatActivity {
                 finish();
             }
         });
+//
+//        // 네트워크 데이터를 받아온다.
+//        getNetworkData();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         // 네트워크 데이터를 받아온다.
         getNetworkData();
     }
@@ -64,7 +71,7 @@ public class BoardMyActivity extends AppCompatActivity {
         offset = 0;
         limit = 25;
 
-        Retrofit retrofit = NetworkClient.getRetrofitClient(BoardMyActivity.this);
+        Retrofit retrofit = NetworkClient.getRetrofitClient(PostingMyActivity.this);
         PostingApi api = retrofit.create(PostingApi.class);
 
         SharedPreferences sp = getApplication().getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
@@ -81,7 +88,7 @@ public class BoardMyActivity extends AppCompatActivity {
 
                     postingList.addAll( response.body().getResultList() );
 
-                    adapter = new BoardMyAdapter(BoardMyActivity.this, postingList);
+                    adapter = new PostingMyAdapter(PostingMyActivity.this, postingList);
 
                     adapter.notifyDataSetChanged();
 
