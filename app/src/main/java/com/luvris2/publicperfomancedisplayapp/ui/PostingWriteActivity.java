@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.luvris2.publicperfomancedisplayapp.R;
-import com.luvris2.publicperfomancedisplayapp.adapter.BoardAdapter;
+import com.luvris2.publicperfomancedisplayapp.adapter.PostingAdapter;
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
 import com.luvris2.publicperfomancedisplayapp.api.PostingApi;
 import com.luvris2.publicperfomancedisplayapp.config.Config;
@@ -35,13 +35,13 @@ public class PostingWriteActivity extends AppCompatActivity {
     EditText editTxtBoard;
     Button btnBoardUpload;
 
-    BoardAdapter adapter;
+    PostingAdapter adapter;
     ArrayList<Posting> postingList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_posting_write);
+        setContentView(R.layout.activity_board_posting);
 
         imgBack = findViewById(R.id.imgBack);
         editTxtBoardTitle = findViewById(R.id.editTxtBoardTitle);

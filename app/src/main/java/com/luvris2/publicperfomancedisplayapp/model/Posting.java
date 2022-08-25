@@ -1,7 +1,9 @@
 package com.luvris2.publicperfomancedisplayapp.model;
 
+import java.io.Serializable;
+
 // 최지훈
-public class Posting {
+public class Posting implements Serializable {
 
     private String nickname;
     private int id;
