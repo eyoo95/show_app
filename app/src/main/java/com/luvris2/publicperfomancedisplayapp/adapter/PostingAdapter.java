@@ -44,6 +44,7 @@ public class PostingAdapter extends RecyclerView.Adapter<PostingAdapter.ViewHold
         holder.txtTitle.setText(posting.getTitle());
         holder.txtCreatedAt.setText(posting.getCreatedAt());
         holder.txtUpdatedAt.setText(posting.getUpdatedAt());
+        holder.txtRecommend.setText("추천 수 " + posting.getRecommend());
         holder.txtContent.setText(posting.getContent());
         holder.txtNickName.setText(posting.getNickname());
     }
@@ -60,6 +61,7 @@ public class PostingAdapter extends RecyclerView.Adapter<PostingAdapter.ViewHold
         TextView txtUpdatedAt;
         TextView txtContent;
         TextView txtNickName;
+        TextView txtRecommend;
         CardView cardView;
 
         public ViewHolder(@NonNull View itemView) {
@@ -70,8 +72,10 @@ public class PostingAdapter extends RecyclerView.Adapter<PostingAdapter.ViewHold
             txtUpdatedAt = itemView.findViewById(R.id.txtUpdatedAt);
             txtContent = itemView.findViewById(R.id.txtContent);
             txtNickName = itemView.findViewById(R.id.txtNickName);
+            txtRecommend = itemView.findViewById(R.id.txtRecommend);
             cardView = itemView.findViewById(R.id.cardView);
 
+            // 전체 글에서 카드뷰를 누르면 상세정보 액티비티로 데이터를 넘겨준다.
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -41,7 +41,7 @@ public class PostingWriteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_board_posting);
+        setContentView(R.layout.activity_posting_write);
 
         imgBack = findViewById(R.id.imgBack);
         editTxtBoardTitle = findViewById(R.id.editTxtBoardTitle);
