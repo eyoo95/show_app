@@ -180,8 +180,10 @@ public class HomeFragment extends Fragment {
 
                 // 조건에 따른 공연 검색
                 getPerformanceData( prfName, prfPlace, prfGenre, signgucode, 2);
-
             }
+
+
+
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) { }

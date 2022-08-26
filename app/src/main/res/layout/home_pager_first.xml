@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/frame1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/frameSize"
+        android:layout_marginLeft="@dimen/pageMarginAndOffset"
+        android:layout_marginRight="@dimen/pageMarginAndOffset"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imgEventimg1"
+            android:layout_width="wrap_content"
+            android:layout_height="185dp"
+            android:layout_alignWithParentIfMissing="false"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentRight="false"
+            android:layout_alignParentBottom="false"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:duplicateParentState="false"
+            app:srcCompat="@drawable/ic_baseline_photo_camera_24" />
+
+        <TextView
+            android:id="@+id/txtEventTitle1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imgEventimg1"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:text="공연 제목"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/txtEventDate1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtEventTitle1"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="0dp"
+            android:text="공연 기간"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txtEventPlace1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtEventDate1"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="공연 장소"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
+
+</FrameLayout>
