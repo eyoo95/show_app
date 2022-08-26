@@ -25,7 +25,7 @@ public class LogoActivity extends AppCompatActivity {
                 startActivity(intent); //인트로 실행 후 바로 MainActivity 이동
                 finish();
             }
-        },3000); // 3초 후 인트로 실행
+        },500); // 3초 후 인트로 실행
     }
 
     @Override
