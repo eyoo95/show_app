@@ -53,8 +53,8 @@
                     android:src="@drawable/ic_baseline_add_circle_outline_24" />
             </LinearLayout>
 
-            <ListView
-                android:id="@+id/listView"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="30dp"

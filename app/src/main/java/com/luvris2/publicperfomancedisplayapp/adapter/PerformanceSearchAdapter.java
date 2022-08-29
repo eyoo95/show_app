@@ -53,9 +53,7 @@ public class PerformanceSearchAdapter extends RecyclerView.Adapter<PerformanceSe
         imgUrl = performance.getPosterUrl();
 
         // 글라이드 라이브러리 사용
-        GlideUrl url = new GlideUrl(imgUrl,
-                new LazyHeaders.Builder().addHeader("User-Agent", "Android").build());
-        Glide.with(context).load(url).placeholder(R.drawable.ic_image_not_supported).fitCenter().into(holder.imgPoster);
+        Glide.with(context).load(imgUrl).placeholder(R.drawable.ic_image_not_supported).fitCenter().into(holder.imgPoster);
     }
 
     @Override

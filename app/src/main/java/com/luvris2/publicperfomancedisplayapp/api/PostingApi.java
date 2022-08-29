@@ -23,6 +23,7 @@ public interface PostingApi {
 //                                 @Part("title")RequestBody title,
 //                                 @Part("content")RequestBody content);
 
+    // 게시물 생성 API
     @POST("/posting")
     Call<PostingList> addPosting(@Header("Authorization") String token,
                                  @Body Posting posting);
@@ -40,6 +41,12 @@ public interface PostingApi {
     // 게시물 목록 조회
     @GET("/posting")
     Call<PostingList> getPostingList(@Query("offset") int offset,
+                                     @Query("limit") int limit);
+
+    // 게시물 정렬 커뮤프래그 리사이클러뷰
+    @GET("/posting/lists")
+    Call<PostingList> getPostingSort(@Query("order") String order,
+                                     @Query("offset") int offset,
                                      @Query("limit") int limit);
 
     // 내 게시물 보기
