@@ -81,7 +81,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:src="@drawable/ic_baseline_settings_24"
-                    app:tint="#E1E1E1" />
+                    app:tint="#C6C6C6" />
 
             </LinearLayout>
 
@@ -106,8 +106,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
-                        tools:src="@drawable/ic_mypage_rating"
-                        app:tint="#7AD7E1" />
+                        tools:src="@drawable/ic_mypage_rating" />
 
                     <TextView
                         android:id="@+id/textView53"
@@ -129,12 +128,11 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/imgMypageBoard"
+                        android:id="@+id/imgMypagePosting"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
-                        tools:src="@drawable/ic_mypage_board"
-                        app:tint="#7AD7E1" />
+                        tools:src="@drawable/ic_mypage_board"/>
 
                     <TextView
                         android:id="@+id/textView54"
@@ -160,8 +158,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
-                        tools:src="@drawable/ic_mypage_like"
-                        app:tint="#7AD7E1" />
+                        tools:src="@drawable/ic_mypage_like"/>
 
                     <TextView
                         android:id="@+id/txtMypageLike"
@@ -186,7 +183,6 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
-                        app:tint="#7AD7E1"
                         tools:src="@drawable/ic_mypage_analysis" />
 
                     <TextView
