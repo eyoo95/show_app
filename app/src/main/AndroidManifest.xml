@@ -35,6 +35,9 @@
             android:name=".ui.PostingActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.PostingEditActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.PostingMyActivity"
             android:exported="false" />
         <activity

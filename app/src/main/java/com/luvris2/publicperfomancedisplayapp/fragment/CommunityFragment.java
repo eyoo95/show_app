@@ -9,14 +9,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.luvris2.publicperfomancedisplayapp.R;
 import com.luvris2.publicperfomancedisplayapp.adapter.PostingAdapter;
+import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
+import com.luvris2.publicperfomancedisplayapp.api.PostingApi;
 import com.luvris2.publicperfomancedisplayapp.model.Posting;
+import com.luvris2.publicperfomancedisplayapp.model.PostingList;
 import com.luvris2.publicperfomancedisplayapp.ui.PostingActivity;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,6 +50,8 @@ public class CommunityFragment extends Fragment {
     int offset = 0;
     int limit = 25;
 
+    // 정렬과 관련된 멤버변수
+    String order = "recommend";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -93,8 +104,8 @@ public class CommunityFragment extends Fragment {
         txtFragEditor = rootView.findViewById(R.id.txtFragEditor);
         imgBack = rootView.findViewById(R.id.imgBack);
         recyclerView = rootView.findViewById(R.id.recyclerView);
-//        recyclerView.setHasFixedSize(true);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         txtFragBoard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +121,43 @@ public class CommunityFragment extends Fragment {
             }
         });
 
+        getNetworkData();
 
         return rootView;
+    }
+
+    private void getNetworkData() {
+        postingList.clear();
+        limit = 5;
+        offset = 0;
+
+        Retrofit retrofit = NetworkClient.getRetrofitClient(getContext());
+        PostingApi api = retrofit.create(PostingApi.class);
+
+        Call<PostingList> call = api.getPostingSort(order, offset, limit);
+
+        call.enqueue(new Callback<PostingList>() {
+            @Override
+            public void onResponse(Call<PostingList> call, Response<PostingList> response) {
+
+                if(response.isSuccessful()){
+
+
+                    postingList.addAll(response.body().getResultList());
+
+                    adapter = new PostingAdapter(getActivity(), postingList);
+
+                    recyclerView.setAdapter(adapter);
+
+                }else{
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PostingList> call, Throwable t) {
+
+            }
+        });
     }
 }
