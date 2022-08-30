@@ -25,6 +25,7 @@ import com.luvris2.publicperfomancedisplayapp.BuildConfig;
 import com.luvris2.publicperfomancedisplayapp.R;
 import com.luvris2.publicperfomancedisplayapp.api.KopisPerformanceApi;
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
+import com.luvris2.publicperfomancedisplayapp.api.NetworkClient_KOPIS;
 import com.luvris2.publicperfomancedisplayapp.model.KopisApiPerformance;
 import com.luvris2.publicperfomancedisplayapp.model.kopisApiDetail;
 
@@ -84,7 +85,11 @@ public class eventInfoActivity extends AppCompatActivity {
 
         Log.i("recyclerView Intent ", " mt20id : " + mt20id, null);
 
+        Prfnm = "지킬 앤 하이드";
+
         getPerformanceDetailData(mt20id, service);
+
+
 
 
         // 글라이드 라이브러리 사용
@@ -98,7 +103,7 @@ public class eventInfoActivity extends AppCompatActivity {
         btnEventUrl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent browserIntent  =  new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.naver.com/"));
+                Intent browserIntent  =  new Intent(Intent.ACTION_VIEW, Uri.parse("https://tickets.interpark.com/search?keyword="+Prfnm));
                 startActivity(browserIntent);
             }
         });
@@ -116,8 +121,8 @@ public class eventInfoActivity extends AppCompatActivity {
     void getPerformanceDetailData(String Id ,String service) {
         showProgress("공연 목록 불러오는 중...");
 
-        // 네트워크로 데이터 전송, Retrofit 객체 생성
-        Retrofit retrofit = NetworkClient.getRetrofitClient(eventInfoActivity.this);
+        // 네트워크로 데이터 전송, Retrofit 객체 생성, KOPIS에서 직접 받아오는 거라 별도의 NetworkClient_KOPIS 사용
+        Retrofit retrofit = NetworkClient_KOPIS.getRetrofitClient(eventInfoActivity.this);
         KopisPerformanceApi api = retrofit.create(KopisPerformanceApi.class);
 
         // 헤더에 설정 할 데이터 확인, 공유 저장소에 저장되어있는 토큰 호출
