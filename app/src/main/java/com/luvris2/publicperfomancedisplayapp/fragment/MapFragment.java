@@ -108,6 +108,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             myPosition = ((MainActivity)getActivity()).getLocation();
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myPosition, 16));
             googleMap.addMarker(new MarkerOptions().position(myPosition).title("내 위치"));
+            dismissProgressBar();
         });
     }
 
