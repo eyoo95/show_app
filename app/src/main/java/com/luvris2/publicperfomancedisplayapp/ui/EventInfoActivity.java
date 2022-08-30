@@ -96,7 +96,7 @@ public class EventInfoActivity extends AppCompatActivity {
         btnEventEditReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent  =  new Intent(EventInfoActivity.this, EditReviewActivity.class);
+                Intent intent  =  new Intent(EventInfoActivity.this, MyReviewEditActivity.class);
                 startActivity(intent);
             }
         });
