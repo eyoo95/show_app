@@ -13,4 +13,8 @@ public class Config {
     public static final String GOOGLE_MAPS_BASE_URL = "https://maps.googleapis.com";
     public static final String GOOGLE_MAPS_API_KEY = "AIzaSyDLRY2CF9QwQ5UENhzwJsOb6FKKqieCwhk";
 
+    public static final String KOPIS_OPEN_API_BASE_URL = "https://kopis.or.kr/";
+
+
+
 }

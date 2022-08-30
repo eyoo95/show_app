@@ -23,6 +23,8 @@ public interface KopisPerformanceApi {
                                              @Query("prfstate") int prfstate);
 
     // 공연 상세 검색
+    @GET("/performancedetail/{prfId}")
+    Call<KopisApiPerformance> getPerformanceDetail(@Path("prfId") String prfId);
 
     // 내 지역(구) 공연 검색
     @GET("/nearbyperformance/{sidoCodeSub}")
@@ -35,5 +37,5 @@ public interface KopisPerformanceApi {
     // 공연 상세 검색
     @GET("/performancedetail/{prfId}")
     Call<KopisApiDetail> getDetailSearch(@Path("prfId")String prfId,
-                                                       @Query("service") String service);
+                                         @Query("service") String service);
 }

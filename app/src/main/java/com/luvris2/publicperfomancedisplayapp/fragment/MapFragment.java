@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -31,7 +32,6 @@ import com.luvris2.publicperfomancedisplayapp.R;
 import com.luvris2.publicperfomancedisplayapp.api.KopisPerformanceApi;
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
 import com.luvris2.publicperfomancedisplayapp.model.KopisApiPerformance;
-import com.luvris2.publicperfomancedisplayapp.subclass.GlideApp;
 import com.luvris2.publicperfomancedisplayapp.ui.MainActivity;
 
 import java.io.IOException;
@@ -203,7 +203,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         }
 
         // 해당 공연 정보 표시
-        GlideApp.with(getActivity()).load(nearByPerformanceDetail.getPosterUrl())
+
+        Glide.with(getActivity()).load(nearByPerformanceDetail.getPosterUrl())
                 .placeholder(R.drawable.ic_image_not_supported).fitCenter().into(imgMapPerformancePoster);
         txtMapPerformanceTitle.setText(nearByPerformanceDetail.getPrfName());
         txtMapPerformanceDate.setText(nearByPerformanceDetail.getPrfpdfrom() + " ~ " + nearByPerformanceDetail.getPrfpdto());

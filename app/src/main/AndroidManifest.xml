@@ -28,12 +28,6 @@
             android:name=".ui.EditorRecommActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.MyWritingEditActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.MyWritingActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.PostingActivity"
             android:exported="false" />
         <activity
@@ -49,7 +43,7 @@
             android:name=".ui.PostingWriteActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.EditReviewActivity"
+            android:name=".ui.MyReviewEditActivity"
             android:exported="false" />
         <activity
             android:name=".ui.EventInfoActivity"
