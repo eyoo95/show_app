@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imgMapPerformancePoster"
+            android:layout_width="250dp"
+            android:layout_height="375dp"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/txtMapPerformanceTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="공연 이름"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtMapPerformanceDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="기간"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/txtMapPerformancePlace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="30dp"
+            android:text="공연시설"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/txtMapPerformanceCast"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="30dp"
+            android:text="출연진"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/txtMapPerformanceCrew"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="30dp"
+            android:text="제작진"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/txtMapPerformanceRuntime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="30dp"
+            android:text="공연 런타임"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/txtMapPerformanceAge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="30dp"
+            android:text="공연 관람 연령"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/txtMapPerformanceEnter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="30dp"
+            android:text="제작사"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/txtMapPerformanceGenre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="30dp"
+            android:text="장르"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/txtMapPerformancTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="30dp"
+            android:text="공연 시간"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+</LinearLayout>
