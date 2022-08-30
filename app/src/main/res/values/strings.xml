@@ -13,5 +13,12 @@
     <string name="txtEventInfo"><![CDATA[지금 이 순간, 단 하나의 선택! 뮤지컬 <지킬앤하이드> 대한민국 뮤지컬 역사상 가장 압도적인 흥행작. 2004년 국내 초연 이후 누적 회차 1,410회, 평균 객석 점유율 95%, 누적 관객수 150만 명을 돌파한 그 누구도 넘볼 수…]]></string>
     <string name="reviewEditRating">별점을 입력해주세요</string>
 
+    <string name="alert_title">선택하세요</string>
+
+    <string-array name="alert_photo">
+        <item>카메라로 사진찍기</item>
+        <item>앨범에서 가져오기</item>
+    </string-array>
+
 
 </resources>
