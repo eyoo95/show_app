@@ -58,7 +58,7 @@
                         tools:src="@tools:sample/avatars" />
 
                     <TextView
-                        android:id="@+id/txtEventTitle"
+                        android:id="@+id/txtEventTitle1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -67,7 +67,7 @@
                         android:textSize="20sp" />
 
                     <TextView
-                        android:id="@+id/txtEventDate"
+                        android:id="@+id/txtEventDate1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -76,7 +76,7 @@
                         android:textSize="20sp" />
 
                     <TextView
-                        android:id="@+id/txtEventPlace"
+                        android:id="@+id/txtEventPlace1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -85,7 +85,7 @@
                         android:textSize="20sp" />
 
                     <TextView
-                        android:id="@+id/textEventDesc"
+                        android:id="@+id/textEventDesc1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="30dp"
