@@ -23,6 +23,7 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.luvris2.publicperfomancedisplayapp.ui.LoginActivity;
 import com.luvris2.publicperfomancedisplayapp.R;
+import com.luvris2.publicperfomancedisplayapp.ui.MyReviewActivity;
 import com.luvris2.publicperfomancedisplayapp.ui.UserEditActivity;
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
 import com.luvris2.publicperfomancedisplayapp.api.UserApi;
@@ -161,7 +162,15 @@ public class MyPageFragment extends Fragment {
             }
         });
 
-        // 내 별점 (리뷰)
+        // 내 별점 (리뷰) 버튼
+        imgMypageRating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), MyReviewActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         // 내가 작성한 글 (자유게시판)
         imgMypagePosting.setOnClickListener(new View.OnClickListener() {

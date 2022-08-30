@@ -10,8 +10,10 @@ import retrofit2.http.Query;
 
 public interface KopisPerformanceApi {
     // 공연 검색
+
+    // 공연 검색
     @GET("/performancesearch")
-    Call<KopisApiPerformance> getPerformance(@Query("stdate") String stdate,
+    Call<KopisApiPerformance> getPlaceSearch(@Query("stdate") String stdate,
                                              @Query("eddate") String eddate,
                                              @Query("cpage") int cpage,
                                              @Query("rows") int rows,
@@ -19,8 +21,20 @@ public interface KopisPerformanceApi {
                                              @Query("shprfnmfct") String shprfnmfct,
                                              @Query("shcate") String shcate,
                                              @Query("signgucode") String signgucode,
-                                             @Query("signgusubcod") String signgusubcode,
                                              @Query("prfstate") int prfstate);
+
+
+//    @GET("/performancesearch")
+//    Call<KopisApiPerformance> getPerformance(@Query("stdate") String stdate,
+//                                             @Query("eddate") String eddate,
+//                                             @Query("cpage") int cpage,
+//                                             @Query("rows") int rows,
+//                                             @Query("shprfnm") String shprfnm,
+//                                             @Query("shprfnmfct") String shprfnmfct,
+//                                             @Query("shcate") String shcate,
+//                                             @Query("signgucode") String signgucode,
+//                                             @Query("signgusubcod") String signgusubcode,
+//                                             @Query("prfstate") int prfstate);
 
     // 공연 상세 검색
     @GET("/performancedetail/{prfId}")

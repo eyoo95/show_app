@@ -1,5 +1,6 @@
 package com.luvris2.publicperfomancedisplayapp.ui;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.luvris2.publicperfomancedisplayapp.R;
@@ -22,6 +24,8 @@ import com.luvris2.publicperfomancedisplayapp.model.KopisApiDetail;
 import java.io.IOException;
 
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class EventInfoActivity extends AppCompatActivity {
@@ -46,7 +50,6 @@ public class EventInfoActivity extends AppCompatActivity {
     private String Prfpdto;
     private String fcltynm;
     private String sty;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,13 +97,13 @@ public class EventInfoActivity extends AppCompatActivity {
         btnEventEditReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent  =  new Intent(EventInfoActivity.this, MyReviewEditActivity.class);
+                Intent intent  =  new Intent(EventInfoActivity.this, MyReviewWriteActivity.class);
                 startActivity(intent);
             }
         });
     }
 
-    void getPerformanceDetailData(String Id ,String service) {
+    void getPerformanceDetailData(String prfId ,String service) {
         showProgress("공연 목록 불러오는 중...");
 
         // 네트워크로 데이터 전송, Retrofit 객체 생성, KOPIS에서 직접 받아오는 거라 별도의 NetworkClient_KOPIS 사용
@@ -109,78 +112,72 @@ public class EventInfoActivity extends AppCompatActivity {
 
         // 헤더에 설정 할 데이터 확인, 공유 저장소에 저장되어있는 토큰 호출
         // API 요청
-        Call<KopisApiDetail> call = api.getDetailSearch(Id, service);
+        Call<KopisApiDetail> call = api.getDetailSearch(prfId, service);
 
         // Retrofit 값을 바로 저장하기 위한 동기 처리
-        new Thread(() -> {
-            try {
-                KopisApiDetail data = call.execute().body();
-                imgUrl = data.getPoster();
-                Prfnm = data.getPrfnm();
-                Prfpdfrom = data.getPrfpdfrom();
-                Prfpdto = data.getPrfpdto();
-                fcltynm = data.getFcltynm();
-//                sty = data.getSty();
-
-                Log.i("recyclerView imgUrl ", " imgUrl : " + data.getPoster() , null);
-                Log.i("recyclerView Prfnm ", " Prfnm : " +  data.getPrfnm() , null);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }).start();
-
-        // API 응답에 따른 약간의 대기 시간 설정
-        try {
-            Thread.sleep(3000);
-            dismissProgress();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            dismissProgress();
-        }
-        dismissProgress();
-    }
-
-
-
-//        // API 요청
-//        Call<kopisApiDetail> call = api.getDetailSearch(Id , service);
-//        call.enqueue(new Callback<kopisApiDetail>() {
-//            @Override
-//            public void onResponse(@NonNull Call<kopisApiDetail> call, @NonNull Response<kopisApiDetail> response) {
-//                dismissProgress();
+//        new Thread(() -> {
+//            try {
+//                KopisApiDetail data = call.execute().body();
+//                imgUrl = data.getPoster();
+//                Prfnm = data.getPrfnm();
+//                Prfpdfrom = data.getPrfpdfrom();
+//                Prfpdto = data.getPrfpdto();
+//                fcltynm = data.getFcltynm();
+////                sty = data.getSty();
 //
-//                // 200 OK, 네트워크 정상 응답
-//                if(response.isSuccessful()) {
-//                    kopisApiDetail data = response.body();
+//                Log.i("recyclerView imgUrl ", " imgUrl : " + data.getPoster() , null);
+//                Log.i("recyclerView Prfnm ", " Prfnm : " +  data.getPrfnm() , null);
 //
-//                    imgUrl = data.getPoster();
-//                    Prfnm = data.getPrfnm();
-//                    Prfpdfrom = data.getPrfpdfrom();
-//                    Prfpdto = data.getPrfpdto();
-//                    fcltynm = data.getFcltynm();
-//                    sty = data.getSty();
-//
-//                }
-//
-//                // 진행중인 공연이 없을 경우 메시지 출력
-//                else if(response.code() == 500) {
-//                    Toast.makeText(eventInfoActivity.this, "현재 진행중인 공연이 없습니다.", Toast.LENGTH_LONG).show();
-//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
 //            }
+//        }).start();
 //
-//            @Override
-//            public void onFailure(@NonNull Call<kopisApiDetail> call, @NonNull Throwable t) {
-//                dismissProgress();
-//            }
-//        });
-//        initKeyword(); // 검색 조건 초기화
+//        // API 응답에 따른 약간의 대기 시간 설정
+//        try {
+//            Thread.sleep(3000);
+//            dismissProgress();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//            dismissProgress();
+//        }
+//        dismissProgress();
 //    }
+
+        call.enqueue(new Callback<KopisApiDetail>() {
+            @Override
+            public void onResponse(@NonNull Call<KopisApiDetail> call, @NonNull Response<KopisApiDetail> response) {
+                dismissProgress();
+
+                // 200 OK, 네트워크 정상 응답
+                if(response.isSuccessful()) {
+                    KopisApiDetail data = response.body();
+
+                    imgUrl = data.getPoster();
+                    Prfnm = data.getPrfnm();
+                    Prfpdfrom = data.getPrfpdfrom();
+                    Prfpdto = data.getPrfpdto();
+                    fcltynm = data.getFcltynm();
+                }
+
+                // 진행중인 공연이 없을 경우 메시지 출력
+                else if(response.code() == 500) {
+                    Toast.makeText(EventInfoActivity.this, "현재 진행중인 공연이 없습니다.", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<KopisApiDetail> call, @NonNull Throwable t) {
+                dismissProgress();
+            }
+        });
+        initKeyword(); // 검색 조건 초기화
+    }
 
 //    // Retrofit 값을 바로 저장하기 위한 동기 처리
 //        new Thread(() -> {
 //        try {
-//            kopisApiDetail data = call.execute().body();
+//            KopisApiDetail data = call.execute().body();
 //            imgUrl = data.getPoster();
 //            Prfnm = data.getPrfnm();
 //            Prfpdfrom = data.getPrfpdfrom();

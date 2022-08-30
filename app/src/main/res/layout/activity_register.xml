@@ -128,7 +128,6 @@
             android:layout_marginRight="10dp"
             android:background="@drawable/round_layout"
             android:ems="10"
-            android:fontFamily="@font/nanum_square_r"
             android:hint="비밀번호를 입력해주세요."
             android:inputType="textPassword"
             android:minHeight="48dp"

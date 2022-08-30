@@ -49,6 +49,9 @@
             android:name=".ui.EventInfoActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.MyReviewActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.AnalysisLoadingActivity"
             android:exported="false" />
         <activity

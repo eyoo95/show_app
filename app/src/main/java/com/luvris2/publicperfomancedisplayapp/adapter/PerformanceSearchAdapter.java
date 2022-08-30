@@ -1,6 +1,8 @@
 package com.luvris2.publicperfomancedisplayapp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
 import com.luvris2.publicperfomancedisplayapp.R;
 import com.luvris2.publicperfomancedisplayapp.model.KopisApiPerformance;
+import com.luvris2.publicperfomancedisplayapp.ui.EventInfoActivity;
 
 import java.util.List;
 
@@ -26,6 +29,12 @@ public class PerformanceSearchAdapter extends RecyclerView.Adapter<PerformanceSe
 
     // 공연 포스터 url
     String imgUrl;
+    String prfName;
+    String prfPlace;
+    String prfGenre;
+    String stEdDate;
+    String prfState;
+    String mt20id;
 
     public PerformanceSearchAdapter(Context context, List<KopisApiPerformance> performanceList) {
         this.context = context;
@@ -43,18 +52,32 @@ public class PerformanceSearchAdapter extends RecyclerView.Adapter<PerformanceSe
     // 메모리에 있는 데이터를 화면에 표시하는 메소드
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
         KopisApiPerformance performance = performanceList.get(position);
-        holder.txtPrfName.setText(""+performance.getPrfName());
-        holder.txtPrfPlace.setText("" + performance.getPrfPlace());
-        holder.txtPrfGenre.setText("" + performance.getPrfGenre());
-        holder.txtPrfState.setText("" + performance.getPrfState());
-        holder.txtStEdDate.setText(performance.getPrfpdfrom() + " ~ " + performance.getPrfpdto());
-        //holder.ratingBar.setRating(performance.getRating);
+        // 멤버 변수화
+        mt20id = performance.getPrfId();
         imgUrl = performance.getPosterUrl();
+        prfName = performance.getPrfName();
+        prfPlace = performance.getPrfPlace();
+        prfGenre = performance.getPrfGenre();
+        prfState = performance.getPrfState();
+        stEdDate = performance.getPrfpdfrom() + " ~ " + performance.getPrfpdto();
+        // 화면에 표시
+        holder.txtPrfName.setText(prfName);
+        holder.txtPrfPlace.setText(prfPlace);
+        holder.txtPrfGenre.setText(prfGenre);
+        holder.txtPrfState.setText(prfState);
+        holder.txtStEdDate.setText(stEdDate);
+        //holder.ratingBar.setRating(performance.getRating);
+
+
 
         // 글라이드 라이브러리 사용
-        Glide.with(context).load(imgUrl).placeholder(R.drawable.ic_image_not_supported).fitCenter().into(holder.imgPoster);
+        GlideUrl url = new GlideUrl(imgUrl,
+                new LazyHeaders.Builder().addHeader("User-Agent", "Android").build());
+        Glide.with(context).load(url).placeholder(R.drawable.ic_image_not_supported).fitCenter().into(holder.imgPoster);
     }
+
 
     @Override
     public int getItemCount() {
@@ -81,19 +104,26 @@ public class PerformanceSearchAdapter extends RecyclerView.Adapter<PerformanceSe
             cardView = itemView.findViewById(R.id.cardView);
             ratingBar = itemView.findViewById(R.id.ratingBar);
 
-//            // 카드뷰 클릭 이벤트
-//            cardView.setOnClickListener(view -> {
-//                // 유저가 몇번째 행을 클릭했는지 인덱스 저장
-//                int index = getAdapterPosition();
-//
-//                // 인덱스의 저장된 데이터 호출
-//                Posting posting = postingList.get(index);
-//
-//                // 수정하는 액티비티로 데이터 전달
-//                Intent intent = new Intent(context, EditPostingActivity.class);
-//                intent.putExtra("posting", posting);
-//                context.startActivity(intent);
-//            });
+            // 카드뷰 클릭 이벤트
+            cardView.setOnClickListener(view -> {
+                // 유저가 몇번째 행을 클릭했는지 인덱스 저장
+                int index = getAdapterPosition();
+
+                // 인덱스의 저장된 데이터 호출
+                KopisApiPerformance Performance = performanceList.get(index);
+                Log.i("recyclerView Adapter", "recycler Adapter index : " + index, null);
+
+                // 수정하는 액티비티로 데이터 전달 // 후에 상세정보 불러오기로 바꿔야함 // 우선 기본틀만
+                Intent intent = new Intent(context, EventInfoActivity.class);
+                intent.putExtra("mt20id",Performance.getPrfId());
+
+                Log.i("recyclerView Adapter 2", "Performance.getPrfId() : " + Performance.getPrfId(), null);
+
+                context.startActivity(intent);
+            });
+
         }
+
+
     }
 }
