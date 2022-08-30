@@ -60,7 +60,7 @@ public class HomeFragment extends Fragment {
     private ProgressDialog dialog;
 
     // 공연 검색 키워드
-    String prfName="", prfPlace="", prfGenre="", signgucode="";
+    String prfName="", prfPlace="", prfGenre="", signgucode="", signgusubcode="";
     int prfState=2; // 2=공연중
     String[] signguList = {"서울", "부산", "대구", "인천", "광주", "대전", "울산", "세종", "경기",
             "강원", "충북", "충남", "전북", "전남", "경북", "경남", "제주"};
@@ -363,7 +363,7 @@ public class HomeFragment extends Fragment {
 
         // 헤더에 설정 할 데이터 확인, 공유 저장소에 저장되어있는 토큰 호출
         // API 요청
-        Call<KopisApiPerformance> call = api.getPlaceSearch(currentTime, currentTime, cpage, rows, prfName, prfPlace, prfGenre, signgucode, prfState);
+        Call<KopisApiPerformance> call = api.getPerformance(currentTime, currentTime, cpage, rows, prfName, prfPlace, prfGenre, signgucode, signgusubcode, prfState);
 
         call.enqueue(new Callback<KopisApiPerformance>() {
             @Override
