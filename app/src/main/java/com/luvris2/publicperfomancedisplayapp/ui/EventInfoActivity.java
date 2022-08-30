@@ -47,8 +47,6 @@ public class EventInfoActivity extends AppCompatActivity {
     private String fcltynm;
     private String sty;
 
-    String Kopis_API_KEY = SAMPLE_API_KEY;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
