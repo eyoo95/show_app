@@ -33,6 +33,8 @@ public class NetworkClient {
                     .client(httpClient)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
+
+
         }
         return retrofit;
     }
