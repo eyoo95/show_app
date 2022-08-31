@@ -18,7 +18,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
             android:orientation="vertical">
 
             <TextView
@@ -27,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp"
-                android:fontFamily="@font/nanum_square_b"
+                android:fontFamily="@font/nanum_square_eb"
                 android:text="내 정보"
                 android:textSize="24sp" />
 
@@ -106,7 +109,8 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
-                        tools:src="@drawable/ic_mypage_rating" />
+                        android:src="@drawable/ic_mypage_rating"
+                        app:tint="#7AD7E1" />
 
                     <TextView
                         android:id="@+id/textView53"
@@ -132,8 +136,8 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
-                        tools:src="@drawable/ic_mypage_board"/>
-
+                        android:src="@drawable/ic_mypage_board"
+                        app:tint="#7AD7E1" />
 
 
                     <TextView
@@ -160,7 +164,8 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
-                        tools:src="@drawable/ic_mypage_like"/>
+                        android:src="@drawable/ic_mypage_like"
+                        app:tint="#7AD7E1" />
 
                     <TextView
                         android:id="@+id/txtMypageLike"
@@ -185,7 +190,8 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
-                        tools:src="@drawable/ic_mypage_analysis" />
+                        android:src="@drawable/ic_mypage_analysis"
+                        app:tint="#7AD7E1" />
 
                     <TextView
                         android:id="@+id/textView56"
@@ -218,7 +224,7 @@
                     android:textColor="#434343" />
 
                 <Button
-                    android:id="@+id/button9"
+                    android:id="@+id/btnMypageFeedback"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -228,13 +234,13 @@
                     android:textColor="#434343" />
 
                 <Button
-                    android:id="@+id/button11"
+                    android:id="@+id/btnMypageApp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:backgroundTint="#FFFFFF"
                     android:gravity="center|left"
-                    android:text="⭐ 앱 평점주기"
+                    android:text="⭐ 앱 별점주기"
                     android:textColor="#434343" />
 
             </LinearLayout>

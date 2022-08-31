@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,12 +66,17 @@ public class MyPageFragment extends Fragment {
     ImageView imgMypageLike; // 좋아요
     ImageView imgMypageAnalysis; // 취향분석
 
+    Button btnMypageFeedback; // 앱 피드백 보내기
+    Button btnMypageApp; // 앱 별점주기
+
     // 프로그레스 다이얼로그
     private ProgressDialog dialog;
     private String myEmail;
     private String myNickname;
     private int myAge;
     private int myGender;
+
+    private String getPackageName;
 
     public MyPageFragment() {
         // Required empty public constructor
@@ -118,11 +125,8 @@ public class MyPageFragment extends Fragment {
         imgMypageLike = rootView.findViewById(R.id.imgMypageLike);
         imgMypageAnalysis = rootView.findViewById(R.id.imgMypageAnalysis);
 
-//        imgMypageRating.setColorFilter(Color.parseColor("#7AD7E1"));
-//        imgMypagePosting.setColorFilter(Color.parseColor("#7AD7E1"));
-//        imgMypageLike.setColorFilter(Color.parseColor("#7AD7E1"));
-//        imgMypageAnalysis.setColorFilter(Color.parseColor("#7AD7E1"));
-
+        btnMypageFeedback = rootView.findViewById(R.id.btnMypageFeedback); // 앱 피드백
+        btnMypageApp = rootView.findViewById(R.id.btnMypageApp); // 앱 별점
 
 
         // 우저정보 화면에 보여주기
@@ -190,7 +194,37 @@ public class MyPageFragment extends Fragment {
             }
         });
         
-        // 취향분석
+//        // 취향분석
+//        imgMypageAnalysis.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
+
+        // 피드백보내기
+        btnMypageFeedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent email = new Intent(Intent.ACTION_SEND);
+                email.setType("plain/text");
+                String[] address = {"email@gmail.com"};
+                email.putExtra(Intent.EXTRA_EMAIL, address);
+                email.putExtra(Intent.EXTRA_SUBJECT, "보내질 email 제목");
+                email.putExtra(Intent.EXTRA_TEXT, "보낼 email 내용을 미리 적어 놓을 수 있습니다.\n");
+                startActivity(email);
+            }
+        });
+
+
+        // 앱 별점주기 (플레이스토어)
+        btnMypageApp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent browserIntent  =  new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id="));
+                startActivity(browserIntent);
+            }
+        });
 
 
         // 이 위에서 기능 작업하기

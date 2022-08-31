@@ -16,11 +16,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="right"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            app:srcCompat="@drawable/ic_back" />
+
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="30dp"
             android:fontFamily="@font/nanum_square_eb"
             android:gravity="center"
@@ -32,10 +41,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="30dp"
             android:layout_marginRight="30dp"
-            android:text="비밀번호"
-            android:fontFamily="@font/nanum_square_b"/>
+            android:fontFamily="@font/nanum_square_b"
+            android:text="비밀번호" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -216,9 +225,10 @@
 
         <Button
             android:id="@+id/btnWithdrawal"
-            android:layout_width="match_parent"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
             android:backgroundTint="#D61414"
             android:fontFamily="@font/nanum_square_b"
             android:minHeight="48dp"
