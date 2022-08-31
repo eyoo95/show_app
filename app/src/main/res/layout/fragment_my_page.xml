@@ -134,6 +134,8 @@
                         android:layout_gravity="center"
                         tools:src="@drawable/ic_mypage_board"/>
 
+
+
                     <TextView
                         android:id="@+id/textView54"
                         android:layout_width="match_parent"
