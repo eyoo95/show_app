@@ -2,13 +2,7 @@ package com.luvris2.publicperfomancedisplayapp.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -108,7 +106,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             myPosition = ((MainActivity)getActivity()).getLocation();
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myPosition, 16));
             googleMap.addMarker(new MarkerOptions().position(myPosition).title("내 위치"));
-            dismissProgressBar();
         });
     }
 
@@ -121,8 +118,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                 IconGenerator iconFactory = new IconGenerator(getActivity());
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(nearByPlacePosition)
-                        .title(nearByPerformanceList.get(i).getPrfName())
-                        .snippet(nearByPerformanceList.get(i).getPrfPlace());
+                            .title(nearByPerformanceList.get(i).getPrfName())
+                            .snippet(nearByPerformanceList.get(i).getPrfPlace());
                 googleMap.addMarker(markerOptions).setIcon(BitmapDescriptorFactory.fromBitmap(iconFactory.makeIcon(nearByPerformanceList.get(i).getPrfName())));
             }
         } else {
@@ -203,7 +200,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         }
 
         // 해당 공연 정보 표시
-
         Glide.with(getActivity()).load(nearByPerformanceDetail.getPosterUrl())
                 .placeholder(R.drawable.ic_image_not_supported).fitCenter().into(imgMapPerformancePoster);
         txtMapPerformanceTitle.setText(nearByPerformanceDetail.getPrfName());
