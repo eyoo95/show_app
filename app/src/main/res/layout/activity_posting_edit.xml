@@ -71,15 +71,6 @@
 
         </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/imageButton3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:backgroundTint="#FFFFFF"
-            app:srcCompat="@drawable/ic_add_photo"
-            tools:ignore="SpeakableTextPresentCheck" />
-
         <EditText
             android:id="@+id/editContent"
             android:layout_width="match_parent"

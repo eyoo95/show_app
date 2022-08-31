@@ -60,8 +60,8 @@ public class PostingMyAdapter extends RecyclerView.Adapter<PostingMyAdapter.View
 
             cardView = itemView.findViewById(R.id.cardView);
             txtTitle = itemView.findViewById(R.id.txtTitle);
-            txtCreatedAt = itemView.findViewById(R.id.txtCreatedAt);
-            txtContent = itemView.findViewById(R.id.txtContent);
+            txtCreatedAt = itemView.findViewById(R.id.txtMember);
+            txtContent = itemView.findViewById(R.id.txtPrfTitle);
 
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override

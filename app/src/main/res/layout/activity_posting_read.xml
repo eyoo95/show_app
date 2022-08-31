@@ -55,18 +55,8 @@
             android:minHeight="48dp"
             android:padding="10dp" />
 
-        <ImageView
-            android:id="@+id/imgBoardRead"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="30dp"
-            tools:src="@tools:sample/avatars" />
-
         <TextView
-            android:id="@+id/txtContent"
+            android:id="@+id/txtPrfTitle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"

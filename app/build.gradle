@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -59,11 +60,12 @@ dependencies {
     implementation "androidx.viewpager2:viewpager2:1.0.0"
     implementation 'me.relex:circleindicator:2.1.6'
 
-    // YoYo
-    implementation 'com.daimajia.androidanimations:library:2.4@aar'
+    //firebase
+    implementation platform('com.google.firebase:firebase-bom:30.3.1')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-database'
 
-    // camera
+    // Commons IO
     implementation 'commons-io:commons-io:2.4'
-
-
 }
+apply plugin: 'com.google.gms.google-services'

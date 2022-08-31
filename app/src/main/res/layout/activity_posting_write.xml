@@ -52,18 +52,6 @@
             android:hint="제목을 입력하세요"
             android:inputType="textPersonName" />
 
-        <ImageView
-            android:id="@+id/imgBoardRead"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="30dp"
-            android:background="@drawable/border"
-            android:tint="#E1E1E1"
-            tools:src="@drawable/ic_baseline_add_a_photo_24" />
-
         <EditText
             android:id="@+id/editTxtBoard"
             android:layout_width="match_parent"

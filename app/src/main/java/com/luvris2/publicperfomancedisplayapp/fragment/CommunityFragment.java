@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
 import com.luvris2.publicperfomancedisplayapp.api.PostingApi;
 import com.luvris2.publicperfomancedisplayapp.model.Posting;
 import com.luvris2.publicperfomancedisplayapp.model.PostingList;
+import com.luvris2.publicperfomancedisplayapp.ui.PartyActivity;
 import com.luvris2.publicperfomancedisplayapp.ui.PostingActivity;
 
 import java.util.ArrayList;
@@ -42,6 +44,7 @@ public class CommunityFragment extends Fragment {
     RecyclerView recyclerView;
     TextView txtFragEditor;
     ImageView imgBack;
+    Button btnParty;
 
     PostingAdapter adapter;
     ArrayList<Posting> postingList = new ArrayList<>();
@@ -99,6 +102,7 @@ public class CommunityFragment extends Fragment {
         // Inflate the layout for this fragment
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_community, container, false);
 
+        btnParty = rootView.findViewById(R.id.btnParty);
         txtFragBoard = rootView.findViewById(R.id.txtFragBoard);
         imgFragBoard = rootView.findViewById(R.id.imgFragBoard);
         txtFragEditor = rootView.findViewById(R.id.txtFragEditor);
@@ -106,6 +110,13 @@ public class CommunityFragment extends Fragment {
         recyclerView = rootView.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        btnParty.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().startActivity(new Intent(getActivity(), PartyActivity.class));
+            }
+        });
 
         txtFragBoard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,4 +171,16 @@ public class CommunityFragment extends Fragment {
             }
         });
     }
+
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//
+//        getNetworkData();
+//
+//        adapter = new PostingAdapter(getActivity(), postingList);
+//
+//        recyclerView.setAdapter(adapter);
+//
+//    }
 }

@@ -43,7 +43,7 @@ public class PostingReadActivity extends AppCompatActivity {
 
         imgBack = findViewById(R.id.imgBack);
         txtTitle = findViewById(R.id.txtTitle);
-        txtContent = findViewById(R.id.txtContent);
+        txtContent = findViewById(R.id.txtPrfTitle);
 
         txtTitle.setText(postingTitle);
         txtContent.setText(postingContent);
