@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:370341097290:android:1af5d881f541cc12eb1bb3",
+        "mobilesdk_app_id": "1:370341097290:android:aeaca599ff74f16deb1bb3",
         "android_client_info": {
-          "package_name": "com.ifif3526.chatapp"
+          "package_name": "com.luvris2.publicperfomancedisplayapp"
         }
       },
       "oauth_client": [

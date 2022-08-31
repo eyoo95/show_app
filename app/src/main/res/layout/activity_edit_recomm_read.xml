@@ -49,7 +49,7 @@
             tools:src="@tools:sample/avatars" />
 
         <EditText
-            android:id="@+id/txtContent"
+            android:id="@+id/txtPrfTitle"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:layout_gravity="center"
