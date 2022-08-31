@@ -19,7 +19,7 @@ import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
 import com.luvris2.publicperfomancedisplayapp.R;
 import com.luvris2.publicperfomancedisplayapp.model.KopisApiPerformance;
-import com.luvris2.publicperfomancedisplayapp.ui.EventInfoActivity;
+import com.luvris2.publicperfomancedisplayapp.ui.PerformanceInfoActivity;
 
 import java.util.List;
 
@@ -114,7 +114,7 @@ public class PerformanceSearchAdapter extends RecyclerView.Adapter<PerformanceSe
                 Log.i("recyclerView Adapter", "recycler Adapter index : " + index, null);
 
                 // 수정하는 액티비티로 데이터 전달 // 후에 상세정보 불러오기로 바꿔야함 // 우선 기본틀만
-                Intent intent = new Intent(context, EventInfoActivity.class);
+                Intent intent = new Intent(context, PerformanceInfoActivity.class);
                 intent.putExtra("mt20id",Performance.getPrfId());
 
                 Log.i("recyclerView Adapter 2", "Performance.getPrfId() : " + Performance.getPrfId(), null);

@@ -46,7 +46,7 @@
             android:name=".ui.MyReviewEditActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.EventInfoActivity"
+            android:name=".ui.PerformanceInfoActivity"
             android:exported="false" />
         <activity
             android:name=".ui.MyReviewActivity"

@@ -1,6 +1,5 @@
 package com.luvris2.publicperfomancedisplayapp.api;
 
-import com.luvris2.publicperfomancedisplayapp.model.KopisApiDetail;
 import com.luvris2.publicperfomancedisplayapp.model.KopisApiPerformance;
 
 import retrofit2.Call;
@@ -48,8 +47,4 @@ public interface KopisPerformanceApi {
                                                 @Query("cpage") int cpage,
                                                 @Query("rows") int rows,
                                                 @Query("prfstate") int prfstate);
-    // 공연 상세 검색
-    @GET("/performancedetail/{prfId}")
-    Call<KopisApiDetail> getDetailSearch(@Path("prfId")String prfId,
-                                         @Query("service") String service);
 }
