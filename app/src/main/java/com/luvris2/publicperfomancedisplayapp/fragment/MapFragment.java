@@ -57,7 +57,6 @@ import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
 import com.luvris2.publicperfomancedisplayapp.config.Config;
 import com.luvris2.publicperfomancedisplayapp.model.GoogleMapPlaceSearch;
 import com.luvris2.publicperfomancedisplayapp.model.KopisApiPerformance;
-import com.luvris2.publicperfomancedisplayapp.subclass.GlideApp;
 import com.luvris2.publicperfomancedisplayapp.ui.MainActivity;
 
 import java.io.IOException;

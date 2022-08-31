@@ -160,4 +160,16 @@ public class CommunityFragment extends Fragment {
             }
         });
     }
+
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//
+//        getNetworkData();
+//
+//        adapter = new PostingAdapter(getActivity(), postingList);
+//
+//        recyclerView.setAdapter(adapter);
+//
+//    }
 }
