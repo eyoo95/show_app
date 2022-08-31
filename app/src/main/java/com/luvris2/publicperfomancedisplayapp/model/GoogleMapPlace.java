@@ -1,27 +1,27 @@
 package com.luvris2.publicperfomancedisplayapp.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class GoogleMapPlace implements Serializable {
-
-    public GoogleMapPlace(Object plus_code) {
-        this.plus_code = plus_code;
+    public GoogleMapPlace(ArrayList<GoogleMapPlace> results) {
+        this.results = results;
     }
 
-    private Object plus_code;
-    private String compound_code;
+    private ArrayList<GoogleMapPlace> results;
+    private String formatted_address;
 
 
-    public String getCompound_code() {
-        return compound_code;
+    public String getFormatted_address() {
+        return formatted_address;
     }
-    public void setCompound_code(String compound_code) {
-        this.compound_code = compound_code;
+    public void setFormatted_address(String formatted_address) {
+        this.formatted_address = formatted_address;
     }
-    public Object getPlus_code() {
-        return plus_code;
+    public ArrayList<GoogleMapPlace> getResults() {
+        return results;
     }
-    public void setPlus_code(Object plus_code) {
-        this.plus_code = plus_code;
+    public void setResults(ArrayList<GoogleMapPlace> results) {
+        this.results = results;
     }
 }

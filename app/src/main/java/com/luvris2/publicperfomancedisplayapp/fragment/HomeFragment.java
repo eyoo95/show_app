@@ -43,9 +43,9 @@ import retrofit2.Retrofit;
 public class HomeFragment extends Fragment {
 
     TextView txtPlace, txtType;
-
-
+    private ViewGroup rootView;
     // 뷰페이저2 관련 변수
+
     private ViewPager2 mPager;
     private FragmentStateAdapter pagerAdapter;
     private int num_page = 4;
@@ -72,6 +72,7 @@ public class HomeFragment extends Fragment {
     // 공연 검색을 위한 스피너
     Spinner spinner;
     int spinnerNumber = 0; // 0=지역별, 1=유형별
+    public String poster;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -124,11 +125,12 @@ public class HomeFragment extends Fragment {
                 }
             }
 
-            // 페이지 클릭했을 때
+
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 mIndicator.animatePageSelected(position%num_page);
+
             }
 
         });
@@ -176,8 +178,10 @@ public class HomeFragment extends Fragment {
 
                 // 조건에 따른 공연 검색
                 getPerformanceData( prfName, prfPlace, prfGenre, signgucode, 2);
-
             }
+
+
+
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) { }
@@ -198,6 +202,8 @@ public class HomeFragment extends Fragment {
             txtPlace.setBackgroundColor(Color.parseColor("#ffffff"));
             spinner.setAdapter(typeArrayAdapter);
         });
+
+
 
 
         imgSearch.setOnClickListener(view -> {
@@ -364,7 +370,6 @@ public class HomeFragment extends Fragment {
         // 헤더에 설정 할 데이터 확인, 공유 저장소에 저장되어있는 토큰 호출
         // API 요청
         Call<KopisApiPerformance> call = api.getPlaceSearch(currentTime, currentTime, cpage, rows, prfName, prfPlace, prfGenre, signgucode, prfState);
-
         call.enqueue(new Callback<KopisApiPerformance>() {
             @Override
             public void onResponse(@NonNull Call<KopisApiPerformance> call, @NonNull Response<KopisApiPerformance> response) {
@@ -379,7 +384,10 @@ public class HomeFragment extends Fragment {
                     else { performanceList.clear(); }
                     adapter = new PerformanceSearchAdapter(getActivity(), performanceList);
                     recyclerView.setAdapter(adapter);
+
+
                 }
+
                 // 진행중인 공연이 없을 경우 메시지 출력
                 else if(response.code() == 500) {
                     Toast.makeText(getActivity(), "현재 진행중인 공연이 없습니다.", Toast.LENGTH_LONG).show();
@@ -388,6 +396,7 @@ public class HomeFragment extends Fragment {
                     recyclerView.setAdapter(adapter);
                 }
             }
+
             @Override
             public void onFailure(@NonNull Call<KopisApiPerformance> call, @NonNull Throwable t) {
                 dismissProgress();

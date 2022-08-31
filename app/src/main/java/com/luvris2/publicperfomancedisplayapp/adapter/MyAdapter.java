@@ -8,7 +8,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.luvris2.publicperfomancedisplayapp.fragment.HomePagerFirst;
 import com.luvris2.publicperfomancedisplayapp.fragment.HomePagerFourth;
 import com.luvris2.publicperfomancedisplayapp.fragment.HomePagerThird;
-import com.luvris2.publicperfomancedisplayapp.fragment.HomePagersecond;
+import com.luvris2.publicperfomancedisplayapp.fragment.HomePagerSecond;
 
 public class MyAdapter extends FragmentStateAdapter {
 
@@ -25,7 +25,7 @@ public class MyAdapter extends FragmentStateAdapter {
         int index = getRealPosition(position);
 
         if(index==0) return new HomePagerFirst();
-        else if(index==1) return new HomePagersecond();
+        else if(index==1) return new HomePagerSecond();
         else if(index==2) return new HomePagerThird();
         else return new HomePagerFourth();
 

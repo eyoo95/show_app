@@ -58,6 +58,7 @@ public class PostingActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(PostingActivity.this, PostingWriteActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 

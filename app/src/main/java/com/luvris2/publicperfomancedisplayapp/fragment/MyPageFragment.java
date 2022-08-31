@@ -19,8 +19,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.luvris2.publicperfomancedisplayapp.ui.LoginActivity;
 import com.luvris2.publicperfomancedisplayapp.R;
+import com.luvris2.publicperfomancedisplayapp.ui.MyReviewActivity;
 import com.luvris2.publicperfomancedisplayapp.ui.UserEditActivity;
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
 import com.luvris2.publicperfomancedisplayapp.api.UserApi;
@@ -57,7 +60,7 @@ public class MyPageFragment extends Fragment {
     TextView txtEmail;
 
     ImageView imgMypageRating; // 별점 (리뷰)
-    ImageView imgMypageBoard; // 내가 쓴 글 (자유게시판)
+    ImageView imgMypagePosting; // 내가 쓴 글 (자유게시판)
     ImageView imgMypageLike; // 좋아요
     ImageView imgMypageAnalysis; // 취향분석
 
@@ -111,12 +114,16 @@ public class MyPageFragment extends Fragment {
         txtEmail = rootView.findViewById(R.id.txtMyEmail);
 
         imgMypageRating = rootView.findViewById(R.id.imgMypageRating);
-        imgMypageBoard = rootView.findViewById(R.id.imgMypageBoard);
+        imgMypagePosting = rootView.findViewById(R.id.imgMypagePosting);
         imgMypageLike = rootView.findViewById(R.id.imgMypageLike);
         imgMypageAnalysis = rootView.findViewById(R.id.imgMypageAnalysis);
 
-        // 버튼 색 리셋
-        imgEditUser.setColorFilter(Color.parseColor("#E1E1E1"));
+//        imgMypageRating.setColorFilter(Color.parseColor("#7AD7E1"));
+//        imgMypagePosting.setColorFilter(Color.parseColor("#7AD7E1"));
+//        imgMypageLike.setColorFilter(Color.parseColor("#7AD7E1"));
+//        imgMypageAnalysis.setColorFilter(Color.parseColor("#7AD7E1"));
+
+
 
         // 우저정보 화면에 보여주기
 
@@ -147,7 +154,7 @@ public class MyPageFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                imgEditUser.setColorFilter(Color.parseColor("#378C95"));
+                YoYo.with(Techniques.Pulse).duration(400).repeat(0).playOn(imgEditUser);
 
                 Intent intent = new Intent(getActivity(), UserEditActivity.class);
                 startActivity(intent);
@@ -155,10 +162,18 @@ public class MyPageFragment extends Fragment {
             }
         });
 
-        // 내 별점 (리뷰)
+        // 내 별점 (리뷰) 버튼
+        imgMypageRating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), MyReviewActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         // 내가 작성한 글 (자유게시판)
-        imgMypageBoard.setOnClickListener(new View.OnClickListener() {
+        imgMypagePosting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), PostingMyActivity.class);

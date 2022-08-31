@@ -55,7 +55,6 @@
                 android:layout_weight="8"
                 android:background="@drawable/round_layout"
                 android:ems="10"
-                android:fontFamily="@font/nanum_square_r"
                 android:hint="변경할 비밀번호"
                 android:inputType="textPassword"
                 android:maxLength="12"

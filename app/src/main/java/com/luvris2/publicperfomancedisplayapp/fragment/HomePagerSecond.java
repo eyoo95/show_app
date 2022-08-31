@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment;
 import com.luvris2.publicperfomancedisplayapp.R;
 
 
-public class HomePagersecond extends Fragment {
+public class HomePagerSecond extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

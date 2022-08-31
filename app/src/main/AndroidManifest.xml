@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.luvris2.publicperfomancedisplayapp">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -29,12 +31,6 @@
             android:name=".ui.EditorRecommActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.MyWritingEditActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.MyWritingActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.PostingActivity"
             android:exported="false" />
         <activity
@@ -50,10 +46,13 @@
             android:name=".ui.PostingWriteActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.EditReviewActivity"
+            android:name=".ui.MyReviewEditActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.EventInfoActivity"
+            android:name=".ui.PerformanceInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.MyReviewActivity"
             android:exported="false" />
         <activity
             android:name=".ui.AnalysisLoadingActivity"

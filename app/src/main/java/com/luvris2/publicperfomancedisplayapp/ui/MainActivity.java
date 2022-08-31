@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,14 +18,13 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 import com.luvris2.publicperfomancedisplayapp.R;
 import com.luvris2.publicperfomancedisplayapp.api.GoogleMapApi;
+import com.luvris2.publicperfomancedisplayapp.api.KopisPerformanceApi;
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
 import com.luvris2.publicperfomancedisplayapp.config.Config;
 import com.luvris2.publicperfomancedisplayapp.fragment.CommunityFragment;
@@ -32,8 +32,12 @@ import com.luvris2.publicperfomancedisplayapp.fragment.HomeFragment;
 import com.luvris2.publicperfomancedisplayapp.fragment.MapFragment;
 import com.luvris2.publicperfomancedisplayapp.fragment.MyPageFragment;
 import com.luvris2.publicperfomancedisplayapp.model.GoogleMapPlace;
+import com.luvris2.publicperfomancedisplayapp.model.KopisApiPerformance;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -59,7 +63,10 @@ public class MainActivity extends AppCompatActivity {
     LocationListener locationListener;
     Location location;
     double gpsX, gpsY;
-    Object mySidoLocation;
+    String mySidoLocation;
+
+    // 내 위치 주변 공연 정보 저장
+    ArrayList<KopisApiPerformance> nearByPerformanceList = new ArrayList<>();
 
     // 프로그레스 다이얼로그
     ProgressDialog progressDialog;
@@ -92,61 +99,61 @@ public class MainActivity extends AppCompatActivity {
         myPageFragment = new MyPageFragment();
 
         // 탭 메뉴 클릭시 이벤트
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int itemId = item.getItemId();
-                // 메뉴 선택시 이동 할 프래그먼트의 이름을 저장 할 변수
-                Fragment fragment = null;
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            // 메뉴 선택시 이동 할 프래그먼트의 이름을 저장 할 변수
+            Fragment fragment = null;
 
-                if (itemId == R.id.menuHome) {
-                    // 메뉴 선택시 지정된 프래그먼트로 이동
-                    fragment = homeFragment;
-                    // 프래그먼트의 액션바 타이틀 설정
-                    getSupportActionBar().setTitle("홈");
-                    getSupportActionBar().show();
+            if (itemId == R.id.menuHome) {
+                // 메뉴 선택시 지정된 프래그먼트로 이동
+                fragment = homeFragment;
+                // 프래그먼트의 액션바 타이틀 설정
+                getSupportActionBar().setTitle("홈");
+                getSupportActionBar().show();
 
-                    // 메뉴 선택시 아이콘 이미지 변경
-                    item.setIcon(R.drawable.tap_menu_icon_home_fill);
-                    // 선택되지 않은 메뉴의 아이콘 이미지 변경
-                    bottomNavigationView.getMenu().findItem(R.id.menuMap).setIcon(R.drawable.tap_menu_icon_map);
-                    bottomNavigationView.getMenu().findItem(R.id.menuCommunity).setIcon(R.drawable.tap_menu_icon_community);
-                    bottomNavigationView.getMenu().findItem(R.id.menuMyPage).setIcon(R.drawable.tap_menu_icon_my_page);
-                }
-                else if (item.getItemId() == R.id.menuMap) {
-                    fragment = mapFragment;
-                    getSupportActionBar().setTitle("내 주변 공연/전시 찾기");
-                    getSupportActionBar().show();
-                    item.setIcon(R.drawable.tap_menu_icon_map_fill);
-                    bottomNavigationView.getMenu().findItem(R.id.menuHome).setIcon(R.drawable.tap_menu_icon_home);
-                    bottomNavigationView.getMenu().findItem(R.id.menuCommunity).setIcon(R.drawable.tap_menu_icon_community);
-                    bottomNavigationView.getMenu().findItem(R.id.menuMyPage).setIcon(R.drawable.tap_menu_icon_my_page);
-                }
-                else if (item.getItemId() == R.id.menuCommunity) {
-                    fragment = communityFragment;
-                    getSupportActionBar().setTitle("커뮤니티");
-                    getSupportActionBar().show();
-                    item.setIcon(R.drawable.tap_menu_icon_map_fill);
-                    item.setIcon(R.drawable.tap_menu_icon_community_fill);
-                    bottomNavigationView.getMenu().findItem(R.id.menuHome).setIcon(R.drawable.tap_menu_icon_home);
-                    bottomNavigationView.getMenu().findItem(R.id.menuMap).setIcon(R.drawable.tap_menu_icon_map);
-                    bottomNavigationView.getMenu().findItem(R.id.menuMyPage).setIcon(R.drawable.tap_menu_icon_my_page);
-                }
-                else if (item.getItemId() == R.id.menuMyPage) {
-                    fragment = myPageFragment;
-                    getSupportActionBar().setTitle("내 정보");
-                    getSupportActionBar().show();
-                    item.setIcon(R.drawable.tap_menu_icon_my_page_fill);
-                    bottomNavigationView.getMenu().findItem(R.id.menuHome).setIcon(R.drawable.tap_menu_icon_home);
-                    bottomNavigationView.getMenu().findItem(R.id.menuMap).setIcon(R.drawable.tap_menu_icon_map);
-                    bottomNavigationView.getMenu().findItem(R.id.menuCommunity).setIcon(R.drawable.tap_menu_icon_community);
-                }
-                return loadFragment(fragment);
+                // 메뉴 선택시 아이콘 이미지 변경
+                item.setIcon(R.drawable.tap_menu_icon_home_fill);
+                // 선택되지 않은 메뉴의 아이콘 이미지 변경
+                bottomNavigationView.getMenu().findItem(R.id.menuMap).setIcon(R.drawable.tap_menu_icon_map);
+                bottomNavigationView.getMenu().findItem(R.id.menuCommunity).setIcon(R.drawable.tap_menu_icon_community);
+                bottomNavigationView.getMenu().findItem(R.id.menuMyPage).setIcon(R.drawable.tap_menu_icon_my_page);
             }
+            else if (item.getItemId() == R.id.menuMap) {
+                fragment = mapFragment;
+                getSupportActionBar().setTitle("내 주변 공연/전시 찾기");
+                getSupportActionBar().show();
+                item.setIcon(R.drawable.tap_menu_icon_map_fill);
+                bottomNavigationView.getMenu().findItem(R.id.menuHome).setIcon(R.drawable.tap_menu_icon_home);
+                bottomNavigationView.getMenu().findItem(R.id.menuCommunity).setIcon(R.drawable.tap_menu_icon_community);
+                bottomNavigationView.getMenu().findItem(R.id.menuMyPage).setIcon(R.drawable.tap_menu_icon_my_page);
+            }
+            else if (item.getItemId() == R.id.menuCommunity) {
+                fragment = communityFragment;
+                getSupportActionBar().setTitle("커뮤니티");
+                getSupportActionBar().show();
+                item.setIcon(R.drawable.tap_menu_icon_map_fill);
+                item.setIcon(R.drawable.tap_menu_icon_community_fill);
+                bottomNavigationView.getMenu().findItem(R.id.menuHome).setIcon(R.drawable.tap_menu_icon_home);
+                bottomNavigationView.getMenu().findItem(R.id.menuMap).setIcon(R.drawable.tap_menu_icon_map);
+                bottomNavigationView.getMenu().findItem(R.id.menuMyPage).setIcon(R.drawable.tap_menu_icon_my_page);
+            }
+            else if (item.getItemId() == R.id.menuMyPage) {
+                fragment = myPageFragment;
+                getSupportActionBar().setTitle("내 정보");
+                getSupportActionBar().show();
+                item.setIcon(R.drawable.tap_menu_icon_my_page_fill);
+                bottomNavigationView.getMenu().findItem(R.id.menuHome).setIcon(R.drawable.tap_menu_icon_home);
+                bottomNavigationView.getMenu().findItem(R.id.menuMap).setIcon(R.drawable.tap_menu_icon_map);
+                bottomNavigationView.getMenu().findItem(R.id.menuCommunity).setIcon(R.drawable.tap_menu_icon_community);
+            }
+            return loadFragment(fragment);
         });
 
         Log.i("MyTestMainActivity", "getLocation");
+
+        // 내 위치 정보 확인하여 5km 이내의 공연 검색
         getLocation();
+
         // todo : onLocationChanged
 
         // GPS 사용 권한 확인 및 요청
@@ -180,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
                     gpsX = location.getLatitude();
                     gpsY = location.getLongitude();
                     locationManager.removeUpdates(locationListener);
+                    Log.i("MyTestMainActivity", "onLocationChanged "+gpsX+gpsY);
                 }
                 @Override
                 public void onProviderEnabled(@NonNull String provider) { }
@@ -211,8 +219,6 @@ public class MainActivity extends AppCompatActivity {
 
     // Google Maps API를 통한 내 현재 위치의 지역 정보 추출
     public String getMySidoLocation(LatLng location) {
-        showProgressBar("내 지역 정보를 확인중입니다. 잠시만 기다려주세요.");
-
         Retrofit retrofit = NetworkClient.getRetrofitGoogleMaps(MainActivity.this);
         GoogleMapApi api = retrofit.create(GoogleMapApi.class);
 
@@ -222,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
         // Retrofit 값을 바로 저장하기 위한 동기 처리
         new Thread(() -> {
             try {
-                mySidoLocation = call.execute().body().getPlus_code();
+                mySidoLocation = call.execute().body().getResults().get(1).getFormatted_address();
                 Log.i("MyTest Location Geocode", "" + mySidoLocation );
             } catch (IOException e) {
                 e.printStackTrace();
@@ -232,49 +238,172 @@ public class MainActivity extends AppCompatActivity {
         // API 응답에 따른 약간의 대기 시간 설정
         try {
             Thread.sleep(1000);
-            dismissProgressBar();
         } catch (InterruptedException e) {
             e.printStackTrace();
-            dismissProgressBar();
         }
+        return sidoSubClassify(mySidoLocation);
+    }
 
-        // 지역 확인 후 지역 코드 변환
-        if (mySidoLocation.toString().contains("서울특별시")) {
+    // 지역 확인 후 지역 코드 변환
+    private String sidoClassify(String sidoLocation) {
+        Log.i("MyTest sidoclassify", "" + sidoLocation );
+        if (sidoLocation.contains("서울특별시")) {
             return "11";
-        } else if (mySidoLocation.toString().contains("부산광역시")) {
+        } else if (sidoLocation.contains("부산광역시")) {
             return "26";
-        } else if (mySidoLocation.toString().contains("대구광역시")) {
+        } else if (sidoLocation.contains("대구광역시")) {
             return "27";
-        } else if (mySidoLocation.toString().contains("인천광역시")) {
+        } else if (sidoLocation.contains("인천광역시")) {
             return "28";
-        } else if (mySidoLocation.toString().contains("광주광역시")) {
+        } else if (sidoLocation.contains("광주광역시")) {
             return "29";
-        } else if (mySidoLocation.toString().contains("대전광역시")) {
+        } else if (sidoLocation.contains("대전광역시")) {
             return "30";
-        } else if (mySidoLocation.toString().contains("울산광역시")) {
+        } else if (sidoLocation.contains("울산광역시")) {
             return "31";
-        } else if (mySidoLocation.toString().contains("세종특별자치시")) {
+        } else if (sidoLocation.contains("세종특별자치시")) {
             return "36";
-        } else if (mySidoLocation.toString().contains("경기도")) {
+        } else if (sidoLocation.contains("경기도")) {
             return "41";
-        } else if (mySidoLocation.toString().contains("강원도")) {
+        } else if (sidoLocation.contains("강원도")) {
             return "42";
-        } else if (mySidoLocation.toString().contains("충청북도")) {
+        } else if (sidoLocation.contains("충청북도")) {
             return "43";
-        } else if (mySidoLocation.toString().contains("충청남도")) {
+        } else if (sidoLocation.contains("충청남도")) {
             return "44";
-        } else if (mySidoLocation.toString().contains("전라북도")) {
+        } else if (sidoLocation.contains("전라북도")) {
             return "45";
-        } else if (mySidoLocation.toString().contains("전라남도")) {
+        } else if (sidoLocation.contains("전라남도")) {
             return "46";
-        } else if (mySidoLocation.toString().contains("경상북도")) {
+        } else if (sidoLocation.contains("경상북도")) {
             return "47";
-        } else if (mySidoLocation.toString().contains("경상남도")) {
+        } else if (sidoLocation.contains("경상남도")) {
             return "48";
-        } else if (mySidoLocation.toString().contains("제주특별자치도")) {
+        } else if (sidoLocation.contains("제주특별자치도")) {
             return "50";
         }
         return "error";
+    }
+
+    // 지역 확인 후 지역 코드 변환
+    private String sidoSubClassify(String sidoSubLocation) {
+        Log.i("MyTest sidoclassify", "" + sidoSubLocation );
+        if (sidoSubLocation.contains("서울특별시 종로구")) {
+            return "1111";
+        } else if (sidoSubLocation.contains("서울특별시 중구")) {
+            return "1114";
+        } else if (sidoSubLocation.contains("서울특별시 용산구")) {
+            return "1117";
+        } else if (sidoSubLocation.contains("서울특별시 성동구")) {
+            return "1120";
+        } else if (sidoSubLocation.contains("서울특별시 광진구")) {
+            return "1121";
+        } else if (sidoSubLocation.contains("서울특별시 동대문구")) {
+            return "1123";
+        } else if (sidoSubLocation.contains("서울특별시 중랑구")) {
+            return "1126";
+        } else if (sidoSubLocation.contains("서울특별시 성북구")) {
+            return "1129";
+        } else if (sidoSubLocation.contains("서울특별시 강북구")) {
+            return "1130";
+        } else if (sidoSubLocation.contains("서울특별시 도봉구")) {
+            return "1132";
+        } else if (sidoSubLocation.contains("서울특별시 노원구")) {
+            return "1135";
+        } else if (sidoSubLocation.contains("서울특별시 은평구")) {
+            return "1138";
+        } else if (sidoSubLocation.contains("서울특별시 서대문구")) {
+            return "1141";
+        } else if (sidoSubLocation.contains("서울특별시 마포구")) {
+            return "1144";
+        } else if (sidoSubLocation.contains("서울특별시 양천구")) {
+            return "1147";
+        } else if (sidoSubLocation.contains("서울특별시 강서구")) {
+            return "1150";
+        } else if (sidoSubLocation.contains("서울특별시 구로구")) {
+            return "1153";
+        } else if (sidoSubLocation.contains("서울특별시 금천구")) {
+            return "1154";
+        } else if (sidoSubLocation.contains("서울특별시 영등포구")) {
+            return "1156";
+        } else if (sidoSubLocation.contains("서울특별시 동작구")) {
+            return "1159";
+        } else if (sidoSubLocation.contains("서울특별시 관악구")) {
+            return "1162";
+        } else if (sidoSubLocation.contains("서울특별시 서초구")) {
+            return "1165";
+        } else if (sidoSubLocation.contains("서울특별시 강남구")) {
+            return "1168";
+        } else if (sidoSubLocation.contains("서울특별시 송파구")) {
+            return "1171";
+        } else if (sidoSubLocation.contains("서울특별시 강동구")) {
+            return "1174";
+        } else if (sidoSubLocation.contains("부산광역시")) {
+            return "2600";
+        } else if (sidoSubLocation.contains("부산광역시 중구")) {
+            return "2611";
+        } else if (sidoSubLocation.contains("부산광역시 서구")) {
+            return "2614";
+        } else if (sidoSubLocation.contains("부산광역시 동구")) {
+            return "2617";
+        } else if (sidoSubLocation.contains("부산광역시 영도구")) {
+            return "2620";
+        } else if (sidoSubLocation.contains("부산광역시 부산진구")) {
+            return "2623";
+        } else if (sidoSubLocation.contains("부산광역시 동래구")) {
+            return "2626";
+        } else if (sidoSubLocation.contains("부산광역시 남구")) {
+            return "2629";
+        } else if (sidoSubLocation.contains("부산광역시 북구")) {
+            return "2632";
+        } else if (sidoSubLocation.contains("부산광역시 해운대구")) {
+            return "2635";
+        } else if (sidoSubLocation.contains("부산광역시 사하구")) {
+            return "2638";
+        } else if (sidoSubLocation.contains("부산광역시 금정구")) {
+            return "2641";
+        } else if (sidoSubLocation.contains("부산광역시 강서구")) {
+            return "2644";
+        } else if (sidoSubLocation.contains("부산광역시 연제구")) {
+            return "2647";
+        } else if (sidoSubLocation.contains("부산광역시 수영구")) {
+            return "2650";
+        } else if (sidoSubLocation.contains("부산광역시 사상구")) {
+            return "2653";
+        } else if (sidoSubLocation.contains("부산광역시 기장군")) {
+            return "2671";
+        } else if (sidoSubLocation.contains("대구광역시")) {
+            return "2700";
+        }
+
+        return "error";
+    }
+
+    // 내 지역(구) 공연 찾기
+    public ArrayList<KopisApiPerformance> nearByPerformanceSearch(String sidoCodeSub) {
+        Log.i("MyTest nearByPlace sido", ""+ sidoCodeSub);
+
+        // 네트워크로 데이터 전송, Retrofit 객체 생성
+        Retrofit retrofit = NetworkClient.getRetrofitClient(MainActivity.this);
+        KopisPerformanceApi api = retrofit.create(KopisPerformanceApi.class);
+        Call<KopisApiPerformance> call = (Call<KopisApiPerformance>) api.nearByPlaceSearch(sidoCodeSub, getCurrentTime(), getCurrentTime(), 1, 999, 2);
+
+        // Retrofit 값을 바로 저장하기 위한 동기 처리
+        new Thread(() -> {
+            try {
+                nearByPerformanceList = call.execute().body().getResultList();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+
+        // API 응답에 따른 약간의 대기 시간 설정
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return nearByPerformanceList;
     }
 
     // GPS 기능 설정 대화 상자 출력
@@ -323,6 +452,14 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    // todo : 현재 시간을 구하는 메소드
+    public String getCurrentTime() {
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+        return dateFormat.format(date);
     }
 
     // 위치 정보 수신 대기를 위한 프로그레스 다이얼로그
