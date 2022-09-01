@@ -33,6 +33,7 @@ import com.luvris2.publicperfomancedisplayapp.fragment.MapFragment;
 import com.luvris2.publicperfomancedisplayapp.fragment.MyPageFragment;
 import com.luvris2.publicperfomancedisplayapp.model.GoogleMapPlace;
 import com.luvris2.publicperfomancedisplayapp.model.KopisApiPerformance;
+import com.luvris2.publicperfomancedisplayapp.resource.SidoSubClassify;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -54,11 +55,6 @@ public class MainActivity extends AppCompatActivity {
     Fragment mapFragment;
     Fragment communityFragment;
     Fragment myPageFragment;
-
-    private String myEmail;
-    private String myNickname;
-    private int myAge;
-    private int myGender;
 
     // GPS 관련 변수
     LocationManager locationManager;
@@ -129,7 +125,6 @@ public class MainActivity extends AppCompatActivity {
                 bottomNavigationView.getMenu().findItem(R.id.menuCommunity).setIcon(R.drawable.tap_menu_icon_community);
                 bottomNavigationView.getMenu().findItem(R.id.menuMyPage).setIcon(R.drawable.tap_menu_icon_my_page);
                 showProgressBar("위치 정보를 확인중입니다. 잠시만 기다려주세요.", 10000);
-
             }
             else if (item.getItemId() == R.id.menuCommunity) {
                 fragment = communityFragment;
@@ -155,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
 
         Log.i("MyTestMainActivity", "getLocation");
 
-        // 내 위치 정보 확인하여 5km 이내의 공연 검색
+        // 내 지역(구군) 공연 검색
         getLocation();
 
         // todo : onLocationChanged
@@ -210,8 +205,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 if (isNetworkEnabled) {
                     Log.i("MyTestMainActivity", "In getLocation Method NetworkProvider");
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, locationListener); // 에뮬레이터 문제로 테스트만 이대로 진행
-//                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, locationListener);
+                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, locationListener);  // 테스트 끝나고 NETWORK_PROVIDER
                 } else {
                     if (location == null) {
                         Log.i("MyTestMainActivity", "In getLocation Method GpsProvider");
@@ -246,142 +240,8 @@ public class MainActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return sidoSubClassify(mySidoLocation);
-    }
 
-    // 지역 확인 후 지역 코드 변환
-    private String sidoClassify(String sidoLocation) {
-        Log.i("MyTest sidoclassify", "" + sidoLocation );
-        if (sidoLocation.contains("서울특별시")) {
-            return "11";
-        } else if (sidoLocation.contains("부산광역시")) {
-            return "26";
-        } else if (sidoLocation.contains("대구광역시")) {
-            return "27";
-        } else if (sidoLocation.contains("인천광역시")) {
-            return "28";
-        } else if (sidoLocation.contains("광주광역시")) {
-            return "29";
-        } else if (sidoLocation.contains("대전광역시")) {
-            return "30";
-        } else if (sidoLocation.contains("울산광역시")) {
-            return "31";
-        } else if (sidoLocation.contains("세종특별자치시")) {
-            return "36";
-        } else if (sidoLocation.contains("경기도")) {
-            return "41";
-        } else if (sidoLocation.contains("강원도")) {
-            return "42";
-        } else if (sidoLocation.contains("충청북도")) {
-            return "43";
-        } else if (sidoLocation.contains("충청남도")) {
-            return "44";
-        } else if (sidoLocation.contains("전라북도")) {
-            return "45";
-        } else if (sidoLocation.contains("전라남도")) {
-            return "46";
-        } else if (sidoLocation.contains("경상북도")) {
-            return "47";
-        } else if (sidoLocation.contains("경상남도")) {
-            return "48";
-        } else if (sidoLocation.contains("제주특별자치도")) {
-            return "50";
-        }
-        return "error";
-    }
-
-    // 지역 확인 후 지역 코드 변환
-    private String sidoSubClassify(String sidoSubLocation) {
-        Log.i("MyTest sidoclassify", "" + sidoSubLocation );
-        if (sidoSubLocation.contains("서울특별시 종로구")) {
-            return "1111";
-        } else if (sidoSubLocation.contains("서울특별시 중구")) {
-            return "1114";
-        } else if (sidoSubLocation.contains("서울특별시 용산구")) {
-            return "1117";
-        } else if (sidoSubLocation.contains("서울특별시 성동구")) {
-            return "1120";
-        } else if (sidoSubLocation.contains("서울특별시 광진구")) {
-            return "1121";
-        } else if (sidoSubLocation.contains("서울특별시 동대문구")) {
-            return "1123";
-        } else if (sidoSubLocation.contains("서울특별시 중랑구")) {
-            return "1126";
-        } else if (sidoSubLocation.contains("서울특별시 성북구")) {
-            return "1129";
-        } else if (sidoSubLocation.contains("서울특별시 강북구")) {
-            return "1130";
-        } else if (sidoSubLocation.contains("서울특별시 도봉구")) {
-            return "1132";
-        } else if (sidoSubLocation.contains("서울특별시 노원구")) {
-            return "1135";
-        } else if (sidoSubLocation.contains("서울특별시 은평구")) {
-            return "1138";
-        } else if (sidoSubLocation.contains("서울특별시 서대문구")) {
-            return "1141";
-        } else if (sidoSubLocation.contains("서울특별시 마포구")) {
-            return "1144";
-        } else if (sidoSubLocation.contains("서울특별시 양천구")) {
-            return "1147";
-        } else if (sidoSubLocation.contains("서울특별시 강서구")) {
-            return "1150";
-        } else if (sidoSubLocation.contains("서울특별시 구로구")) {
-            return "1153";
-        } else if (sidoSubLocation.contains("서울특별시 금천구")) {
-            return "1154";
-        } else if (sidoSubLocation.contains("서울특별시 영등포구")) {
-            return "1156";
-        } else if (sidoSubLocation.contains("서울특별시 동작구")) {
-            return "1159";
-        } else if (sidoSubLocation.contains("서울특별시 관악구")) {
-            return "1162";
-        } else if (sidoSubLocation.contains("서울특별시 서초구")) {
-            return "1165";
-        } else if (sidoSubLocation.contains("서울특별시 강남구")) {
-            return "1168";
-        } else if (sidoSubLocation.contains("서울특별시 송파구")) {
-            return "1171";
-        } else if (sidoSubLocation.contains("서울특별시 강동구")) {
-            return "1174";
-        } else if (sidoSubLocation.contains("부산광역시")) {
-            return "2600";
-        } else if (sidoSubLocation.contains("부산광역시 중구")) {
-            return "2611";
-        } else if (sidoSubLocation.contains("부산광역시 서구")) {
-            return "2614";
-        } else if (sidoSubLocation.contains("부산광역시 동구")) {
-            return "2617";
-        } else if (sidoSubLocation.contains("부산광역시 영도구")) {
-            return "2620";
-        } else if (sidoSubLocation.contains("부산광역시 부산진구")) {
-            return "2623";
-        } else if (sidoSubLocation.contains("부산광역시 동래구")) {
-            return "2626";
-        } else if (sidoSubLocation.contains("부산광역시 남구")) {
-            return "2629";
-        } else if (sidoSubLocation.contains("부산광역시 북구")) {
-            return "2632";
-        } else if (sidoSubLocation.contains("부산광역시 해운대구")) {
-            return "2635";
-        } else if (sidoSubLocation.contains("부산광역시 사하구")) {
-            return "2638";
-        } else if (sidoSubLocation.contains("부산광역시 금정구")) {
-            return "2641";
-        } else if (sidoSubLocation.contains("부산광역시 강서구")) {
-            return "2644";
-        } else if (sidoSubLocation.contains("부산광역시 연제구")) {
-            return "2647";
-        } else if (sidoSubLocation.contains("부산광역시 수영구")) {
-            return "2650";
-        } else if (sidoSubLocation.contains("부산광역시 사상구")) {
-            return "2653";
-        } else if (sidoSubLocation.contains("부산광역시 기장군")) {
-            return "2671";
-        } else if (sidoSubLocation.contains("대구광역시")) {
-            return "2700";
-        }
-
-        return "error";
+        return SidoSubClassify.sidoSubClassify(mySidoLocation);
     }
 
     // 내 지역(구) 공연 찾기
@@ -404,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
 
         // API 응답에 따른 약간의 대기 시간 설정
         try {
-            Thread.sleep(10000);
+            Thread.sleep(12000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

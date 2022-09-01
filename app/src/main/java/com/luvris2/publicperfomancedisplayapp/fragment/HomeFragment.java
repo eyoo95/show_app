@@ -65,9 +65,9 @@ public class HomeFragment extends Fragment {
     // 공연 검색 키워드
     String prfTime="", prfName="", prfPlace="", prfGenre="", signgucode="", signgusubcode="";
     int prfState=2; // 2=공연중
-    String[] signguList = {"", "서울", "부산", "대구", "인천", "광주", "대전", "울산", "세종", "경기",
+    String[] signguList = {"서울", "부산", "대구", "인천", "광주", "대전", "울산", "세종", "경기",
             "강원", "충북", "충남", "전북", "전남", "경북", "경남", "제주"};
-    String[] genreList = {"", "연극", "뮤지컬" , "무용", "클래식", "오페라", "국악", "복합"};
+    String[] genreList = {"연극", "뮤지컬" , "무용", "클래식", "오페라", "국악", "복합"};
 
     // 공연 검색 아이콘
     ImageView imgSearch;
@@ -127,15 +127,11 @@ public class HomeFragment extends Fragment {
                     mPager.setCurrentItem(position);
                 }
             }
-
-
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 mIndicator.animatePageSelected(position%num_page);
-
             }
-
         });
 
         final float pageMargin= getResources().getDimensionPixelOffset(R.dimen.pageMargin);
@@ -176,16 +172,12 @@ public class HomeFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (spinnerNumber == 0) { selectedPlaceData(i);
-                } else if (spinnerNumber == 1 ) { selectedTypeData(i); }
+                if (spinnerNumber == 0) { selectedPlaceData(i, signguList);
+                } else if (spinnerNumber == 1 ) { selectedTypeData(i, genreList); }
 
                 // 조건에 따른 공연 검색
-                getPerformanceData( prfName, prfPlace, prfGenre, signgucode, signgusubcode, 2);
+                getPerformanceData( prfTime, prfName, prfPlace, prfGenre, signgucode, 2);
             }
-
-
-
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) { }
         });
@@ -207,6 +199,7 @@ public class HomeFragment extends Fragment {
         });
 
 
+        // 상세 검색 간이 뷰 출력
         imgSearch.setOnClickListener(view -> {
             performanceDetailSearch();
         });
@@ -215,7 +208,7 @@ public class HomeFragment extends Fragment {
     }
 
     // 스피너를 통한 지역 선택시 지역 코드 저장 메소드
-    void selectedPlaceData(int i) {
+    void selectedPlaceData(int i, String[] signguList) {
         switch (signguList[i]) {
             case "" :
                 signgucode = "";
@@ -275,7 +268,7 @@ public class HomeFragment extends Fragment {
     }
 
     // 스피너를 통한 장르 선택시 장르 코드 저장 메소드
-    void selectedTypeData(int i) {
+    void selectedTypeData(int i, String[] genreList) {
         switch (genreList[i]) {
             case "" :
                 prfGenre = "";
@@ -374,6 +367,11 @@ public class HomeFragment extends Fragment {
         EditText editPerformanceKeyword = performanceSearchView.findViewById(R.id.editPerformanceKeyword);
         DatePicker dtPick = performanceSearchView.findViewById(R.id.datePicker);
 
+        // 상세 검색 분류 목록
+        String[] signguList = {"", "서울", "부산", "대구", "인천", "광주", "대전", "울산", "세종", "경기",
+                "강원", "충북", "충남", "전북", "전남", "경북", "경남", "제주"};
+        String[] genreList = {"", "연극", "뮤지컬" , "무용", "클래식", "오페라", "국악", "복합"};
+
         // 분류별 스피너 설정, 지역별/장르별
         Spinner spinnerType = performanceSearchView.findViewById(R.id.spinnerType);
         Spinner spinnerRegion = performanceSearchView.findViewById(R.id.spinnerRegion);
@@ -391,7 +389,7 @@ public class HomeFragment extends Fragment {
         spinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedTypeData(i);
+                selectedTypeData(i, signguList);
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) { }
@@ -401,7 +399,7 @@ public class HomeFragment extends Fragment {
         spinnerRegion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedPlaceData(i);
+                selectedPlaceData(i, genreList);
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) { }
