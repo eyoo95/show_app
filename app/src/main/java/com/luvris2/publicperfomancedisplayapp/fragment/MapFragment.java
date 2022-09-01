@@ -106,6 +106,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             myPosition = ((MainActivity)getActivity()).getLocation();
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myPosition, 16));
             googleMap.addMarker(new MarkerOptions().position(myPosition).title("내 위치"));
+            dismissProgressBar();
+
+
         });
     }
 
@@ -118,8 +121,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                 IconGenerator iconFactory = new IconGenerator(getActivity());
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(nearByPlacePosition)
-                            .title(nearByPerformanceList.get(i).getPrfName())
-                            .snippet(nearByPerformanceList.get(i).getPrfPlace());
+                        .title(nearByPerformanceList.get(i).getPrfName())
+                        .snippet(nearByPerformanceList.get(i).getPrfPlace());
                 googleMap.addMarker(markerOptions).setIcon(BitmapDescriptorFactory.fromBitmap(iconFactory.makeIcon(nearByPerformanceList.get(i).getPrfName())));
             }
         } else {

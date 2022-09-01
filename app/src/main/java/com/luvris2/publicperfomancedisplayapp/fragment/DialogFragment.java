@@ -38,7 +38,7 @@ public class DialogFragment extends Fragment {
         Tspinner = (Spinner) rootView.findViewById(R.id.spinnerType);
         datePicker = rootView.findViewById(R.id.datePicker);
         Rspinner = (Spinner) rootView.findViewById(R.id.spinnerRegion);
-        editText = rootView.findViewById(R.id.editTxtKeyword);
+        editText = rootView.findViewById(R.id.editPerformanceKeyword);
 
         initTypeSpinnerFooter();
 

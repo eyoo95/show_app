@@ -1,6 +1,5 @@
 package com.luvris2.publicperfomancedisplayapp.api;
 
-import com.luvris2.publicperfomancedisplayapp.R;
 import com.luvris2.publicperfomancedisplayapp.model.ReviewList;
 
 import retrofit2.Call;

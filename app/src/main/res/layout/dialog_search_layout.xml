@@ -116,7 +116,7 @@
                 android:textSize="20sp" />
 
             <EditText
-                android:id="@+id/editTxtKeyword"
+                android:id="@+id/editPerformanceKeyword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"

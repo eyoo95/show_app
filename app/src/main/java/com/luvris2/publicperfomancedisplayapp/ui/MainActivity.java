@@ -206,7 +206,8 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 if (isNetworkEnabled) {
                     Log.i("MyTestMainActivity", "In getLocation Method NetworkProvider");
-                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, locationListener);
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, locationListener); // 에뮬레이터 문제로 테스트만 이대로 진행
+//                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, locationListener);
                 } else {
                     if (location == null) {
                         Log.i("MyTestMainActivity", "In getLocation Method GpsProvider");

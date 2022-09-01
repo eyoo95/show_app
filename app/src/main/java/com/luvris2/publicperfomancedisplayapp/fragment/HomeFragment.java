@@ -4,11 +4,14 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -60,11 +63,11 @@ public class HomeFragment extends Fragment {
     private ProgressDialog dialog;
 
     // 공연 검색 키워드
-    String prfName="", prfPlace="", prfGenre="", signgucode="";
+    String prfTime="", prfName="", prfPlace="", prfGenre="", signgucode="", signgusubcode="";
     int prfState=2; // 2=공연중
-    String[] signguList = {"서울", "부산", "대구", "인천", "광주", "대전", "울산", "세종", "경기",
+    String[] signguList = {"", "서울", "부산", "대구", "인천", "광주", "대전", "울산", "세종", "경기",
             "강원", "충북", "충남", "전북", "전남", "경북", "경남", "제주"};
-    String[] genreList = {"연극", "뮤지컬" , "무용", "클래식", "오페라", "국악", "복합"};
+    String[] genreList = {"", "연극", "뮤지컬" , "무용", "클래식", "오페라", "국악", "복합"};
 
     // 공연 검색 아이콘
     ImageView imgSearch;
@@ -177,7 +180,7 @@ public class HomeFragment extends Fragment {
                 } else if (spinnerNumber == 1 ) { selectedTypeData(i); }
 
                 // 조건에 따른 공연 검색
-                getPerformanceData( prfName, prfPlace, prfGenre, signgucode, 2);
+                getPerformanceData( prfName, prfPlace, prfGenre, signgucode, signgusubcode, 2);
             }
 
 
@@ -204,70 +207,19 @@ public class HomeFragment extends Fragment {
         });
 
 
-
-
         imgSearch.setOnClickListener(view -> {
-            AlertDialog.Builder dialogAddRating = new AlertDialog.Builder(getActivity());
-
-            // 다이얼로그 제목 설정
-            dialogAddRating.setTitle("공연 상세 검색");
-
-            // 레이아웃 xml 뷰와 연결 설정
-            View performanceSearchView = (View) View.inflate(getActivity(), R.layout.dialog_search_layout, null);
-            dialogAddRating.setView(performanceSearchView);
-
-            // 분류별 스피너 설정, 지역별/장르별
-            Spinner spinnerType = performanceSearchView.findViewById(R.id.spinnerType);
-            Spinner spinnerRegion = performanceSearchView.findViewById(R.id.spinnerRegion);
-            ArrayAdapter<String> searchTypeArrayAdapter = new ArrayAdapter<>
-                    (getActivity(), android.R.layout.simple_spinner_dropdown_item, genreList);
-            ArrayAdapter<String> searchPlaceArrayAdapter = new ArrayAdapter<>
-                    (getActivity(), android.R.layout.simple_spinner_dropdown_item, signguList);
-            searchTypeArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            searchPlaceArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            // 스피너 화면 설정
-            spinnerType.setAdapter(searchTypeArrayAdapter);
-            spinnerRegion.setAdapter(searchPlaceArrayAdapter);
-
-            // 지역 선택에 따른 지역코드 입력
-            spinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    selectedTypeData(i);
-                }
-                @Override
-                public void onNothingSelected(AdapterView<?> adapterView) { }
-            });
-
-            // 지역 선택에 따른 지역코드 입력
-            spinnerRegion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    selectedPlaceData(i);
-                }
-                @Override
-                public void onNothingSelected(AdapterView<?> adapterView) { }
-            });
-
-            // 확인을 누르면 실행 될 코드 작성
-            dialogAddRating.setPositiveButton("확인", (dialogInterface, i) -> {
-                getPerformanceData( prfName, prfPlace, prfGenre, signgucode, 2);
-            });
-
-            // 취소를 누르면 실행 될 코드 작성
-            dialogAddRating.setNegativeButton("취소", (dialogInterface, i) -> {
-                // 취소시 실행 코드 작성
-            });
-
-            // 다이얼로그 유저에게 출력
-            dialogAddRating.show();
+            performanceDetailSearch();
         });
+
         return rootView;
     }
 
     // 스피너를 통한 지역 선택시 지역 코드 저장 메소드
     void selectedPlaceData(int i) {
         switch (signguList[i]) {
+            case "" :
+                signgucode = "";
+                break;
             case "서울":
                 signgucode = "11";
                 break;
@@ -325,6 +277,9 @@ public class HomeFragment extends Fragment {
     // 스피너를 통한 장르 선택시 장르 코드 저장 메소드
     void selectedTypeData(int i) {
         switch (genreList[i]) {
+            case "" :
+                prfGenre = "";
+                break;
             case "연극":
                 prfGenre = "AAAA";
                 break;
@@ -350,7 +305,7 @@ public class HomeFragment extends Fragment {
     }
 
     // todo : 공연 목록 확인
-    void getPerformanceData(String prfName, String prfPlace, String prfGenre, String signgucode, int prfState) {
+    void getPerformanceData(String prfTime, String prfName, String prfPlace, String prfGenre, String signgucode, int prfState) {
         // 데이터 초기화
         performanceList.clear();
 
@@ -359,7 +314,7 @@ public class HomeFragment extends Fragment {
         int rows = 6;
 
         // 현재 시간 불러오기
-        String currentTime = getCurrentTime();
+        prfTime = getCurrentTime();
 
         showProgress("공연 목록 불러오는 중...");
 
@@ -369,25 +324,25 @@ public class HomeFragment extends Fragment {
 
         // 헤더에 설정 할 데이터 확인, 공유 저장소에 저장되어있는 토큰 호출
         // API 요청
-        Call<KopisApiPerformance> call = api.getPlaceSearch(currentTime, currentTime, cpage, rows, prfName, prfPlace, prfGenre, signgucode, prfState);
+        Call<KopisApiPerformance> call = api.getPerformance(prfTime, prfTime, cpage, rows, prfName, prfPlace, prfGenre, signgucode, signgusubcode, prfState);
+
         call.enqueue(new Callback<KopisApiPerformance>() {
             @Override
             public void onResponse(@NonNull Call<KopisApiPerformance> call, @NonNull Response<KopisApiPerformance> response) {
                 dismissProgress();
-
                 // 200 OK, 네트워크 정상 응답
                 if(response.isSuccessful()) {
-                    KopisApiPerformance data = response.body();
-
-                    // 기존의 데이터에서 추가
-                    if (data != null) { performanceList.addAll(data.getResultList()); }
-                    else { performanceList.clear(); }
+                    ArrayList<KopisApiPerformance> data = response.body().getResultList();
+                    Log.i("MyTest HomeFrag getPrf", ""+data);
+                    // 공연 검색
+                    if (data != null) { performanceList.addAll(data); }
+                    else {
+                        performanceList.clear();
+                        Toast.makeText(getActivity(), "현재 진행중인 공연이 없습니다.", Toast.LENGTH_LONG).show();
+                    }
                     adapter = new PerformanceSearchAdapter(getActivity(), performanceList);
                     recyclerView.setAdapter(adapter);
-
-
                 }
-
                 // 진행중인 공연이 없을 경우 메시지 출력
                 else if(response.code() == 500) {
                     Toast.makeText(getActivity(), "현재 진행중인 공연이 없습니다.", Toast.LENGTH_LONG).show();
@@ -396,13 +351,95 @@ public class HomeFragment extends Fragment {
                     recyclerView.setAdapter(adapter);
                 }
             }
-
             @Override
             public void onFailure(@NonNull Call<KopisApiPerformance> call, @NonNull Throwable t) {
                 dismissProgress();
+                Log.i("MyTest getprf fail", ""+t);
             }
         });
         initKeyword(); // 검색 조건 초기화
+    }
+
+    // 간이 뷰로 공연 상세 검색 설정
+    public void performanceDetailSearch() {
+        AlertDialog.Builder dialogPerformanceSearch = new AlertDialog.Builder(getActivity());
+
+        // 다이얼로그 제목 설정
+        dialogPerformanceSearch.setTitle("공연 상세 검색");
+
+        // 레이아웃 xml 뷰와 연결 설정
+        View performanceSearchView = (View) View.inflate(getActivity(), R.layout.dialog_search_layout, null);
+        dialogPerformanceSearch.setView(performanceSearchView);
+
+        EditText editPerformanceKeyword = performanceSearchView.findViewById(R.id.editPerformanceKeyword);
+        DatePicker dtPick = performanceSearchView.findViewById(R.id.datePicker);
+
+        // 분류별 스피너 설정, 지역별/장르별
+        Spinner spinnerType = performanceSearchView.findViewById(R.id.spinnerType);
+        Spinner spinnerRegion = performanceSearchView.findViewById(R.id.spinnerRegion);
+        ArrayAdapter<String> searchTypeArrayAdapter = new ArrayAdapter<>
+                (getActivity(), android.R.layout.simple_spinner_dropdown_item, genreList);
+        ArrayAdapter<String> searchPlaceArrayAdapter = new ArrayAdapter<>
+                (getActivity(), android.R.layout.simple_spinner_dropdown_item, signguList);
+        searchTypeArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        searchPlaceArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // 스피너 화면 설정
+        spinnerType.setAdapter(searchTypeArrayAdapter);
+        spinnerRegion.setAdapter(searchPlaceArrayAdapter);
+
+        // 지역 선택에 따른 지역코드 입력
+        spinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedTypeData(i);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) { }
+        });
+
+        // 지역 선택에 따른 지역코드 입력
+        spinnerRegion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedPlaceData(i);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) { }
+        });
+
+        // 확인을 누르면 실행 될 코드 작성
+        dialogPerformanceSearch.setPositiveButton("확인", (dialogInterface, i) -> {
+            // 검색 키워드 저장
+            prfName = editPerformanceKeyword.getText().toString().trim();
+
+            // 날짜 변수 초기화
+            int prfMonth = dtPick.getMonth()+1;
+            String prfMonthString = "";
+            int prfDay = dtPick.getDayOfMonth();
+            String prfDayString = "";
+
+            // 월이 10월 미만이면 앞에 0을 붙이도록 설정
+            if ( prfMonth < 10 ) { prfMonthString = "0" + prfMonth; }
+            else { prfMonthString = "" +  prfMonth; }
+
+            // 일이 10일 미만이면 앞에 0을 붙이도록 설정
+            if ( prfDay < 10 ) { prfDayString = "0" + prfDay; }
+            else { prfDayString = "" + prfDay; }
+
+            // 날짜를 6자리로 가공
+            prfTime = dtPick.getYear() + prfMonthString + prfDayString ;
+
+            Log.i("MyTest HomeFrag Search", ""+prfTime+prfName+prfPlace+prfGenre+signgucode);
+            getPerformanceData(prfTime, prfName, prfPlace, prfGenre, signgucode, 2);
+        });
+
+        // 취소를 누르면 실행 될 코드 작성
+        dialogPerformanceSearch.setNegativeButton("취소", (dialogInterface, i) -> {
+            // 취소시 실행 코드 작성
+        });
+
+        // 다이얼로그 유저에게 출력
+        dialogPerformanceSearch.show();
     }
 
     // 현재 시간을 구하는 메소드
