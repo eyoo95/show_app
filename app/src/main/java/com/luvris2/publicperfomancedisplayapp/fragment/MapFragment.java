@@ -66,8 +66,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
         fab = rootView.findViewById(R.id.floatingActionButton);
 
-        showProgressBar("위치 정보를 확인중입니다. 잠시만 기다려주세요.");
-
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
@@ -79,8 +77,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     public void onMapReady(@NonNull final GoogleMap googleMap) {
         // todo : (GoogleMaps API) 현재 나의 위치 정보 호출
         myPosition = ((MainActivity) getActivity()).getLocation();
-
-        dismissProgressBar();
 
         // 내 위치 지도에 표시
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myPosition, 16));

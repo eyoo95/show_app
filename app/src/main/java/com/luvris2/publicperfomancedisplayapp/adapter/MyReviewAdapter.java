@@ -29,7 +29,7 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.ViewHo
 
     @NonNull
     @Override
-    public MyReviewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.review_row, parent, false);
         return new ViewHolder(view);
@@ -40,9 +40,9 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.ViewHo
         Review review = reviewList.get(position);
 
         // todo: 꼭 워크벤치로 Review DB 확인하고 컬럼명 Model.Review 파일 수정 후, 아래 코드 수정할 것.
-//        holder.txtRatingTitle.setText(review.getMt20id());
-//        holder.txtRatingContent.setText(review.getId());
-//        holder.txtRatingCreatedAt.setText(review.getContent());
+        holder.txtRatingTitle.setText(review.getMt20id());
+        holder.txtRatingContent.setText(review.getId());
+        holder.txtRatingCreatedAt.setText(review.getContent());
     }
 
     @Override

@@ -38,6 +38,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -126,6 +128,8 @@ public class MainActivity extends AppCompatActivity {
                 bottomNavigationView.getMenu().findItem(R.id.menuHome).setIcon(R.drawable.tap_menu_icon_home);
                 bottomNavigationView.getMenu().findItem(R.id.menuCommunity).setIcon(R.drawable.tap_menu_icon_community);
                 bottomNavigationView.getMenu().findItem(R.id.menuMyPage).setIcon(R.drawable.tap_menu_icon_my_page);
+                showProgressBar("위치 정보를 확인중입니다. 잠시만 기다려주세요.", 10000);
+
             }
             else if (item.getItemId() == R.id.menuCommunity) {
                 fragment = communityFragment;
@@ -464,14 +468,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // 위치 정보 수신 대기를 위한 프로그레스 다이얼로그
-    public void showProgressBar(String message) {
+    public void showProgressBar(String message, int sec) {
         progressDialog = new ProgressDialog(MainActivity.this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCancelable(false);
         progressDialog.setTitle("정보 수신 중...");
         progressDialog.setMessage(message);
         progressDialog.show();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                TimerTask task = new TimerTask() {
+                    @Override
+                    public void run() {
+                        progressDialog.dismiss();
+                    }
+                };
+                Timer timer = new Timer();
+                timer.schedule(task, sec);
+            }
+        });
+        thread.start();
     }
+
     public void dismissProgressBar() {
         progressDialog.dismiss();
     }
