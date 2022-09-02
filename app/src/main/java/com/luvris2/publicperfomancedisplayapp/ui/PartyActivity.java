@@ -6,11 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -19,26 +21,35 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.luvris2.publicperfomancedisplayapp.R;
 import com.luvris2.publicperfomancedisplayapp.adapter.PartyAdapter;
+import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
+import com.luvris2.publicperfomancedisplayapp.api.UserApi;
+import com.luvris2.publicperfomancedisplayapp.config.Config;
+import com.luvris2.publicperfomancedisplayapp.fragment.MyPageFragment;
 import com.luvris2.publicperfomancedisplayapp.model.PartyData;
+import com.luvris2.publicperfomancedisplayapp.model.User;
+import com.luvris2.publicperfomancedisplayapp.model.UserRes;
 
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 public class PartyActivity extends AppCompatActivity {
 
-    RecyclerView recyclerView;
-    EditText editChat;
-    Button btnSend;
+    private RecyclerView recyclerView;
+    private EditText editChat;
+    private Button btnSend;
 
-    private String nick = "nick2";
+    private String myNickName;
 
     // 어댑터, 리스트
-    PartyAdapter adapter;
-    ArrayList<PartyData> partyDataList = new ArrayList<>();
+    public PartyAdapter adapter;
+    private ArrayList<PartyData> partyDataList = new ArrayList<>();
 
     DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
     DatabaseReference commandsRef = rootRef.child("rooms").child("chat");
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +62,8 @@ public class PartyActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(PartyActivity.this));
 
+        loadUserInfo();
+
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,14 +71,16 @@ public class PartyActivity extends AppCompatActivity {
 
                 if(msg != null) {
                     PartyData chat = new PartyData();
-                    chat.setNickname(nick);
+                    chat.setNickname(myNickName);
                     chat.setMsg(msg);
                     commandsRef.push().setValue(chat);
                 }
+
+                editChat.setText("");
             }
         });
 
-        adapter = new PartyAdapter(PartyActivity.this, partyDataList, nick);
+        adapter = new PartyAdapter(PartyActivity.this, partyDataList);
 
         adapter.notifyDataSetChanged();
 
@@ -97,6 +112,42 @@ public class PartyActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+    }
+
+    private void loadUserInfo() {
+
+        Retrofit retrofit = NetworkClient.getRetrofitClient(PartyActivity.this);
+        UserApi api = retrofit.create(UserApi.class);
+
+        SharedPreferences sp = getApplication().getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
+        String accessToken = sp.getString("accessToken", "");
+
+        Call<UserRes> call = api.getUserInfo("Bearer " + accessToken);
+
+        call.enqueue(new Callback<UserRes>() {
+            @Override // 성공했을 때
+            public void onResponse(Call<UserRes> call, Response<UserRes> response) {
+
+                // 200 OK 일 때,
+                if (response.isSuccessful()) {
+
+                    //TODO: 회원정보 넣어야 됨
+
+                    UserRes data = response.body();
+                    User userInfo = data.getUserInfo();
+
+                    myNickName = userInfo.getNickname();
+
+                } else {
+                    Toast.makeText(getApplication(), "에러 발생 : " + response.code(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override // 실패했을 때
+            public void onFailure(Call<UserRes> call, Throwable t) {
+                // 네트워크 자체 문제로 실패!
             }
         });
     }
