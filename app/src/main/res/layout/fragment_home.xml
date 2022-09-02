@@ -104,7 +104,7 @@
                         android:textSize="30sp" />
 
                     <LinearLayout
-                        android:id="@+id/Linear"
+                        android:id="@+id/LinearPlaceSearch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -112,21 +112,156 @@
                         android:layout_marginBottom="10dp"
                         android:orientation="horizontal">
 
-                        <ImageView
-                            android:id="@+id/imageView7"
-                            android:layout_width="100dp"
-                            android:layout_height="150dp"
-                            android:layout_margin="20dp"
-                            android:layout_weight="1"
-                            tools:src="@tools:sample/avatars" />
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardViewContent1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_weight="1">
 
-                        <ImageView
-                            android:id="@+id/imageView8"
-                            android:layout_width="100dp"
-                            android:layout_height="150dp"
-                            android:layout_margin="20dp"
-                            android:layout_weight="1"
-                            tools:src="@tools:sample/avatars" />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:id="@+id/imgHomeEventPoster1"
+                                    android:layout_width="100dp"
+                                    android:layout_height="150dp"
+                                    android:layout_margin="10dp"
+                                    android:layout_weight="1"
+                                    tools:src="@tools:sample/avatars" />
+
+                                <TextView
+                                    android:id="@+id/txtrecommEventTitle1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="TextView" />
+
+                                <TextView
+                                    android:id="@+id/txtrecommEventDate1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="TextView" />
+
+                                <TextView
+                                    android:id="@+id/txtrecommEventPlace1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="TextView" />
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardViewContent2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_weight="1">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:id="@+id/imgHomeEventPoster2"
+                                    android:layout_width="100dp"
+                                    android:layout_height="150dp"
+                                    android:layout_margin="10dp"
+                                    android:layout_weight="1"
+                                    tools:src="@tools:sample/avatars" />
+
+                                <TextView
+                                    android:id="@+id/txtrecommEventTitle2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="TextView" />
+
+                                <TextView
+                                    android:id="@+id/txtrecommEventDate2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="TextView" />
+
+                                <TextView
+                                    android:id="@+id/txtrecommEventPlace2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="TextView" />
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardViewContent3"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_weight="1">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:id="@+id/imgHomeEventPoster3"
+                                    android:layout_width="100dp"
+                                    android:layout_height="150dp"
+                                    android:layout_margin="10dp"
+                                    android:layout_weight="1"
+                                    tools:src="@tools:sample/avatars" />
+
+                                <TextView
+                                    android:id="@+id/txtrecommEventTitle3"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="TextView" />
+
+                                <TextView
+                                    android:id="@+id/txtrecommEventDate3"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="TextView" />
+
+                                <TextView
+                                    android:id="@+id/txtrecommEventPlace3"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="TextView" />
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
                     </LinearLayout>
                 </LinearLayout>
 

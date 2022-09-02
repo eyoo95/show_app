@@ -33,9 +33,13 @@ import com.luvris2.publicperfomancedisplayapp.model.KopisApiPerformance;
 import com.luvris2.publicperfomancedisplayapp.ui.MainActivity;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
@@ -59,6 +63,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     }
 
     @Override
+    public void onCreate(Bundle saveInstanceState) {
+        super.onCreate(saveInstanceState);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -66,8 +75,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
         fab = rootView.findViewById(R.id.floatingActionButton);
 
+        showProgressBar("내 위치 정보를 받는 중입니다. 조금만 기다려주세요...");
+        // todo : (GoogleMaps API) 현재 나의 위치 정보 호출
+        myPosition = ((MainActivity) getActivity()).getLocation();
+
+        // todo : (Kopis API) 내 부근 공연 검색을 위한 지역 코드로 변환
+        mySidoSubCode = ((MainActivity) getActivity()).getMySidoLocation(myPosition);
+        Log.i("MyTest onMapReady", "mySidoSubCode " + mySidoSubCode);
+
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        assert mapFragment != null;
         mapFragment.getMapAsync(this);
 
         return rootView;
@@ -75,36 +91,61 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
     @Override
     public void onMapReady(@NonNull final GoogleMap googleMap) {
-        // todo : (GoogleMaps API) 현재 나의 위치 정보 호출
-        myPosition = ((MainActivity) getActivity()).getLocation();
+        dismissProgressBar();
 
         // 내 위치 지도에 표시
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myPosition, 16));
         googleMap.addMarker(new MarkerOptions().position(myPosition).title("내 위치")).showInfoWindow();
 
-        // todo : (Kopis API) 내 부근 공연 검색을 위한 지역 코드로 변환
-        mySidoSubCode = ((MainActivity) getActivity()).getMySidoLocation(myPosition);
-        Log.i("MyTest onMapReady", "mySidoSubCode " + mySidoSubCode);
-
-        // todo : (Kopis API) 내 지역 구 진행중인 공연 검색
-        nearByPerformanceList = ((MainActivity)getActivity()).nearByPerformanceSearch(mySidoSubCode);
-        Log.i("MyTest onMapReady", "시설명 " + nearByPerformanceList.get(0).getPrfName());
-
-        // todo : (Kopis API) 내 부근 공연 시설 표시
-        nearbyPerformanceMap(googleMap);
+        // todo : (Kopis API) 내 지역 구 진행중인 공연 검색 후 지도에 표시
+        nearByPerformanceSearch(mySidoSubCode, googleMap);
 
         // 특정 마커 클릭시 해당 공연의 자세한 정보 간이 뷰에 표시
         googleMap.setOnMarkerClickListener(this);
 
         // todo : 플로팅 액션 바 클릭시 내 위치 정보를 찾고 해당 위치로 이동
         fab.setOnClickListener(view -> {
-            showProgressBar("내 위치를 확인중입니다. 잠시만 기다려주세요.");
             myPosition = ((MainActivity)getActivity()).getLocation();
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myPosition, 16));
             googleMap.addMarker(new MarkerOptions().position(myPosition).title("내 위치"));
-            dismissProgressBar();
+            // todo : (Kopis API) 내 지역 구 진행중인 공연 검색 후 지도에 표시
+            nearByPerformanceSearch(mySidoSubCode, googleMap);
+        });
+    }
 
+    // 내 지역(구) 공연 찾기
+    public void nearByPerformanceSearch(String sidoCodeSub, GoogleMap googleMap) {
+        Log.i("MyTest nearByPlace sido", ""+ sidoCodeSub);
+        showProgressBar("내 지역(구군)의 진행중인 공연 찾는 중...");
+        // 네트워크로 데이터 전송, Retrofit 객체 생성
+        Retrofit retrofit = NetworkClient.getRetrofitClient(getActivity());
+        KopisPerformanceApi api = retrofit.create(KopisPerformanceApi.class);
+        Call<KopisApiPerformance> call = (Call<KopisApiPerformance>) api.nearByPlaceSearch(sidoCodeSub, getCurrentTime(), getCurrentTime(), 1, 999, 2);
+        call.enqueue(new Callback<KopisApiPerformance>() {
+            @Override // 성공했을 때
+            public void onResponse(Call<KopisApiPerformance> call, Response<KopisApiPerformance> response) {
+                // 200 OK 일 때,
+                if (response.isSuccessful()) {
+                    nearByPerformanceList = response.body().getResultList();
 
+                    if (nearByPerformanceList != null) {
+                        Log.i("MyTest onMapReady", "시설명 " + nearByPerformanceList.get(0).getPrfName());
+                        // todo : (Kopis API) 내 부근 공연 시설 표시
+                        nearbyPerformanceMap(googleMap);
+                    } else {
+                        Toast.makeText(getActivity(), "현재 내 지역(구)에 진행중인 공연이 없습니다.", Toast.LENGTH_LONG).show();
+                    }
+
+                } else {
+                    Toast.makeText(getActivity(), "에러 발생 : " + response.code(), Toast.LENGTH_SHORT).show();
+                }
+                dismissProgressBar();
+            }
+            @Override // 실패했을 때
+            public void onFailure(Call<KopisApiPerformance> call, Throwable t) {
+                // 네트워크 자체 문제로 실패!
+                dismissProgressBar();
+            }
         });
     }
 
@@ -121,9 +162,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                         .snippet(nearByPerformanceList.get(i).getPrfPlace());
                 googleMap.addMarker(markerOptions).setIcon(BitmapDescriptorFactory.fromBitmap(iconFactory.makeIcon(nearByPerformanceList.get(i).getPrfName())));
             }
-        } else {
-            Toast.makeText(getActivity(), "현재 내 지역(구)에 진행중인 공연이 없습니다.", Toast.LENGTH_LONG).show();
         }
+    }
+
+    // todo : 현재 시간을 구하는 메소드
+    public String getCurrentTime() {
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+        return dateFormat.format(date);
     }
 
     // todo : 위치 정보 수신 대기를 위한 프로그레스 다이얼로그

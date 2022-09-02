@@ -29,8 +29,7 @@ public class MyReviewActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     ImageView imgBack;
-    ImageView imgDelete;
-    
+
     // 어댑터, 어레이리스트
     MyReviewAdapter adapter;
     ArrayList<Review> reviewList = new ArrayList<>();

@@ -1,15 +1,6 @@
 package com.luvris2.publicperfomancedisplayapp.ui;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -20,11 +11,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.luvris2.publicperfomancedisplayapp.R;
 import com.luvris2.publicperfomancedisplayapp.api.GoogleMapApi;
-import com.luvris2.publicperfomancedisplayapp.api.KopisPerformanceApi;
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
 import com.luvris2.publicperfomancedisplayapp.config.Config;
 import com.luvris2.publicperfomancedisplayapp.fragment.CommunityFragment;
@@ -32,21 +29,14 @@ import com.luvris2.publicperfomancedisplayapp.fragment.HomeFragment;
 import com.luvris2.publicperfomancedisplayapp.fragment.MapFragment;
 import com.luvris2.publicperfomancedisplayapp.fragment.MyPageFragment;
 import com.luvris2.publicperfomancedisplayapp.model.GoogleMapPlace;
-import com.luvris2.publicperfomancedisplayapp.model.KopisApiPerformance;
 import com.luvris2.publicperfomancedisplayapp.resource.SidoSubClassify;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
-
     // 탭 메뉴
     BottomNavigationView bottomNavigationView;
 
@@ -59,15 +49,8 @@ public class MainActivity extends AppCompatActivity {
     // GPS 관련 변수
     LocationManager locationManager;
     LocationListener locationListener;
-    Location location;
     double gpsX, gpsY;
     String mySidoLocation;
-
-    // 내 위치 주변 공연 정보 저장
-    ArrayList<KopisApiPerformance> nearByPerformanceList = new ArrayList<>();
-
-    // 프로그레스 다이얼로그
-    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
                 bottomNavigationView.getMenu().findItem(R.id.menuHome).setIcon(R.drawable.tap_menu_icon_home);
                 bottomNavigationView.getMenu().findItem(R.id.menuCommunity).setIcon(R.drawable.tap_menu_icon_community);
                 bottomNavigationView.getMenu().findItem(R.id.menuMyPage).setIcon(R.drawable.tap_menu_icon_my_page);
-                showProgressBar("위치 정보를 확인중입니다. 잠시만 기다려주세요.", 10000);
             }
             else if (item.getItemId() == R.id.menuCommunity) {
                 fragment = communityFragment;
@@ -149,10 +131,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Log.i("MyTestMainActivity", "getLocation");
-
         // 내 지역(구군) 공연 검색
         getLocation();
-
         // todo : onLocationChanged
 
         // GPS 사용 권한 확인 및 요청
@@ -205,12 +185,11 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 if (isNetworkEnabled) {
                     Log.i("MyTestMainActivity", "In getLocation Method NetworkProvider");
-                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, locationListener);  // 테스트 끝나고 NETWORK_PROVIDER
-                } else {
-                    if (location == null) {
-                        Log.i("MyTestMainActivity", "In getLocation Method GpsProvider");
-                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, locationListener);
-                    }}
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, locationListener);  // 테스트 끝나고 NETWORK_PROVIDER
+                } else if (isGPSEnabled) {
+                    Log.i("MyTestMainActivity", "In getLocation Method GpsProvider");
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, locationListener);
+                }
             }
         } catch (Exception e) { e.printStackTrace();}
         return new LatLng(gpsX, gpsY);
@@ -240,35 +219,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
         return SidoSubClassify.sidoSubClassify(mySidoLocation);
-    }
-
-    // 내 지역(구) 공연 찾기
-    public ArrayList<KopisApiPerformance> nearByPerformanceSearch(String sidoCodeSub) {
-        Log.i("MyTest nearByPlace sido", ""+ sidoCodeSub);
-
-        // 네트워크로 데이터 전송, Retrofit 객체 생성
-        Retrofit retrofit = NetworkClient.getRetrofitClient(MainActivity.this);
-        KopisPerformanceApi api = retrofit.create(KopisPerformanceApi.class);
-        Call<KopisApiPerformance> call = (Call<KopisApiPerformance>) api.nearByPlaceSearch(sidoCodeSub, getCurrentTime(), getCurrentTime(), 1, 999, 2);
-
-        // Retrofit 값을 바로 저장하기 위한 동기 처리
-        new Thread(() -> {
-            try {
-                nearByPerformanceList = call.execute().body().getResultList();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }).start();
-
-        // API 응답에 따른 약간의 대기 시간 설정
-        try {
-            Thread.sleep(12000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return nearByPerformanceList;
     }
 
     // GPS 기능 설정 대화 상자 출력
@@ -318,41 +269,4 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
-
-    // todo : 현재 시간을 구하는 메소드
-    public String getCurrentTime() {
-        long now = System.currentTimeMillis();
-        Date date = new Date(now);
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
-        return dateFormat.format(date);
-    }
-
-    // 위치 정보 수신 대기를 위한 프로그레스 다이얼로그
-    public void showProgressBar(String message, int sec) {
-        progressDialog = new ProgressDialog(MainActivity.this);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setCancelable(false);
-        progressDialog.setTitle("정보 수신 중...");
-        progressDialog.setMessage(message);
-        progressDialog.show();
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                TimerTask task = new TimerTask() {
-                    @Override
-                    public void run() {
-                        progressDialog.dismiss();
-                    }
-                };
-                Timer timer = new Timer();
-                timer.schedule(task, sec);
-            }
-        });
-        thread.start();
-    }
-
-    public void dismissProgressBar() {
-        progressDialog.dismiss();
-    }
-
 }

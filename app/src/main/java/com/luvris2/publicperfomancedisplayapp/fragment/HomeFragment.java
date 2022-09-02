@@ -2,6 +2,7 @@ package com.luvris2.publicperfomancedisplayapp.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -26,13 +28,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.bumptech.glide.Glide;
 import com.luvris2.publicperfomancedisplayapp.R;
 import com.luvris2.publicperfomancedisplayapp.adapter.MyAdapter;
 import com.luvris2.publicperfomancedisplayapp.adapter.PerformanceSearchAdapter;
 import com.luvris2.publicperfomancedisplayapp.api.KopisPerformanceApi;
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
 import com.luvris2.publicperfomancedisplayapp.model.KopisApiPerformance;
+import com.luvris2.publicperfomancedisplayapp.ui.PerformanceInfoActivity;
+import com.luvris2.publicperfomancedisplayapp.ui.SearchResultActivity;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -69,6 +75,7 @@ public class HomeFragment extends Fragment {
             "강원", "충북", "충남", "전북", "전남", "경북", "경남", "제주"};
     String[] genreList = {"연극", "뮤지컬" , "무용", "클래식", "오페라", "국악", "복합"};
 
+
     // 공연 검색 아이콘
     ImageView imgSearch;
 
@@ -76,6 +83,23 @@ public class HomeFragment extends Fragment {
     Spinner spinner;
     int spinnerNumber = 0; // 0=지역별, 1=유형별
     public String poster;
+
+    // 내 취향 추천을 위한 변수
+    private String mt20id;
+    private String mt20id1;
+    private String mt20id2;
+    private String mt20id3;
+
+    ImageView imgHomeEventPoster;
+    TextView txtrecommEventTitle;
+    TextView txtrecommEventPlace;
+    TextView txtrecommEventDate;
+
+    CardView cardViewContent1;
+    CardView cardViewContent2;
+    CardView cardViewContent3;
+
+    KopisApiPerformance kopisApiPerformance;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -134,6 +158,69 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        // 내 취향 띄우기 1 ------------------------------------------------------//
+
+        mt20id1 = "PF197039";
+
+        imgHomeEventPoster = rootView.findViewById(R.id.imgHomeEventPoster1);
+        txtrecommEventTitle = rootView.findViewById(R.id.txtrecommEventTitle1);
+        txtrecommEventPlace = rootView.findViewById(R.id.txtrecommEventPlace1);
+        txtrecommEventDate = rootView.findViewById(R.id.txtrecommEventDate1);
+        cardViewContent1 = rootView.findViewById(R.id.cardViewContent1);
+
+        getPerformanceDetailData(mt20id1);
+
+        cardViewContent1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), PerformanceInfoActivity.class);
+                intent.putExtra("mt20id", mt20id1);
+            }
+        });
+
+
+
+        // 내 취향 띄우기 2 ------------------------------------------------------//
+
+        mt20id2 = "PF197269";
+
+        imgHomeEventPoster = rootView.findViewById(R.id.imgHomeEventPoster2);
+        txtrecommEventTitle = rootView.findViewById(R.id.txtrecommEventTitle2);
+        txtrecommEventPlace = rootView.findViewById(R.id.txtrecommEventPlace2);
+        txtrecommEventDate = rootView.findViewById(R.id.txtrecommEventDate2);
+        cardViewContent2 = rootView.findViewById(R.id.cardViewContent2);
+
+        getPerformanceDetailData(mt20id2);
+
+        cardViewContent2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), PerformanceInfoActivity.class);
+                intent.putExtra("mt20id", mt20id2);
+            }
+        });
+
+        // 내 취향 띄우기 3 ------------------------------------------------------//
+
+        mt20id3 = "PF197040";
+
+        imgHomeEventPoster = rootView.findViewById(R.id.imgHomeEventPoster3);
+        txtrecommEventTitle = rootView.findViewById(R.id.txtrecommEventTitle3);
+        txtrecommEventPlace = rootView.findViewById(R.id.txtrecommEventPlace3);
+        txtrecommEventDate = rootView.findViewById(R.id.txtrecommEventDate3);
+        cardViewContent3 = rootView.findViewById(R.id.cardViewContent3);
+
+        getPerformanceDetailData(mt20id3);
+
+        cardViewContent3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), PerformanceInfoActivity.class);
+                intent.putExtra("mt20id", mt20id3);
+            }
+        });
+
+        // 뷰페이저 구현
         final float pageMargin= getResources().getDimensionPixelOffset(R.dimen.pageMargin);
         final float pageOffset = getResources().getDimensionPixelOffset(R.dimen.offset);
 
@@ -429,6 +516,13 @@ public class HomeFragment extends Fragment {
 
             Log.i("MyTest HomeFrag Search", ""+prfTime+prfName+prfPlace+prfGenre+signgucode);
             getPerformanceData(prfTime, prfName, prfPlace, prfGenre, signgucode, 2);
+            Intent intent = new Intent(getActivity(), SearchResultActivity.class);
+            intent.putExtra("prfTime", prfTime);
+            intent.putExtra("prfName", prfName);
+            intent.putExtra("prfPlace", prfPlace);
+            intent.putExtra("prfGenre", prfGenre);
+            intent.putExtra("signgucode", signgucode);
+            startActivity(intent);
         });
 
         // 취소를 누르면 실행 될 코드 작성
@@ -466,5 +560,43 @@ public class HomeFragment extends Fragment {
     }
     void dismissProgress() {
         dialog.dismiss();
+    }
+
+    void getPerformanceDetailData(String prfId) {
+        showProgress("공연 목록 불러오는 중...");
+
+        // retrofit 설정
+        Retrofit retrofit = NetworkClient.getRetrofitClient(getActivity());
+        KopisPerformanceApi api = retrofit.create(KopisPerformanceApi.class);
+        Call<KopisApiPerformance> call = api.getPerformanceDetail(prfId);
+
+        // Retrofit 값을 바로 저장하기 위한 동기 처리
+        new Thread(() -> {
+            try {
+                kopisApiPerformance = call.execute().body().getResult();
+                Log.i("MyTest Data Response", "" + kopisApiPerformance);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+
+        // API 응답에 따른 약간의 대기 시간 설정
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // 해당 공연 정보 표시
+        Glide.with(getActivity()).load(kopisApiPerformance.getPosterUrl())
+                .into(imgHomeEventPoster);
+        Log.i("MyTest Data ImgUrl", ""+kopisApiPerformance.getPosterUrl());
+        txtrecommEventTitle.setText(kopisApiPerformance.getPrfName());
+        txtrecommEventDate.setText(kopisApiPerformance.getPrfpdfrom() + " ~ " + kopisApiPerformance.getPrfpdto());
+        txtrecommEventPlace.setText(kopisApiPerformance.getPrfPlace());
+
+        dismissProgress();
+
+        initKeyword();
     }
 }
