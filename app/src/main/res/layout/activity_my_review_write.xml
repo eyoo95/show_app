@@ -60,7 +60,10 @@
                     android:id="@+id/imgReviewWriteShow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
                     tools:srcCompat="@tools:sample/avatars" />
 
                 <LinearLayout
@@ -110,32 +113,35 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:layout_marginRight="15dp"
             android:numStars="5"
             android:rating="3"
             android:stepSize="3" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/txtReview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/nanum_square_r"
+            android:gravity="center"
+            android:text="관람에 대한 별점을 남겨주세요!" />
 
-            <ImageView
-                android:id="@+id/imgReviewPhoto"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:layout_marginTop="20dp"
-                android:layout_weight="1"
-                tools:srcCompat="@drawable/ic_add_photo" />
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/imgReviewPhoto"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/ic_add_photo" />
 
         <EditText
             android:id="@+id/editReviewWrite"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:layout_marginRight="15dp"
             android:background="@drawable/border"
             android:ems="10"

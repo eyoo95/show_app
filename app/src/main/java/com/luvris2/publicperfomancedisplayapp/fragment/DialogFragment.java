@@ -48,6 +48,7 @@ public class DialogFragment extends Fragment {
             public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 String date = year + "/" + monthOfYear + "/" + dayOfMonth;
                 //todo: 선택한 날짜 데이터 담아서 HomeFragment로
+
             }
         });
         
@@ -56,6 +57,8 @@ public class DialogFragment extends Fragment {
 
         // 검색어 가져오기
         String keyword = editText.getText().toString().trim();
+
+        Log.i("keyword" , "키워드 : " + keyword);
 
         return rootView;
     }
