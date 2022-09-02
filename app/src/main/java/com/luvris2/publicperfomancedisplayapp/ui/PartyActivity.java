@@ -8,6 +8,7 @@ import com.luvris2.publicperfomancedisplayapp.R;
 
 public class PartyActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
