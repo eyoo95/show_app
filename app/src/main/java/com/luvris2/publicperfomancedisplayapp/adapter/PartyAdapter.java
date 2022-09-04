@@ -36,10 +36,19 @@ public class PartyAdapter extends RecyclerView.Adapter<PartyAdapter.ViewHolder>{
 
     Context context;
     List<PartyData> partyDataList;
+    String myNickName;
 
     public PartyAdapter(Context context, List<PartyData> partyDataList) {
         this.context = context;
         this.partyDataList = partyDataList;
+    }
+
+    public String getMyNickName() {
+        return myNickName;
+    }
+
+    public void setMyNickName(String myNickName) {
+        this.myNickName = myNickName;
     }
 
     @NonNull
@@ -56,27 +65,28 @@ public class PartyAdapter extends RecyclerView.Adapter<PartyAdapter.ViewHolder>{
 
         holder.txtNickName.setText(partyData.getNickname());
         holder.txtMsg.setText(partyData.getMsg());
-
-        if (partyData.getNickname().equals(holder.txtNickName.getText().toString())) {
-            holder.txtMsg.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
-            holder.txtNickName.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
-        } else {
-            holder.txtMsg.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-            holder.txtNickName.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-        }
+//
+//        if (partyData.getNickname().equals(holder.txtNickName.getText().toString())) {
+//            holder.txtMsg.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
+//            holder.txtNickName.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
+//        } else {
+//            holder.txtMsg.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+//            holder.txtNickName.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+//        }
 
         Log.i("Tag1", partyData.getNickname() + "A");
         Log.i("Tag1", holder.txtNickName.getText().toString().trim() + "B");
         //내가 메세지를 보냈다면 오른쪽 끝에서 보이고
         //남이 보냈다면 왼쪽 끝에서 보임
-//        if(partyData.getNickname().equals(this.myNickName)) {
-//            holder.txtMsg.setGravity(Gravity.END);
-//            holder.txtNickName.setGravity(Gravity.END);
-//        }
-//        else {
-//            holder.txtMsg.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-//            holder.txtNickName.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-//        }
+
+        if(partyData.getNickname() != null && partyData.getNickname().equals(this.myNickName)) {
+            holder.txtMsg.setGravity(Gravity.END);
+            holder.txtNickName.setGravity(Gravity.END);
+        }
+        else {
+            holder.txtMsg.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+            holder.txtNickName.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+        }
     }
 
     @Override

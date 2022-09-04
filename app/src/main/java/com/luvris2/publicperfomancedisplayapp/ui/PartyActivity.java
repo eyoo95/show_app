@@ -71,7 +71,7 @@ public class PartyActivity extends AppCompatActivity {
 
                 if(msg != null) {
                     PartyData chat = new PartyData();
-                    chat.setNickname(myNickName);
+                    chat.setNickname(adapter.getMyNickName());
                     chat.setMsg(msg);
                     commandsRef.push().setValue(chat);
                 }
@@ -136,9 +136,8 @@ public class PartyActivity extends AppCompatActivity {
                     //TODO: 회원정보 넣어야 됨
 
                     UserRes data = response.body();
-                    User userInfo = data.getUserInfo();
-
-                    myNickName = userInfo.getNickname();
+                    String userInfo = data.getUserInfo().getNickname();
+                    adapter.setMyNickName(userInfo);
 
                 } else {
                     Toast.makeText(getApplication(), "에러 발생 : " + response.code(), Toast.LENGTH_SHORT).show();
