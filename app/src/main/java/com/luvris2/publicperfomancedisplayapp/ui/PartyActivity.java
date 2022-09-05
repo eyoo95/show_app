@@ -1,97 +1,90 @@
 package com.luvris2.publicperfomancedisplayapp.ui;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.annotations.Nullable;
 import com.luvris2.publicperfomancedisplayapp.R;
 import com.luvris2.publicperfomancedisplayapp.adapter.PartyAdapter;
-import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
-import com.luvris2.publicperfomancedisplayapp.api.UserApi;
-import com.luvris2.publicperfomancedisplayapp.config.Config;
-import com.luvris2.publicperfomancedisplayapp.fragment.MyPageFragment;
 import com.luvris2.publicperfomancedisplayapp.model.PartyData;
 import com.luvris2.publicperfomancedisplayapp.model.User;
-import com.luvris2.publicperfomancedisplayapp.model.UserRes;
 
 import java.util.ArrayList;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
+import java.util.List;
 
 public class PartyActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
+    private RecyclerView mRecyclerView;
+    public  RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private List<PartyData> partyList;
+
     private EditText editChat;
     private Button btnSend;
+    private DatabaseReference myRef;
 
-    private String myNickName;
-
-    // 어댑터, 리스트
-    public PartyAdapter adapter;
-    private ArrayList<PartyData> partyDataList = new ArrayList<>();
-
-    DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-    DatabaseReference commandsRef = rootRef.child("rooms").child("chat");
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_party);
 
-        editChat = findViewById(R.id.editChat);
-        btnSend = findViewById(R.id.btnSend);
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(PartyActivity.this));
 
-        loadUserInfo();
+        btnSend = findViewById(R.id.btnSend);
+        editChat = findViewById(R.id.editChat);
 
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 String msg = editChat.getText().toString(); //msg
 
                 if(msg != null) {
-                    PartyData chat = new PartyData();
-                    chat.setNickname(adapter.getMyNickName());
-                    chat.setMsg(msg);
-                    commandsRef.push().setValue(chat);
+                    PartyData party = new PartyData();
+                    party.setNickname(user.getNickname());
+                    party.setMsg(msg);
+                    myRef.push().setValue(party);
                 }
 
-                editChat.setText("");
             }
         });
 
-        adapter = new PartyAdapter(PartyActivity.this, partyDataList);
+        mRecyclerView = findViewById(R.id.recyclerView);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
-        adapter.notifyDataSetChanged();
+        partyList = new ArrayList<>();
+        mAdapter = new PartyAdapter(partyList, PartyActivity.this, user.getNickname());
 
-        recyclerView.setAdapter(adapter);
+        mRecyclerView.setAdapter(mAdapter);
 
-        commandsRef.addChildEventListener(new ChildEventListener() {
+        // Write a message to the database
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        myRef = database.getReference().child("room").child("party").child("");
+
+
+        //caution!!!
+
+        myRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Log.d("CHATCHAT", dataSnapshot.getValue().toString());
-                PartyData chat = dataSnapshot.getValue(PartyData.class);
-                adapter.addChat(chat);
+                PartyData party = dataSnapshot.getValue(PartyData.class);
+                ((PartyAdapter) mAdapter).addChat(party);
             }
 
             @Override
@@ -114,40 +107,16 @@ public class PartyActivity extends AppCompatActivity {
 
             }
         });
-    }
 
-    private void loadUserInfo() {
+        //1. recyclerView - 반복
+        //2. 디비 내용을 넣는다
+        //3. 상대방폰에 채팅 내용이 보임 - get
 
-        Retrofit retrofit = NetworkClient.getRetrofitClient(PartyActivity.this);
-        UserApi api = retrofit.create(UserApi.class);
+        //1-1. recyclerview - chat data
+        //1. message, nickname - Data Transfer Object
 
-        SharedPreferences sp = getApplication().getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
-        String accessToken = sp.getString("accessToken", "");
 
-        Call<UserRes> call = api.getUserInfo("Bearer " + accessToken);
 
-        call.enqueue(new Callback<UserRes>() {
-            @Override // 성공했을 때
-            public void onResponse(Call<UserRes> call, Response<UserRes> response) {
 
-                // 200 OK 일 때,
-                if (response.isSuccessful()) {
-
-                    //TODO: 회원정보 넣어야 됨
-
-                    UserRes data = response.body();
-                    String userInfo = data.getUserInfo().getNickname();
-                    adapter.setMyNickName(userInfo);
-
-                } else {
-                    Toast.makeText(getApplication(), "에러 발생 : " + response.code(), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override // 실패했을 때
-            public void onFailure(Call<UserRes> call, Throwable t) {
-                // 네트워크 자체 문제로 실패!
-            }
-        });
     }
 }

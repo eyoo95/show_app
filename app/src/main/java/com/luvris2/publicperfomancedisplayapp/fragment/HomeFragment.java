@@ -168,7 +168,7 @@ public class HomeFragment extends Fragment {
         txtrecommEventDate = rootView.findViewById(R.id.txtrecommEventDate1);
         cardViewContent1 = rootView.findViewById(R.id.cardViewContent1);
 
-        getPerformanceDetailData(mt20id1);
+//        getPerformanceDetailData(mt20id1);
 
         cardViewContent1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -571,14 +571,14 @@ public class HomeFragment extends Fragment {
         Call<KopisApiPerformance> call = api.getPerformanceDetail(prfId);
 
         // Retrofit 값을 바로 저장하기 위한 동기 처리
-        new Thread(() -> {
-            try {
-                kopisApiPerformance = call.execute().body().getResult();
-                Log.i("MyTest Data Response", "" + kopisApiPerformance);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }).start();
+//        new Thread(() -> {
+//            try {
+//                kopisApiPerformance = call.execute().body().getResult();
+//                Log.i("MyTest Data Response", "" + kopisApiPerformance);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }).start();
 
         // API 응답에 따른 약간의 대기 시간 설정
         try {
@@ -588,12 +588,12 @@ public class HomeFragment extends Fragment {
         }
 
         // 해당 공연 정보 표시
-        Glide.with(getActivity()).load(kopisApiPerformance.getPosterUrl())
-                .into(imgHomeEventPoster);
-        Log.i("MyTest Data ImgUrl", ""+kopisApiPerformance.getPosterUrl());
-        txtrecommEventTitle.setText(kopisApiPerformance.getPrfName());
-        txtrecommEventDate.setText(kopisApiPerformance.getPrfpdfrom() + " ~ " + kopisApiPerformance.getPrfpdto());
-        txtrecommEventPlace.setText(kopisApiPerformance.getPrfPlace());
+//        Glide.with(getActivity()).load(kopisApiPerformance.getPosterUrl())
+//                .into(imgHomeEventPoster);
+//        Log.i("MyTest Data ImgUrl", ""+kopisApiPerformance.getPosterUrl());
+//        txtrecommEventTitle.setText(kopisApiPerformance.getPrfName());
+//        txtrecommEventDate.setText(kopisApiPerformance.getPrfpdfrom() + " ~ " + kopisApiPerformance.getPrfpdto());
+//        txtrecommEventPlace.setText(kopisApiPerformance.getPrfPlace());
 
         dismissProgress();
 
