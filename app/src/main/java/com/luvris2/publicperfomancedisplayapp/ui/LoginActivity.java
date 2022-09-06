@@ -8,9 +8,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +37,8 @@ public class LoginActivity extends AppCompatActivity {
     EditText editPassword;
     Button btnLogin;
     TextView txtRegister;
+    CheckBox checkLoginAuto;
+    Boolean checkCount = false;
     
     // 프로그레스 다이얼로그
     private ProgressDialog dialog;
@@ -49,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         editPassword = findViewById(R.id.editTxtRegisterPassword);
         btnLogin = findViewById(R.id.btnLogin);
         txtRegister = findViewById(R.id.txtRegister);
+        checkLoginAuto = findViewById(R.id.checkLoginAuto);
 
         txtRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +63,12 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
+        });
+
+        // 자동 로그인 여부의 대한 상태 정보 저장
+        checkLoginAuto.setOnClickListener(view -> {
+            if (checkLoginAuto.isChecked()) { checkCount = true; }
+            else { checkCount = false; }
         });
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -95,10 +106,14 @@ public class LoginActivity extends AppCompatActivity {
                             UserRes userRes = response.body();
 
                             String accessToken = userRes.getAccessToken();
-
                             SharedPreferences sp = getApplication().getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
                             SharedPreferences.Editor editor = sp.edit();
                             editor.putString("accessToken", accessToken);
+
+                            // 자동로그인을 체크 할 경우, 공유 저장소에 자동로그인 정보 저장
+                            if (checkCount == true) {
+                                editor.putBoolean("autoLogin", true);
+                            }
 
                             editor.apply();
 

@@ -6,7 +6,28 @@ public class Review {
     private String mt20id; //
     private String id;
     private String content; // 리뷰내용
+    private String title; // 리뷰제목
+    private double rating; // 리뷰평점
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
 
     public String getMt20id() {
         return mt20id;

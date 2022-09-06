@@ -9,7 +9,7 @@ import retrofit2.http.Query;
 
 public interface KopisPerformanceApi {
     // 공연 검색
-    @GET("/performancesearch")
+    @GET("/performance")
     Call<KopisApiPerformance> getPerformance(@Query("stdate") String stdate,
                                              @Query("eddate") String eddate,
                                              @Query("cpage") int cpage,
@@ -33,4 +33,9 @@ public interface KopisPerformanceApi {
                                                 @Query("cpage") int cpage,
                                                 @Query("rows") int rows,
                                                 @Query("prfstate") int prfstate);
+
+    // 내 취향 추천
+    @GET("/performance/recommend")
+    Call<KopisApiPerformance> getMyInterestingPerformance(@Query("limit") int limit,
+                                                          @Query("offset") int offset);
 }
