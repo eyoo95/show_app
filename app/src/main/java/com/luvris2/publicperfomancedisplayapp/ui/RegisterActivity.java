@@ -120,6 +120,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Retrofit retrofit = NetworkClient.getRetrofitClient(RegisterActivity.this);
 
                 UserApi api = retrofit.create(UserApi.class);
+
                 User user = new User (email, password, nickname, gender, age);
 
                 Call<UserRes> call = api.register(user);

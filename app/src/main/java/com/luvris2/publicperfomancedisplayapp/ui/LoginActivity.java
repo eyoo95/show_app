@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -38,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     
     // 프로그레스 다이얼로그
     private ProgressDialog dialog;
+    private String myNickname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,5 +135,47 @@ public class LoginActivity extends AppCompatActivity {
     // 다이얼로그를 없애기
     void dismissProgress(){
         dialog.dismiss();
+    }
+
+    // 회원정보 불러오는 기능
+    private void loadUserInfo() {
+
+        Retrofit retrofit = NetworkClient.getRetrofitClient(LoginActivity.this);
+        UserApi api = retrofit.create(UserApi.class);
+
+        SharedPreferences sp = LoginActivity.this.getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
+        String accessToken = sp.getString("accessToken", "");
+
+        Call<UserRes> call = api.getUserInfo("Bearer " + accessToken);
+
+        call.enqueue(new Callback<UserRes>() {
+            @Override // 성공했을 때
+            public void onResponse(Call<UserRes> call, Response<UserRes> response) {
+
+                // 200 OK 일 때,
+                if (response.isSuccessful()) {
+
+                    //TODO: 회원정보 넣어야 됨
+
+                    UserRes data = response.body();
+                    User userInfo = data.getUserInfo();
+                    myNickname = userInfo.getNickname();
+
+
+                    SharedPreferences sp = getApplication().getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putString("nickname", myNickname);
+
+
+                } else {
+                    Toast.makeText(LoginActivity.this, "에러 발생 : " + response.code(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override // 실패했을 때
+            public void onFailure(Call<UserRes> call, Throwable t) {
+                // 네트워크 자체 문제로 실패!
+            }
+        });
     }
 }

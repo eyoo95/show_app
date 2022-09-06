@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.luvris2.publicperfomancedisplayapp">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -21,6 +21,9 @@
         android:theme="@style/Theme.PublicPerfomanceDisplayApp"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.PartyMainActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.PartyActivity"
             android:exported="false" />
@@ -78,6 +81,7 @@
         <activity
             android:name=".ui.MyReviewWriteActivity"
             android:exported="false" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDLRY2CF9QwQ5UENhzwJsOb6FKKqieCwhk" />

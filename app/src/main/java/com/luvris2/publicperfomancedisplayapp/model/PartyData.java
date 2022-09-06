@@ -2,9 +2,18 @@ package com.luvris2.publicperfomancedisplayapp.model;
 
 public class PartyData {
 
+    private int userId;
     private String msg;
     private String nickname;
     private String createdAt;
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
     public String getMsg() {
         return msg;

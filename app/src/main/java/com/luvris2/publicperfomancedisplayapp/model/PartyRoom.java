@@ -11,6 +11,7 @@ public class PartyRoom implements Serializable {
     String title;
     String createdAt;
     String updatedAt;
+    String nickname;
 
     public PartyRoom(int id, int userId, String mt20id, String prfnm, String title, String createdAt, String updatedAt) {
         this.prfnm = prfnm;
@@ -71,5 +72,13 @@ public class PartyRoom implements Serializable {
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 }

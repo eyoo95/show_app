@@ -2,6 +2,7 @@ package com.luvris2.publicperfomancedisplayapp.api;
 
 import com.luvris2.publicperfomancedisplayapp.model.PartyData;
 import com.luvris2.publicperfomancedisplayapp.model.PartyRoom;
+import com.luvris2.publicperfomancedisplayapp.model.PartyRoomRes;
 import com.luvris2.publicperfomancedisplayapp.model.PostingList;
 
 import retrofit2.Call;
@@ -23,10 +24,10 @@ public interface PartyApi {
 
     // 파티찾기(조회)
     @GET("/party")
-    Call<PartyRoom> getPartyRoom(@Query("limit") int limit,
-                                 @Query("offset") int offset,
-                                 @Query("keyword") String keyword,
-                                 @Query("searchType") String searchType);
+    Call<PartyRoomRes> getPartyRoom(@Query("limit") int limit,
+                                    @Query("offset") int offset,
+                                    @Query("keyword") String keyword,
+                                    @Query("searchType") String searchType);
 
     // 파티수정
     @PUT("/party/{partyId}")

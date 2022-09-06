@@ -1,10 +1,12 @@
 package com.luvris2.publicperfomancedisplayapp.ui;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,11 +21,26 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.annotations.Nullable;
 import com.luvris2.publicperfomancedisplayapp.R;
 import com.luvris2.publicperfomancedisplayapp.adapter.PartyAdapter;
+import com.luvris2.publicperfomancedisplayapp.adapter.PostingAdapter;
+import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
+import com.luvris2.publicperfomancedisplayapp.api.PostingApi;
+import com.luvris2.publicperfomancedisplayapp.api.UserApi;
+import com.luvris2.publicperfomancedisplayapp.config.Config;
 import com.luvris2.publicperfomancedisplayapp.model.PartyData;
+import com.luvris2.publicperfomancedisplayapp.model.PartyRoom;
+import com.luvris2.publicperfomancedisplayapp.model.PostingList;
 import com.luvris2.publicperfomancedisplayapp.model.User;
+import com.luvris2.publicperfomancedisplayapp.model.UserRes;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class PartyActivity extends AppCompatActivity {
 
@@ -31,54 +48,49 @@ public class PartyActivity extends AppCompatActivity {
     public  RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<PartyData> partyList;
+    private List<PartyData> partyDataList = new ArrayList<>();
 
     private EditText editChat;
     private Button btnSend;
     private DatabaseReference myRef;
 
-    User user;
+    private String myNickName;
+    private int userId;
+
+    PartyRoom partyRoom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_party);
 
+        loadUserInfo();
 
         btnSend = findViewById(R.id.btnSend);
         editChat = findViewById(R.id.editChat);
 
-        btnSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String msg = editChat.getText().toString(); //msg
-
-                if(msg != null) {
-                    PartyData party = new PartyData();
-                    party.setNickname(user.getNickname());
-                    party.setMsg(msg);
-                    myRef.push().setValue(party);
-                }
-
-            }
-        });
+        partyRoom = (PartyRoom) getIntent().getSerializableExtra("partyRoom");
 
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        partyList = new ArrayList<>();
-        mAdapter = new PartyAdapter(partyList, PartyActivity.this, user.getNickname());
+//        partyList = new ArrayList<>();
+//        mAdapter = new PartyAdapter(partyList, PartyActivity.this, myNickName + "");
+
+        mAdapter = new PartyAdapter(PartyActivity.this, partyDataList, partyRoom.getNickname() + "");
+
+        Log.i("kkkkkk", myNickName + "");
 
         mRecyclerView.setAdapter(mAdapter);
 
         // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        myRef = database.getReference().child("room").child("party").child("");
+        myRef = database.getReference().child("room").child("party").child(partyRoom.getId() + "");
 
 
         //caution!!!
-
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -107,16 +119,65 @@ public class PartyActivity extends AppCompatActivity {
 
             }
         });
+    }
 
-        //1. recyclerView - 반복
-        //2. 디비 내용을 넣는다
-        //3. 상대방폰에 채팅 내용이 보임 - get
+    private void loadUserInfo() {
 
-        //1-1. recyclerview - chat data
-        //1. message, nickname - Data Transfer Object
+        Retrofit retrofit = NetworkClient.getRetrofitClient(PartyActivity.this);
+        UserApi api = retrofit.create(UserApi.class);
+        SharedPreferences sp = getApplication().getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
+        String accessToken = sp.getString("accessToken", "");
+        Call<UserRes> call = api.getUserInfo("Bearer " + accessToken);
+        call.enqueue(new Callback<UserRes>() {
+            @Override // 성공했을 때
+            public void onResponse(Call<UserRes> call, Response<UserRes> response) {
+                // 200 OK 일 때,
+                if (response.isSuccessful()) {
+                    //TODO: 회원정보 넣어야 됨
 
+                    UserRes data = response.body();
+                    User userInfo = data.getUserInfo();
 
+                    myNickName = userInfo.getNickname();
+                    userId = userInfo.getUserId();
 
+                    btnSend.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String msg = editChat.getText().toString(); //msg
 
+                            Calendar calendar = Calendar.getInstance();
+                            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                            String createdAt = formatter.format(calendar.getTime()).toString();
+                            if(msg != null) {
+                                PartyData party = new PartyData();
+                                party.setUserId(userId);
+                                party.setNickname(myNickName);
+                                party.setMsg(msg);
+                                party.setCreatedAt(createdAt);
+                                myRef.push().setValue(party);
+
+                                Log.i("TAG", myNickName + "");
+                                Log.i("TAG", userId + "");
+                            }
+
+                            if (msg == null) {
+
+                            }
+
+                            editChat.setText("");
+
+                        }
+                    });
+
+                } else {
+                    Toast.makeText(getApplication(), "에러 발생 : " + response.code(), Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override // 실패했을 때
+            public void onFailure(Call<UserRes> call, Throwable t) {
+                // 네트워크 자체 문제로 실패!
+            }
+        });
     }
 }
