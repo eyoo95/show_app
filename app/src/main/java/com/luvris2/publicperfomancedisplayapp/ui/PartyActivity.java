@@ -21,14 +21,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.annotations.Nullable;
 import com.luvris2.publicperfomancedisplayapp.R;
 import com.luvris2.publicperfomancedisplayapp.adapter.PartyAdapter;
-import com.luvris2.publicperfomancedisplayapp.adapter.PostingAdapter;
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
-import com.luvris2.publicperfomancedisplayapp.api.PostingApi;
 import com.luvris2.publicperfomancedisplayapp.api.UserApi;
 import com.luvris2.publicperfomancedisplayapp.config.Config;
 import com.luvris2.publicperfomancedisplayapp.model.PartyData;
 import com.luvris2.publicperfomancedisplayapp.model.PartyRoom;
-import com.luvris2.publicperfomancedisplayapp.model.PostingList;
 import com.luvris2.publicperfomancedisplayapp.model.User;
 import com.luvris2.publicperfomancedisplayapp.model.UserRes;
 
@@ -76,13 +73,7 @@ public class PartyActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-//        partyList = new ArrayList<>();
-//        mAdapter = new PartyAdapter(partyList, PartyActivity.this, myNickName + "");
-
-        mAdapter = new PartyAdapter(PartyActivity.this, partyDataList, partyRoom.getNickname() + "");
-
-        Log.i("kkkkkk", myNickName + "");
-
+        mAdapter = new PartyAdapter(PartyActivity.this, partyDataList, 0);
         mRecyclerView.setAdapter(mAdapter);
 
         // Write a message to the database
@@ -95,6 +86,12 @@ public class PartyActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Log.d("CHATCHAT", dataSnapshot.getValue().toString());
+                Log.d("CHATCHAT2", dataSnapshot.child("room").child("party").child(partyRoom.getId() + "").getKey().toString());
+                Log.d("CHATCHAT3", dataSnapshot.child("room").child("party").child(partyRoom.getId() + "").child(userId + "").getKey().toString());
+                String myUserId = dataSnapshot.child("room").child("party").child(partyRoom.getId() + "").child(userId + "").getKey();
+                int intUserId = Integer.parseInt(myUserId);
+                mAdapter = new PartyAdapter(PartyActivity.this, partyDataList, intUserId);
+                mRecyclerView.setAdapter(mAdapter);
                 PartyData party = dataSnapshot.getValue(PartyData.class);
                 ((PartyAdapter) mAdapter).addChat(party);
             }
