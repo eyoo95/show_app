@@ -25,22 +25,15 @@ public class PostingAdapter extends RecyclerView.Adapter<PostingAdapter.ViewHold
 
     Context context;
     List<Posting> postingList;
-    String date;
 
     public PostingAdapter(Context context, List<Posting> postingList) {
         this.context = context;
         this.postingList = postingList;
     }
 
-    // layout 임시 list_row
-    // 테스트가 끝나면 posting_row로 수정할것!!
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // posting_row
-//        View view = LayoutInflater.from(parent.getContext())
-//                .inflate(R.layout.posting_row, parent, false);
-
         // list_row
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_row, parent, false);
@@ -50,14 +43,6 @@ public class PostingAdapter extends RecyclerView.Adapter<PostingAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Posting posting = postingList.get(position);
-
-        //posting_row
-//        holder.txtTitle.setText(posting.getTitle());
-//        holder.txtCreatedAt.setText(posting.getCreatedAt());
-//        holder.txtUpdatedAt.setText(posting.getUpdatedAt());
-//        holder.txtRecommend.setText("추천 수 " + posting.getRecommend());
-//        holder.txtContent.setText(posting.getContent());
-//        holder.txtNickName.setText(posting.getNickname());
 
         //list_row
         holder.txtTitle.setText(posting.getTitle());
@@ -72,14 +57,6 @@ public class PostingAdapter extends RecyclerView.Adapter<PostingAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        //posting_row
-//        TextView txtTitle;
-//        TextView txtCreatedAt;
-//        TextView txtUpdatedAt;
-//        TextView txtContent;
-//        TextView txtNickName;
-//        TextView txtRecommend;
-//        CardView cardView;
 
         //list_row
         CardView cardView;
@@ -90,14 +67,6 @@ public class PostingAdapter extends RecyclerView.Adapter<PostingAdapter.ViewHold
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            //posting_row
-//            txtTitle = itemView.findViewById(R.id.txtTitle);
-//            txtCreatedAt = itemView.findViewById(R.id.txtMember);
-//            txtUpdatedAt = itemView.findViewById(R.id.txtUpdatedAt);
-//            txtContent = itemView.findViewById(R.id.txtPrfTitle);
-//            txtNickName = itemView.findViewById(R.id.txtNickName);
-//            txtRecommend = itemView.findViewById(R.id.txtRecommend);
-//            cardView = itemView.findViewById(R.id.cardView);
 
             //list_row
             cardView = itemView.findViewById(R.id.cardView);

@@ -52,6 +52,9 @@ public class PostingWriteActivity extends AppCompatActivity {
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(PostingWriteActivity.this, PostingActivity.class);
+                startActivity(intent);
+
                 finish();
             }
         });
@@ -67,14 +70,10 @@ public class PostingWriteActivity extends AppCompatActivity {
 
                 Posting posting = new Posting(title, content);
 
-//                RequestBody titleBody = RequestBody.create(title, MediaType.parse("text/plain"));
-//                RequestBody contentBody = RequestBody.create(content, MediaType.parse("text/plain"));
-
                 SharedPreferences sp = getApplication().getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
 
                 String token = sp.getString("accessToken", "");
 
-//                Call<PostingList> call = api.addPosting("Bearer "+ token, titleBody, contentBody);
                 Call<PostingList> call = api.addPosting("Bearer "+ token, posting);
 
                 call.enqueue(new Callback<PostingList>() {
@@ -82,10 +81,15 @@ public class PostingWriteActivity extends AppCompatActivity {
                     public void onResponse(Call<PostingList> call, Response<PostingList> response) {
                         if(response.isSuccessful()){
 
+//                            adapter = new PostingAdapter(PostingWriteActivity.this, postingList);
+//
+//                            adapter.notifyDataSetChanged();
+
                             Intent intent = new Intent(PostingWriteActivity.this, PostingActivity.class);
                             startActivity(intent);
 
                             finish();
+
                         } else {
 
                         }
@@ -96,6 +100,8 @@ public class PostingWriteActivity extends AppCompatActivity {
 
                     }
                 });
+
+
             }
         });
     }
