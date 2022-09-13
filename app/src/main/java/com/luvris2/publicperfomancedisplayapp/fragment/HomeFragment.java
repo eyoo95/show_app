@@ -1,8 +1,11 @@
 package com.luvris2.publicperfomancedisplayapp.fragment;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,27 +24,25 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.cardview.widget.CardView;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.bumptech.glide.Glide;
 import com.luvris2.publicperfomancedisplayapp.R;
 import com.luvris2.publicperfomancedisplayapp.adapter.MyAdapter;
 import com.luvris2.publicperfomancedisplayapp.adapter.MyInterestingAdapter;
 import com.luvris2.publicperfomancedisplayapp.adapter.PerformanceSearchAdapter;
-import com.luvris2.publicperfomancedisplayapp.adapter.PerformanceSearchDialogAdapter;
 import com.luvris2.publicperfomancedisplayapp.api.KopisPerformanceApi;
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
+import com.luvris2.publicperfomancedisplayapp.config.Config;
 import com.luvris2.publicperfomancedisplayapp.model.KopisApiPerformance;
-import com.luvris2.publicperfomancedisplayapp.ui.PerformanceInfoActivity;
+import com.luvris2.publicperfomancedisplayapp.model.UserRes;
 import com.luvris2.publicperfomancedisplayapp.ui.SearchResultActivity;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -92,7 +93,7 @@ public class HomeFragment extends Fragment {
     RecyclerView interestingRecyclerView;
     MyInterestingAdapter interestingAdapter;
     int offset = 0;
-    int limit = 3;
+    int limit = 5;
 
     // 내 취향 추천의 정보를 담을 변수
     ArrayList<KopisApiPerformance> interestingPerformanceList = new ArrayList<>();
@@ -125,9 +126,9 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
 
         // 내 취향 행사 리사이클러뷰 화면 설정
-        interestingRecyclerView = rootView.findViewById(R.id.recyclerViewMyInterest);
+        interestingRecyclerView = rootView.findViewById(R.id.interestingRecyclerView);
         interestingRecyclerView.setHasFixedSize(true);
-        interestingRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));
+        interestingRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false)); // 가로로 구현
 
         //ViewPager2 연결
         mPager = rootView.findViewById(R.id.viewpager);
@@ -158,11 +159,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-
-        // 내 취향 띄우기
-        getMyInterestingPerformanceData();
-
-
         // 뷰페이저 구현
         final float pageMargin= getResources().getDimensionPixelOffset(R.dimen.pageMargin);
         final float pageOffset = getResources().getDimensionPixelOffset(R.dimen.offset);
@@ -180,6 +176,9 @@ public class HomeFragment extends Fragment {
                 page.setTranslationY(myOffset);
             }
         });
+
+        // 내 취향 띄우기
+        getMyInterestingPerformanceData();
 
         // 지역 선택을 위한 스피너 설정
         spinner = rootView.findViewById(R.id.spinner);
@@ -558,40 +557,39 @@ public class HomeFragment extends Fragment {
 
     // 내 취향 행사 공연 정보 확인
     void getMyInterestingPerformanceData() {
+
         // retrofit 설정
         Retrofit retrofit = NetworkClient.getRetrofitClient(getActivity());
         KopisPerformanceApi api = retrofit.create(KopisPerformanceApi.class);
 
+        SharedPreferences sp = getActivity().getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
+        String accessToken = sp.getString("accessToken", "");
 
         // API 호출
-        Call<KopisApiPerformance> call = api.getMyInterestingPerformance(limit, offset);
-
-
+        Call<KopisApiPerformance> call = api.getMyInterestingPerformance("Bearer " + accessToken, limit, offset);
         call.enqueue(new Callback<KopisApiPerformance>() {
             @Override
             public void onResponse(@NonNull Call<KopisApiPerformance> call, @NonNull Response<KopisApiPerformance> response) {
                 // 200 OK, 네트워크 정상 응답
                 if(response.isSuccessful()) {
 
-                    ArrayList<KopisApiPerformance> interestingData = response.body().getResultList();
+                    ArrayList<KopisApiPerformance> data = response.body().getResultList();
 
                     // 공연 검색
-                    if (interestingData != null) { interestingPerformanceList.addAll(interestingData); }
+                    if (data != null) { interestingPerformanceList.addAll(data); }
                     else {
                         interestingPerformanceList.clear();
-                        Toast.makeText(getActivity(), "현재 진행중인 공연이 없습니다.", Toast.LENGTH_LONG).show();
                     }
 
                     interestingAdapter = new MyInterestingAdapter(getActivity(), interestingPerformanceList);
                     interestingRecyclerView.setAdapter(interestingAdapter);
-                    dismissProgress();
 
                 }
             }
             @Override
             public void onFailure(@NonNull Call<KopisApiPerformance> call, @NonNull Throwable t) {
                 dismissProgress();
-                Log.i("MyTest HomFrag net fail", ""+t);
+                Log.i("MyTest recomm API fail", ""+t);
             }
         });
     }
