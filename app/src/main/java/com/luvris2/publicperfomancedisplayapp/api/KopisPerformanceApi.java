@@ -4,7 +4,6 @@ import com.luvris2.publicperfomancedisplayapp.model.KopisApiPerformance;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -37,7 +36,6 @@ public interface KopisPerformanceApi {
 
     // 내 취향 추천
     @GET("/performance/recommend")
-    Call<KopisApiPerformance> getMyInterestingPerformance(@Header("Authorization") String token,
-                                                          @Query("limit") int limit,
+    Call<KopisApiPerformance> getMyInterestingPerformance(@Query("limit") int limit,
                                                           @Query("offset") int offset);
 }
