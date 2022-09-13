@@ -20,6 +20,7 @@ import com.luvris2.publicperfomancedisplayapp.api.PostingApi;
 import com.luvris2.publicperfomancedisplayapp.model.Posting;
 import com.luvris2.publicperfomancedisplayapp.model.PostingList;
 import com.luvris2.publicperfomancedisplayapp.ui.PartyActivity;
+import com.luvris2.publicperfomancedisplayapp.ui.PartyMainActivity;
 import com.luvris2.publicperfomancedisplayapp.ui.PostingActivity;
 
 import java.util.ArrayList;
@@ -114,7 +115,7 @@ public class CommunityFragment extends Fragment {
         btnParty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().startActivity(new Intent(getActivity(), PartyActivity.class));
+                getActivity().startActivity(new Intent(getActivity(), PartyMainActivity.class));
             }
         });
 

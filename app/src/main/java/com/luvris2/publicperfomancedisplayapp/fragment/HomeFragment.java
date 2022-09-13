@@ -158,8 +158,10 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
         // 내 취향 띄우기
         getMyInterestingPerformanceData();
+
 
         // 뷰페이저 구현
         final float pageMargin= getResources().getDimensionPixelOffset(R.dimen.pageMargin);
@@ -560,8 +562,10 @@ public class HomeFragment extends Fragment {
         Retrofit retrofit = NetworkClient.getRetrofitClient(getActivity());
         KopisPerformanceApi api = retrofit.create(KopisPerformanceApi.class);
 
+
         // API 호출
         Call<KopisApiPerformance> call = api.getMyInterestingPerformance(limit, offset);
+
 
         call.enqueue(new Callback<KopisApiPerformance>() {
             @Override
