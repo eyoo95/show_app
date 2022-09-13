@@ -45,16 +45,16 @@ public class PerformanceSearchAdapter extends RecyclerView.Adapter<PerformanceSe
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.place_and_type_search_adapter_row, parent, false);
+                .inflate(R.layout.performance_search_adapter_row, parent, false);
         return new ViewHolder(view);
     }
 
     // 메모리에 있는 데이터를 화면에 표시하는 메소드
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
         KopisApiPerformance performance = performanceList.get(position);
-        // 멤버 변수화
+
+        // 멤버변수화
         mt20id = performance.getPrfId();
         imgUrl = performance.getPosterUrl();
         prfName = performance.getPrfName();
@@ -62,6 +62,7 @@ public class PerformanceSearchAdapter extends RecyclerView.Adapter<PerformanceSe
         prfGenre = performance.getPrfGenre();
         prfState = performance.getPrfState();
         stEdDate = performance.getPrfpdfrom() + " ~ " + performance.getPrfpdto();
+
         // 화면에 표시
         holder.txtPrfName.setText(prfName);
         holder.txtPrfPlace.setText(prfPlace);
@@ -70,14 +71,10 @@ public class PerformanceSearchAdapter extends RecyclerView.Adapter<PerformanceSe
         holder.txtStEdDate.setText(stEdDate);
         //holder.ratingBar.setRating(performance.getRating);
 
-
-
-        // 글라이드 라이브러리 사용
         GlideUrl url = new GlideUrl(imgUrl,
                 new LazyHeaders.Builder().addHeader("User-Agent", "Android").build());
         Glide.with(context).load(url).placeholder(R.drawable.ic_image_not_supported).fitCenter().into(holder.imgPoster);
     }
-
 
     @Override
     public int getItemCount() {
@@ -121,7 +118,6 @@ public class PerformanceSearchAdapter extends RecyclerView.Adapter<PerformanceSe
 
                 context.startActivity(intent);
             });
-
         }
 
 

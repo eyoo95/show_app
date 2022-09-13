@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -31,7 +32,9 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.bumptech.glide.Glide;
 import com.luvris2.publicperfomancedisplayapp.R;
 import com.luvris2.publicperfomancedisplayapp.adapter.MyAdapter;
+import com.luvris2.publicperfomancedisplayapp.adapter.MyInterestingAdapter;
 import com.luvris2.publicperfomancedisplayapp.adapter.PerformanceSearchAdapter;
+import com.luvris2.publicperfomancedisplayapp.adapter.PerformanceSearchDialogAdapter;
 import com.luvris2.publicperfomancedisplayapp.api.KopisPerformanceApi;
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
 import com.luvris2.publicperfomancedisplayapp.model.KopisApiPerformance;
@@ -52,12 +55,11 @@ import retrofit2.Retrofit;
 public class HomeFragment extends Fragment {
 
     TextView txtPlace, txtType;
-    private ViewGroup rootView;
-    // 뷰페이저2 관련 변수
 
+    // 뷰페이저2 관련 변수
     private ViewPager2 mPager;
     private FragmentStateAdapter pagerAdapter;
-    private int num_page = 4;
+    private final int num_page = 4;
     private CircleIndicator3 mIndicator;
 
     // 리사이클러 뷰 관련 변수
@@ -65,16 +67,19 @@ public class HomeFragment extends Fragment {
     PerformanceSearchAdapter adapter;
     ArrayList<KopisApiPerformance> performanceList = new ArrayList<>();
 
+    // 리스트의 뷰가 마지막일 경우, 추가 공연 정보를 보여주는 기능
+    Button btnAddData;
+
     // 프로그레스 다이얼로그
     private ProgressDialog dialog;
 
     // 공연 검색 키워드
     String prfTime="", prfName="", prfPlace="", prfGenre="", signgucode="", signgusubcode="";
     int prfState=2; // 2=공연중
+    int cpage=1, rows=6; // 1페이지당 6개씩 출력
     String[] signguList = {"서울", "부산", "대구", "인천", "광주", "대전", "울산", "세종", "경기",
             "강원", "충북", "충남", "전북", "전남", "경북", "경남", "제주"};
     String[] genreList = {"연극", "뮤지컬" , "무용", "클래식", "오페라", "국악", "복합"};
-
 
     // 공연 검색 아이콘
     ImageView imgSearch;
@@ -82,24 +87,15 @@ public class HomeFragment extends Fragment {
     // 공연 검색을 위한 스피너
     Spinner spinner;
     int spinnerNumber = 0; // 0=지역별, 1=유형별
-    public String poster;
 
     // 내 취향 추천을 위한 변수
-    private String mt20id;
-    private String mt20id1;
-    private String mt20id2;
-    private String mt20id3;
+    RecyclerView interestingRecyclerView;
+    MyInterestingAdapter interestingAdapter;
+    int offset = 0;
+    int limit = 3;
 
-    ImageView imgHomeEventPoster;
-    TextView txtrecommEventTitle;
-    TextView txtrecommEventPlace;
-    TextView txtrecommEventDate;
-
-    CardView cardViewContent1;
-    CardView cardViewContent2;
-    CardView cardViewContent3;
-
-    KopisApiPerformance kopisApiPerformance;
+    // 내 취향 추천의 정보를 담을 변수
+    ArrayList<KopisApiPerformance> interestingPerformanceList = new ArrayList<>();
 
     public HomeFragment() {
         // Required empty public constructor
@@ -121,13 +117,18 @@ public class HomeFragment extends Fragment {
         txtType = rootView.findViewById(R.id.txtHomeSortType);
         txtPlace.setBackgroundColor(Color.parseColor("#DAFBFF"));
         imgSearch = rootView.findViewById(R.id.imgHomeSearch);
+        btnAddData = rootView.findViewById(R.id.btnAddData);
 
         // 리사이클러뷰 화면 설정
         recyclerView = rootView.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
 
-        // ViewPager2 구현
+        // 내 취향 행사 리사이클러뷰 화면 설정
+        interestingRecyclerView = rootView.findViewById(R.id.recyclerViewMyInterest);
+        interestingRecyclerView.setHasFixedSize(true);
+        interestingRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));
+
         //ViewPager2 연결
         mPager = rootView.findViewById(R.id.viewpager);
         //Adapter 연결
@@ -141,7 +142,6 @@ public class HomeFragment extends Fragment {
         mPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
         mPager.setCurrentItem(1000);
         mPager.setOffscreenPageLimit(3);
-
 
         mPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
@@ -158,92 +158,31 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        // 내 취향 띄우기 1 ------------------------------------------------------//
 
-        mt20id1 = "PF197039";
+        // 내 취향 띄우기
+        getMyInterestingPerformanceData();
 
-        imgHomeEventPoster = rootView.findViewById(R.id.imgHomeEventPoster1);
-        txtrecommEventTitle = rootView.findViewById(R.id.txtrecommEventTitle1);
-        txtrecommEventPlace = rootView.findViewById(R.id.txtrecommEventPlace1);
-        txtrecommEventDate = rootView.findViewById(R.id.txtrecommEventDate1);
-        cardViewContent1 = rootView.findViewById(R.id.cardViewContent1);
-
-//        getPerformanceDetailData(mt20id1);
-
-        cardViewContent1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), PerformanceInfoActivity.class);
-                intent.putExtra("mt20id", mt20id1);
-            }
-        });
-
-
-
-        // 내 취향 띄우기 2 ------------------------------------------------------//
-
-        mt20id2 = "PF197269";
-
-        imgHomeEventPoster = rootView.findViewById(R.id.imgHomeEventPoster2);
-        txtrecommEventTitle = rootView.findViewById(R.id.txtrecommEventTitle2);
-        txtrecommEventPlace = rootView.findViewById(R.id.txtrecommEventPlace2);
-        txtrecommEventDate = rootView.findViewById(R.id.txtrecommEventDate2);
-        cardViewContent2 = rootView.findViewById(R.id.cardViewContent2);
-
-        getPerformanceDetailData(mt20id2);
-
-        cardViewContent2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), PerformanceInfoActivity.class);
-                intent.putExtra("mt20id", mt20id2);
-            }
-        });
-
-        // 내 취향 띄우기 3 ------------------------------------------------------//
-
-        mt20id3 = "PF197040";
-
-        imgHomeEventPoster = rootView.findViewById(R.id.imgHomeEventPoster3);
-        txtrecommEventTitle = rootView.findViewById(R.id.txtrecommEventTitle3);
-        txtrecommEventPlace = rootView.findViewById(R.id.txtrecommEventPlace3);
-        txtrecommEventDate = rootView.findViewById(R.id.txtrecommEventDate3);
-        cardViewContent3 = rootView.findViewById(R.id.cardViewContent3);
-
-        getPerformanceDetailData(mt20id3);
-
-        cardViewContent3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), PerformanceInfoActivity.class);
-                intent.putExtra("mt20id", mt20id3);
-            }
-        });
 
         // 뷰페이저 구현
         final float pageMargin= getResources().getDimensionPixelOffset(R.dimen.pageMargin);
         final float pageOffset = getResources().getDimensionPixelOffset(R.dimen.offset);
 
         // 슬라이드 반복되도록
-        mPager.setPageTransformer(new ViewPager2.PageTransformer() {
-            @Override
-            public void transformPage(@NonNull View page, float position) {
-                float myOffset = position * -(2 * pageOffset + pageMargin);
-                if (mPager.getOrientation() == ViewPager2.ORIENTATION_HORIZONTAL) {
-                    if (ViewCompat.getLayoutDirection(mPager) == ViewCompat.LAYOUT_DIRECTION_RTL) {
-                        page.setTranslationX(-myOffset);
-                    } else {
-                        page.setTranslationX(myOffset);
-                    }
+        mPager.setPageTransformer((page, position) -> {
+            float myOffset = position * -(2 * pageOffset + pageMargin);
+            if (mPager.getOrientation() == ViewPager2.ORIENTATION_HORIZONTAL) {
+                if (ViewCompat.getLayoutDirection(mPager) == ViewCompat.LAYOUT_DIRECTION_RTL) {
+                    page.setTranslationX(-myOffset);
                 } else {
-                    page.setTranslationY(myOffset);
+                    page.setTranslationX(myOffset);
                 }
+            } else {
+                page.setTranslationY(myOffset);
             }
         });
 
         // 지역 선택을 위한 스피너 설정
         spinner = rootView.findViewById(R.id.spinner);
-
         // 지역별 스피너 설정
         ArrayAdapter<String> placeArrayAdapter = new ArrayAdapter<>
                 (getActivity(), android.R.layout.simple_spinner_dropdown_item, signguList);
@@ -269,33 +208,42 @@ public class HomeFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> adapterView) { }
         });
 
-        // todo : 지역별 공연 검색
+        // 지역별 공연 검색
         txtPlace.setOnClickListener(view -> {
+            initKeyword();
             spinnerNumber = 0 ;
             txtPlace.setBackgroundColor(Color.parseColor("#DAFBFF"));
             txtType.setBackgroundColor(Color.parseColor("#ffffff"));
             spinner.setAdapter(placeArrayAdapter);
+            signgucode = "11";
         });
 
-        // todo : 유형별 공연 검색
+        // 유형별 공연 검색
         txtType.setOnClickListener(view -> {
+            initKeyword();
             spinnerNumber = 1 ;
             txtType.setBackgroundColor(Color.parseColor("#DAFBFF"));
             txtPlace.setBackgroundColor(Color.parseColor("#ffffff"));
             spinner.setAdapter(typeArrayAdapter);
+            prfGenre = "AAAA";
         });
 
-
-        // 상세 검색 간이 뷰 출력
+        // 찾기 모양 아이콘(돋보기) 클릭시, 상세 검색 간이 뷰 출력
         imgSearch.setOnClickListener(view -> {
             performanceDetailSearch();
+        });
+
+        // 리사이클러뷰에 보여진 공연을 추가적으로 더 보여주는 기능
+        btnAddData.setOnClickListener(view -> {
+            cpage += 1;
+            getPerformanceAddData(prfTime, prfName, prfPlace, prfGenre, signgucode, 2, cpage);
         });
 
         return rootView;
     }
 
     // 스피너를 통한 지역 선택시 지역 코드 저장 메소드
-    void selectedPlaceData(int i, String[] signguList) {
+    void selectedPlaceData(int i, @NonNull String[] signguList) {
         switch (signguList[i]) {
             case "" :
                 signgucode = "";
@@ -384,14 +332,10 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    // todo : 공연 목록 확인
+    // 공연 목록 확인
     void getPerformanceData(String prfTime, String prfName, String prfPlace, String prfGenre, String signgucode, int prfState) {
         // 데이터 초기화
         performanceList.clear();
-
-        // 1페이지, 6개씩 보여주기
-        int cpage = 1;
-        int rows = 6;
 
         // 현재 시간 불러오기
         prfTime = getCurrentTime();
@@ -402,7 +346,54 @@ public class HomeFragment extends Fragment {
         Retrofit retrofit = NetworkClient.getRetrofitClient(getActivity());
         KopisPerformanceApi api = retrofit.create(KopisPerformanceApi.class);
 
-        // 헤더에 설정 할 데이터 확인, 공유 저장소에 저장되어있는 토큰 호출
+        // API 요청
+        Call<KopisApiPerformance> call = api.getPerformance(prfTime, prfTime, cpage, rows, prfName, prfPlace, prfGenre, signgucode, signgusubcode, prfState);
+
+        call.enqueue(new Callback<KopisApiPerformance>() {
+            @Override
+            public void onResponse(@NonNull Call<KopisApiPerformance> call, @NonNull Response<KopisApiPerformance> response) {
+                // 200 OK, 네트워크 정상 응답
+                if(response.isSuccessful()) {
+                    ArrayList<KopisApiPerformance> data = response.body().getResultList();
+                    Log.i("MyTest HomeFrag getPrf", ""+data);
+                    // 공연 검색
+                    if (data != null) { performanceList.addAll(data); }
+                    else {
+                        performanceList.clear();
+                        Toast.makeText(getActivity(), "현재 진행중인 공연이 없습니다.", Toast.LENGTH_LONG).show();
+                    }
+                    adapter = new PerformanceSearchAdapter(getActivity(), performanceList);
+                    recyclerView.setAdapter(adapter);
+                    dismissProgress();
+                }
+                // 진행중인 공연이 없을 경우 메시지 출력
+                else if(response.code() == 500) {
+                    Toast.makeText(getActivity(), "현재 진행중인 공연이 없습니다.", Toast.LENGTH_LONG).show();
+                    performanceList.clear();
+                    adapter = new PerformanceSearchAdapter(getActivity(), performanceList);
+                    recyclerView.setAdapter(adapter);
+                    dismissProgress();
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<KopisApiPerformance> call, @NonNull Throwable t) {
+                dismissProgress();
+                Log.i("MyTest getprf fail", ""+t);
+            }
+        });
+    }
+
+    // 공연 목록 확인
+    void getPerformanceAddData(String prfTime, String prfName, String prfPlace, String prfGenre, String signgucode, int prfState, int cpage) {
+        // 현재 시간 불러오기
+        prfTime = getCurrentTime();
+        Log.i("MyTest Scroll addData", ""+cpage);
+        showProgress("공연 목록 불러오는 중...");
+
+        // 네트워크로 데이터 전송, Retrofit 객체 생성
+        Retrofit retrofit = NetworkClient.getRetrofitClient(getActivity());
+        KopisPerformanceApi api = retrofit.create(KopisPerformanceApi.class);
+
         // API 요청
         Call<KopisApiPerformance> call = api.getPerformance(prfTime, prfTime, cpage, rows, prfName, prfPlace, prfGenre, signgucode, signgusubcode, prfState);
 
@@ -417,19 +408,16 @@ public class HomeFragment extends Fragment {
                     // 공연 검색
                     if (data != null) { performanceList.addAll(data); }
                     else {
-                        performanceList.clear();
-                        Toast.makeText(getActivity(), "현재 진행중인 공연이 없습니다.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "더 이상의 진행중인 공연이 없습니다.", Toast.LENGTH_LONG).show();
                     }
-                    adapter = new PerformanceSearchAdapter(getActivity(), performanceList);
-                    recyclerView.setAdapter(adapter);
                 }
                 // 진행중인 공연이 없을 경우 메시지 출력
                 else if(response.code() == 500) {
-                    Toast.makeText(getActivity(), "현재 진행중인 공연이 없습니다.", Toast.LENGTH_LONG).show();
-                    performanceList.clear();
+                    Toast.makeText(getActivity(), "더 이상의 진행중인 공연이 없습니다.", Toast.LENGTH_LONG).show();
                     adapter = new PerformanceSearchAdapter(getActivity(), performanceList);
-                    recyclerView.setAdapter(adapter);
                 }
+                recyclerView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
             }
             @Override
             public void onFailure(@NonNull Call<KopisApiPerformance> call, @NonNull Throwable t) {
@@ -437,7 +425,6 @@ public class HomeFragment extends Fragment {
                 Log.i("MyTest getprf fail", ""+t);
             }
         });
-        initKeyword(); // 검색 조건 초기화
     }
 
     // 간이 뷰로 공연 상세 검색 설정
@@ -477,9 +464,12 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedTypeData(i, signguList);
+                prfPlace = signguList[i];
+
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) { }
+
         });
 
         // 지역 선택에 따른 지역코드 입력
@@ -487,6 +477,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedPlaceData(i, genreList);
+                prfGenre = genreList[i];
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) { }
@@ -496,6 +487,7 @@ public class HomeFragment extends Fragment {
         dialogPerformanceSearch.setPositiveButton("확인", (dialogInterface, i) -> {
             // 검색 키워드 저장
             prfName = editPerformanceKeyword.getText().toString().trim();
+            Log.i("MyTest HomeFrag EditTxt", ""+prfName);
 
             // 날짜 변수 초기화
             int prfMonth = dtPick.getMonth()+1;
@@ -515,7 +507,7 @@ public class HomeFragment extends Fragment {
             prfTime = dtPick.getYear() + prfMonthString + prfDayString ;
 
             Log.i("MyTest HomeFrag Search", ""+prfTime+prfName+prfPlace+prfGenre+signgucode);
-            getPerformanceData(prfTime, prfName, prfPlace, prfGenre, signgucode, 2);
+
             Intent intent = new Intent(getActivity(), SearchResultActivity.class);
             intent.putExtra("prfTime", prfTime);
             intent.putExtra("prfName", prfName);
@@ -523,6 +515,7 @@ public class HomeFragment extends Fragment {
             intent.putExtra("prfGenre", prfGenre);
             intent.putExtra("signgucode", signgucode);
             startActivity(intent);
+            initKeyword();
         });
 
         // 취소를 누르면 실행 될 코드 작성
@@ -549,6 +542,7 @@ public class HomeFragment extends Fragment {
         prfGenre="";
         signgucode="";
         prfState=2;
+        cpage=1;
     }
 
     // 프로그레스 다이얼로그
@@ -562,41 +556,43 @@ public class HomeFragment extends Fragment {
         dialog.dismiss();
     }
 
-    void getPerformanceDetailData(String prfId) {
-        showProgress("공연 목록 불러오는 중...");
-
+    // 내 취향 행사 공연 정보 확인
+    void getMyInterestingPerformanceData() {
         // retrofit 설정
         Retrofit retrofit = NetworkClient.getRetrofitClient(getActivity());
         KopisPerformanceApi api = retrofit.create(KopisPerformanceApi.class);
-        Call<KopisApiPerformance> call = api.getPerformanceDetail(prfId);
 
-        // Retrofit 값을 바로 저장하기 위한 동기 처리
-//        new Thread(() -> {
-//            try {
-//                kopisApiPerformance = call.execute().body().getResult();
-//                Log.i("MyTest Data Response", "" + kopisApiPerformance);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }).start();
 
-        // API 응답에 따른 약간의 대기 시간 설정
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        // API 호출
+        Call<KopisApiPerformance> call = api.getMyInterestingPerformance(limit, offset);
 
-        // 해당 공연 정보 표시
-//        Glide.with(getActivity()).load(kopisApiPerformance.getPosterUrl())
-//                .into(imgHomeEventPoster);
-//        Log.i("MyTest Data ImgUrl", ""+kopisApiPerformance.getPosterUrl());
-//        txtrecommEventTitle.setText(kopisApiPerformance.getPrfName());
-//        txtrecommEventDate.setText(kopisApiPerformance.getPrfpdfrom() + " ~ " + kopisApiPerformance.getPrfpdto());
-//        txtrecommEventPlace.setText(kopisApiPerformance.getPrfPlace());
 
-        dismissProgress();
+        call.enqueue(new Callback<KopisApiPerformance>() {
+            @Override
+            public void onResponse(@NonNull Call<KopisApiPerformance> call, @NonNull Response<KopisApiPerformance> response) {
+                // 200 OK, 네트워크 정상 응답
+                if(response.isSuccessful()) {
 
-        initKeyword();
+                    ArrayList<KopisApiPerformance> interestingData = response.body().getResultList();
+
+                    // 공연 검색
+                    if (interestingData != null) { interestingPerformanceList.addAll(interestingData); }
+                    else {
+                        interestingPerformanceList.clear();
+                        Toast.makeText(getActivity(), "현재 진행중인 공연이 없습니다.", Toast.LENGTH_LONG).show();
+                    }
+
+                    interestingAdapter = new MyInterestingAdapter(getActivity(), interestingPerformanceList);
+                    interestingRecyclerView.setAdapter(interestingAdapter);
+                    dismissProgress();
+
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<KopisApiPerformance> call, @NonNull Throwable t) {
+                dismissProgress();
+                Log.i("MyTest HomFrag net fail", ""+t);
+            }
+        });
     }
 }

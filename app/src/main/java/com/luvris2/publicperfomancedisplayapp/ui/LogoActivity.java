@@ -15,8 +15,6 @@ public class LogoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logo);
 
-        getSupportActionBar().hide();
-
         Handler handler = new Handler();
         handler.postDelayed(new Runnable(){
             @Override
@@ -25,7 +23,7 @@ public class LogoActivity extends AppCompatActivity {
                 startActivity(intent); //인트로 실행 후 바로 MainActivity 이동
                 finish();
             }
-        },500); // 3초 후 인트로 실행
+        },2000); // 2초 후 인트로 실행
     }
 
     @Override

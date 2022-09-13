@@ -1,11 +1,15 @@
 package com.luvris2.publicperfomancedisplayapp.adapter;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
+
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,9 +17,18 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.luvris2.publicperfomancedisplayapp.R;
+import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
+import com.luvris2.publicperfomancedisplayapp.api.UserApi;
+import com.luvris2.publicperfomancedisplayapp.config.Config;
 import com.luvris2.publicperfomancedisplayapp.model.PartyData;
+import com.luvris2.publicperfomancedisplayapp.model.Posting;
+import com.luvris2.publicperfomancedisplayapp.model.User;
+import com.luvris2.publicperfomancedisplayapp.model.UserRes;
+import com.luvris2.publicperfomancedisplayapp.ui.PartyActivity;
 
+import java.util.ArrayList;
 import java.util.List;
+
 
 public class PartyAdapter extends RecyclerView.Adapter<PartyAdapter.ViewHolder> {
 
@@ -27,6 +40,7 @@ public class PartyAdapter extends RecyclerView.Adapter<PartyAdapter.ViewHolder> 
         this.context = context;
         this.partyDataList = partyDataList;
         this.userId = userId;
+
     }
 
     @NonNull
@@ -34,10 +48,11 @@ public class PartyAdapter extends RecyclerView.Adapter<PartyAdapter.ViewHolder> 
     public PartyAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.party_row, parent, false);
-        return new PartyAdapter.ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
+
     public void onBindViewHolder(@NonNull PartyAdapter.ViewHolder holder, int position) {
         PartyData partyData = partyDataList.get(position);
 
@@ -65,6 +80,7 @@ public class PartyAdapter extends RecyclerView.Adapter<PartyAdapter.ViewHolder> 
             holder.cardView.setLayoutParams(params);
 
         }
+
     }
 
     @Override
@@ -78,17 +94,21 @@ public class PartyAdapter extends RecyclerView.Adapter<PartyAdapter.ViewHolder> 
         return partyDataList != null ? partyDataList.get(position) : null;
     }
 
+
     public void addChat(PartyData party) {
         partyDataList.add(party);
+
         notifyItemInserted(partyDataList.size()-1); //갱신
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+
         CardView cardView;
         TextView txtNickName;
         TextView txtMsg;
         TextView txtCreatedAt;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -97,6 +117,7 @@ public class PartyAdapter extends RecyclerView.Adapter<PartyAdapter.ViewHolder> 
             txtNickName = itemView.findViewById(R.id.txtNickName);
             txtMsg = itemView.findViewById(R.id.txtMsg);
             txtCreatedAt = itemView.findViewById(R.id.txtCreatedAt);
+
         }
     }
 }

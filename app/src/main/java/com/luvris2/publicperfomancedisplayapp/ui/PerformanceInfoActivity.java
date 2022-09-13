@@ -38,10 +38,13 @@ public class PerformanceInfoActivity extends AppCompatActivity {
     String mt20id="", service="";
 
     private String Prfnm;
-    private String fcltynm;
 
 
     KopisApiPerformance kopisApiPerformance;
+    private String prfName;
+    private String prfPlace;
+    private String prfodfrom;
+    private String Url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +67,8 @@ public class PerformanceInfoActivity extends AppCompatActivity {
 
         getPerformanceDetailData(mt20id);
 
+        Log.i("MyTest ", " prfName : " + prfName, null);
+
         // 티켓 링크 버튼 클릭 시
         btnEventUrl.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,11 +79,17 @@ public class PerformanceInfoActivity extends AppCompatActivity {
             }
         });
 
-        // 리뷰 작성 하러가기  클릭 시
+        // 리뷰 작성 하러가기 클릭 시
         btnEventEditReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent  =  new Intent(PerformanceInfoActivity.this, MyReviewWriteActivity.class);
+
+                intent.putExtra("Url", kopisApiPerformance.getPosterUrl()); // 포스터
+                intent.putExtra("prfName", kopisApiPerformance.getPrfName()); // 이름
+                intent.putExtra("prfPlace", kopisApiPerformance.getPrfPlace()); // 장소
+                intent.putExtra("prfodDate", kopisApiPerformance.getPrfpdfrom() +" ~ "+ kopisApiPerformance.getPrfpdto()); // 기간
+
                 startActivity(intent);
             }
         });
@@ -111,10 +122,18 @@ public class PerformanceInfoActivity extends AppCompatActivity {
 
         // 해당 공연 정보 표시
 
-        Glide.with(PerformanceInfoActivity.this).load(kopisApiPerformance.getPosterUrl())
+        Url = kopisApiPerformance.getPosterUrl();
+        Glide.with(PerformanceInfoActivity.this).load(Url)
                 .into(imgEventPoster);
         Log.i("MyTest Data ImgUrl", ""+kopisApiPerformance.getPosterUrl());
-        txtEventTitle1.setText(kopisApiPerformance.getPrfName());
+
+        // API에서 데이터를 불러와 멤버변수에 저장
+        prfName = kopisApiPerformance.getPrfName(); // 이름
+        prfPlace = kopisApiPerformance.getPrfPlace(); // 장소
+        prfodfrom = kopisApiPerformance.getPrfpdfrom(); // 기간
+
+        // 메모리에 저장된 데이터를 UI객체에 입력.
+        txtEventTitle1.setText(prfName);
         txtEventDate1.setText(kopisApiPerformance.getPrfpdfrom() + " ~ " + kopisApiPerformance.getPrfpdto());
         txtEventPlace1.setText(kopisApiPerformance.getPrfPlace());
         txtEventDesc1.setText("출연진:" + kopisApiPerformance.getPrfcast() + System.getProperty("line.separator")

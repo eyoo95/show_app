@@ -25,6 +25,9 @@
             android:name=".ui.PartyMainActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.SearchResultActivity"
+            android:exported="false" />    
+        <activity
             android:name=".ui.PartyActivity"
             android:exported="false" />
         <activity
@@ -76,7 +79,7 @@
             android:name=".ui.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.LikeActivity"
+            android:name=".ui.MyPageLikeActivity"
             android:exported="false" />
         <activity
             android:name=".ui.MyReviewWriteActivity"

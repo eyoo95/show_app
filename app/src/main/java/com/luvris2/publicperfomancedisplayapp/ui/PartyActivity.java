@@ -1,5 +1,6 @@
 package com.luvris2.publicperfomancedisplayapp.ui;
 
+
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,12 +19,15 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
 import com.google.firebase.database.annotations.Nullable;
+
 import com.luvris2.publicperfomancedisplayapp.R;
 import com.luvris2.publicperfomancedisplayapp.adapter.PartyAdapter;
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
 import com.luvris2.publicperfomancedisplayapp.api.UserApi;
 import com.luvris2.publicperfomancedisplayapp.config.Config;
+
 import com.luvris2.publicperfomancedisplayapp.model.PartyData;
 import com.luvris2.publicperfomancedisplayapp.model.PartyRoom;
 import com.luvris2.publicperfomancedisplayapp.model.User;
@@ -33,6 +37,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -55,6 +60,7 @@ public class PartyActivity extends AppCompatActivity {
     private int userId;
 
     PartyRoom partyRoom;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +100,7 @@ public class PartyActivity extends AppCompatActivity {
                 mRecyclerView.setAdapter(mAdapter);
                 PartyData party = dataSnapshot.getValue(PartyData.class);
                 ((PartyAdapter) mAdapter).addChat(party);
+
             }
 
             @Override
@@ -122,6 +129,7 @@ public class PartyActivity extends AppCompatActivity {
 
         Retrofit retrofit = NetworkClient.getRetrofitClient(PartyActivity.this);
         UserApi api = retrofit.create(UserApi.class);
+
         SharedPreferences sp = getApplication().getSharedPreferences(Config.PREFERENCES_NAME, MODE_PRIVATE);
         String accessToken = sp.getString("accessToken", "");
         Call<UserRes> call = api.getUserInfo("Bearer " + accessToken);
@@ -130,12 +138,14 @@ public class PartyActivity extends AppCompatActivity {
             public void onResponse(Call<UserRes> call, Response<UserRes> response) {
                 // 200 OK 일 때,
                 if (response.isSuccessful()) {
+
                     //TODO: 회원정보 넣어야 됨
 
                     UserRes data = response.body();
                     User userInfo = data.getUserInfo();
 
                     myNickName = userInfo.getNickname();
+
                     userId = userInfo.getUserId();
 
                     btnSend.setOnClickListener(new View.OnClickListener() {
@@ -167,10 +177,12 @@ public class PartyActivity extends AppCompatActivity {
                         }
                     });
 
+
                 } else {
                     Toast.makeText(getApplication(), "에러 발생 : " + response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
+
             @Override // 실패했을 때
             public void onFailure(Call<UserRes> call, Throwable t) {
                 // 네트워크 자체 문제로 실패!

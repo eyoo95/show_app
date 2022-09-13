@@ -1,7 +1,5 @@
 package com.luvris2.publicperfomancedisplayapp.model;
 
-import androidx.annotation.Keep;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
