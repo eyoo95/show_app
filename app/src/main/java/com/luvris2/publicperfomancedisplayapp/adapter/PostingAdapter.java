@@ -2,7 +2,6 @@ package com.luvris2.publicperfomancedisplayapp.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,8 +60,8 @@ public class PostingAdapter extends RecyclerView.Adapter<PostingAdapter.ViewHold
 
         //list_row
         holder.txtTitle.setText(posting.getTitle());
-        holder.txtCreatedAt.setText(posting.getCreatedAt().substring(5));
-        holder.txtRecommend.setText("추천 수 " + posting.getRecommend());
+        holder.txtCreatedAt.setText(posting.getCreatedAt().substring(5,10));
+        holder.txtRecommend.setText("" + posting.getRecommend());
         holder.txtNickName.setText(posting.getNickname());
     }
 
@@ -103,7 +102,7 @@ public class PostingAdapter extends RecyclerView.Adapter<PostingAdapter.ViewHold
             cardView = itemView.findViewById(R.id.cardView);
             txtTitle = itemView.findViewById(R.id.txtTitle);
             txtCreatedAt = itemView.findViewById(R.id.txtCreatedAt);
-            txtRecommend = itemView.findViewById(R.id.txtRecommend);
+            txtRecommend = itemView.findViewById(R.id.txtReviewRecommend);
             txtNickName = itemView.findViewById(R.id.txtNickName);
 
             // 카드뷰를 클릭하면 글의 위치 정보를 넘겨준다.

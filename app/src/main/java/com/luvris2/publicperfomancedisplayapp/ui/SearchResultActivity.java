@@ -43,20 +43,15 @@ public class SearchResultActivity extends AppCompatActivity {
     String prfName="", prfPlace="", prfGenre="", signgucode="";
     int prfState=2; // 2=공연중
 
-    // 페이징에 필요한 멤버변수
-    int offset = 0;
-    int limit = 25;
-
     int cpage = 1;
     int rows = 6;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_result);
 
-        imgBack = findViewById(R.id.imgMoreReview);
+        imgBack = findViewById(R.id.imgBack);
         recyclerViewSearch = findViewById(R.id.recyclerViewSearch);
         recyclerViewSearch.setHasFixedSize(true);
         recyclerViewSearch.setLayoutManager(new LinearLayoutManager(SearchResultActivity.this));
@@ -68,20 +63,12 @@ public class SearchResultActivity extends AppCompatActivity {
         prfGenre = getIntent.getStringExtra("prfGenre");
         signgucode = getIntent.getStringExtra("signgucode");
 
-        Log.i("MyTest SearchAct TIme", ""+prfTime+prfTime);
-        Log.i("MyTest SearchAct Name", ""+prfName);
-        Log.i("MyTest SearchAct Genre", ""+prfGenre);
-        Log.i("MyTest SearchAct Place", ""+prfPlace);
-        Log.i("MyTest SearchAct State", ""+prfState);
-        Log.i("MyTest SearchAct code", ""+signgucode);
-
         showProgress("공연 목록 불러오는 중...");
 
         // 네트워크로 데이터 전송, Retrofit 객체 생성
         Retrofit retrofit = NetworkClient.getRetrofitClient(SearchResultActivity.this);
         KopisPerformanceApi api = retrofit.create(KopisPerformanceApi.class);
 
-        // 헤더에 설정 할 데이터 확인, 공유 저장소에 저장되어있는 토큰 호출
         // API 요청
         Call<KopisApiPerformance> call = api.getPerformance(prfTime, prfTime, cpage, rows, prfName, prfPlace, prfGenre, signgucode, "" ,2);
 
@@ -92,10 +79,10 @@ public class SearchResultActivity extends AppCompatActivity {
                 // 200 OK, 네트워크 정상 응답
                 if (response.isSuccessful()) {
                     ArrayList<KopisApiPerformance> data = response.body().getResultList();
-                    Log.i("MyTest HomeFrag getPrf", "" + data);
                     // 공연 검색
                     if (data != null) {
                         performanceList1.addAll(data);
+                        Log.i("MyTest SearchResultActi", "Retrofit : "+ data.get(0).getPrfName()+ data.get(0).getPrfId());
                     } else {
                         performanceList1.clear();
                         Toast.makeText(SearchResultActivity.this, "현재 진행중인 공연이 없습니다.", Toast.LENGTH_LONG).show();
@@ -115,7 +102,7 @@ public class SearchResultActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<KopisApiPerformance> call, @NonNull Throwable t) {
                 dismissProgress();
-                Log.i("MyTest getprf fail", "" + t);
+                Log.i("MyTest SearchResultActi", "Retrofit Error : " + t);
             }
         });
 
@@ -126,6 +113,7 @@ public class SearchResultActivity extends AppCompatActivity {
             }
         });
     }
+
     // 프로그레스 다이얼로그
     void showProgress(String message) {
         dialog = new ProgressDialog(SearchResultActivity.this);
@@ -135,6 +123,5 @@ public class SearchResultActivity extends AppCompatActivity {
     }
     void dismissProgress() {
         dialog.dismiss();
-
     }
 }

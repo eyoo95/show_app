@@ -65,6 +65,7 @@
             android:gravity="top"
             android:hint="내용을 입력하세요"
             android:inputType="textPersonName"
+            android:minHeight="250dp"
             android:padding="10dp" />
 
         <Button

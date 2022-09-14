@@ -41,7 +41,7 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.ViewHo
 
         // todo: 꼭 워크벤치로 Review DB 확인하고 컬럼명 Model.Review 파일 수정 후, 아래 코드 수정할 것.
         holder.txtRatingTitle.setText(review.getMt20id());
-        holder.txtRatingContent.setText(review.getId());
+        holder.txtRatingContent.setText(review.getUserId());
         holder.txtRatingCreatedAt.setText(review.getContent());
     }
 

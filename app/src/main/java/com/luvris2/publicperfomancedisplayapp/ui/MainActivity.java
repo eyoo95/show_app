@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
                             Log.i("MyTestMainActivity", "LastLocation "+gpsX+gpsY);
                         }
                         else {
-                            Toast.makeText(getApplicationContext(), "GPS 수신이 양호하지 않습니다. 다시 시도해주세요.", Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getApplicationContext(), "GPS 수신이 양호하지 않습니다. 다시 시도해주세요.", Toast.LENGTH_LONG).show();
                         }
                     }
                 });

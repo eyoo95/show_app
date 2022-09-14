@@ -8,6 +8,13 @@
     android:weightSum="1"
     >
 
+    <ImageView
+        android:id="@+id/imgBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        app:srcCompat="@drawable/ic_back" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:scrollbars="vertical"

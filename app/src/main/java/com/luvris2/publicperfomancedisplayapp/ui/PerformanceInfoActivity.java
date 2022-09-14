@@ -9,18 +9,29 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.luvris2.publicperfomancedisplayapp.R;
+import com.luvris2.publicperfomancedisplayapp.adapter.PerformanceReviewAdapter;
 import com.luvris2.publicperfomancedisplayapp.api.KopisPerformanceApi;
 import com.luvris2.publicperfomancedisplayapp.api.NetworkClient;
+import com.luvris2.publicperfomancedisplayapp.api.ReviewApi;
 import com.luvris2.publicperfomancedisplayapp.model.KopisApiPerformance;
+import com.luvris2.publicperfomancedisplayapp.model.Review;
+import com.luvris2.publicperfomancedisplayapp.model.ReviewList;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class PerformanceInfoActivity extends AppCompatActivity {
@@ -39,12 +50,20 @@ public class PerformanceInfoActivity extends AppCompatActivity {
 
     private String Prfnm;
 
-
     KopisApiPerformance kopisApiPerformance;
     private String prfName;
     private String prfPlace;
     private String prfodfrom;
     private String Url;
+
+    // 리사이클러 뷰 관련 변수
+    RecyclerView recyclerViewPerfomanceInfo;
+    PerformanceReviewAdapter adapter;
+    ArrayList<Review> reviewList = new ArrayList<>();
+
+    // 페이징에 필요한 멤버변수
+    int offset = 0;
+    int limit = 25;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +112,13 @@ public class PerformanceInfoActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // 리사이클러뷰 화면 설정
+        recyclerViewPerfomanceInfo = findViewById(R.id.recyclerViewPerfomanceInfo);
+        recyclerViewPerfomanceInfo.setHasFixedSize(true);
+        recyclerViewPerfomanceInfo.setLayoutManager(new GridLayoutManager(PerformanceInfoActivity.this,2));
+
+        getReviewList();
     }
 
     void getPerformanceDetailData(String prfId) {
@@ -145,6 +171,57 @@ public class PerformanceInfoActivity extends AppCompatActivity {
                 + "공연시간:" + kopisApiPerformance.getDtguidance());
 
         dismissProgress();
+    }
+
+    void getReviewList() {
+        // 데이터 초기화
+        reviewList.clear();
+
+        // 현재 시간 불러오기
+
+        showProgress("리뷰 목록 불러오는 중...");
+
+        // 네트워크로 데이터 전송, Retrofit 객체 생성
+        Retrofit retrofit = NetworkClient.getRetrofitClient(PerformanceInfoActivity.this);
+        ReviewApi api = retrofit.create(ReviewApi.class);
+
+        Log.i("MyTest", "PerformanceInfoActivity retrofit : "+mt20id);
+        Call<ReviewList> call = api.getShowReview(mt20id, offset, limit);
+
+        call.enqueue(new Callback<ReviewList>() {
+            @Override
+            public void onResponse(Call<ReviewList> call, Response<ReviewList> response) {
+
+                if(response.isSuccessful()){
+
+                    reviewList.addAll( response.body().getResultList() );
+
+                    if(reviewList != null){
+                        adapter = new PerformanceReviewAdapter(PerformanceInfoActivity.this, reviewList);
+
+                        adapter.notifyDataSetChanged();
+
+                        recyclerViewPerfomanceInfo.setAdapter(adapter);
+                    }
+
+
+                    dismissProgress();
+                }
+                // 진행중인 공연이 없을 경우 메시지 출력
+                else if(response.code() == 500) {
+                    Toast.makeText(PerformanceInfoActivity.this, "현재 남겨진 리뷰가 없습니다.", Toast.LENGTH_LONG).show();
+                    reviewList.clear();
+                    adapter = new PerformanceReviewAdapter(PerformanceInfoActivity.this, reviewList);
+                    recyclerViewPerfomanceInfo.setAdapter(adapter);
+                    dismissProgress();
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<ReviewList> call, @NonNull Throwable t) {
+                dismissProgress();
+                Toast.makeText(PerformanceInfoActivity.this, "리뷰를 불러오지 못 했습니다.", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     // 공연 조회 변수 초기화

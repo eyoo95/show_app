@@ -13,7 +13,7 @@ public class PartyRoom implements Serializable {
     String updatedAt;
     String nickname;
 
-    public PartyRoom(int id, int userId, String mt20id, String prfnm, String title, String createdAt, String updatedAt) {
+    public PartyRoom(String prfnm, String title) {
         this.prfnm = prfnm;
         this.title = title;
     }

@@ -34,7 +34,7 @@
                 android:textSize="30sp" />
 
             <ImageView
-                android:id="@+id/imgMoreReview"
+                android:id="@+id/imgBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

@@ -39,6 +39,14 @@ public class PostingWriteActivity extends AppCompatActivity {
     ArrayList<Posting> postingList = new ArrayList<>();
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(PostingWriteActivity.this, PostingActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_posting_write);
@@ -52,6 +60,8 @@ public class PostingWriteActivity extends AppCompatActivity {
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(PostingWriteActivity.this, PostingActivity.class);
+                startActivity(intent);
                 finish();
             }
         });

@@ -5,6 +5,7 @@ import com.luvris2.publicperfomancedisplayapp.model.KopisApiPerformance;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -25,6 +26,9 @@ public interface KopisPerformanceApi {
     // 공연 상세 검색
     @GET("/performancedetail/{prfId}")
     Call<KopisApiPerformance> getPerformanceDetail(@Path("prfId") String prfId);
+
+    @POST("/performancedetail/{prfId}")
+    Call<KopisApiPerformance> setPerformance(@Path("prfId") String prfId);
 
     // 내 지역(구) 공연 검색
     @GET("/nearbyperformance/{sidoCodeSub}")

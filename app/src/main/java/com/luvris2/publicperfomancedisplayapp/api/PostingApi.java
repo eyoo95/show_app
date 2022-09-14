@@ -1,5 +1,6 @@
 package com.luvris2.publicperfomancedisplayapp.api;
 
+import com.luvris2.publicperfomancedisplayapp.model.PostRes;
 import com.luvris2.publicperfomancedisplayapp.model.Posting;
 import com.luvris2.publicperfomancedisplayapp.model.PostingList;
 
@@ -54,5 +55,20 @@ public interface PostingApi {
     Call<PostingList> getMyPosting(@Header("Authorization") String token,
                                    @Query("offset") int offset,
                                    @Query("limit") int limit);
+    // 게시물 추천 확인
+    @GET("/posting/recommend/{postingId}")
+    Call<PostRes> checkRecommendPosting(@Header("Authorization") String token,
+                                        @Path("postingId") int postingId);
+
+    // 게시물 추천
+    @POST("/posting/recommend/{postingId}")
+    Call<PostRes> recommendThisPosting(@Header("Authorization") String token,
+                                           @Path("postingId") int postingId);
+
+    // 게시물 추천 취소
+    @DELETE("/posting/recommend/{postingId}")
+    Call<PostRes> cancelRecommendPosting(@Header("Authorization") String token,
+                                             @Path("postingId") int postingId);
+
 
 }

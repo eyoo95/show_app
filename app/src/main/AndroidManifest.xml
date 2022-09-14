@@ -34,7 +34,7 @@
             android:name=".ui.EditRecommReadActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.EditorRecommActivity"
+            android:name=".ui.PartyCreateActivity"
             android:exported="false" />
         <activity
             android:name=".ui.PostingActivity"

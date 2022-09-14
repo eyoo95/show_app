@@ -2,6 +2,7 @@ package com.luvris2.publicperfomancedisplayapp.adapter;
 
 import android.content.Context;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,6 +53,9 @@ public class PartyAdapter extends RecyclerView.Adapter<PartyAdapter.ViewHolder> 
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
+        Log.i("userIDLog", partyData.getUserId() + "");
+        Log.i("userIDLog2", this.userId + "");
+
         //채팅 친 사람의 닉네임이 나의 닉네임이면 오른쪽 정렬
         if(partyData.getUserId() == this.userId) {
             params.weight = 1.0f;
@@ -87,8 +91,7 @@ public class PartyAdapter extends RecyclerView.Adapter<PartyAdapter.ViewHolder> 
 
     public void addChat(PartyData party) {
         partyDataList.add(party);
-
-        notifyItemInserted(partyDataList.size()-1); //갱신
+        notifyItemInserted(partyDataList.size() - 1); //갱신
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

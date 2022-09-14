@@ -108,13 +108,10 @@ public class PerformanceSearchAdapter extends RecyclerView.Adapter<PerformanceSe
 
                 // 인덱스의 저장된 데이터 호출
                 KopisApiPerformance Performance = performanceList.get(index);
-                Log.i("recyclerView Adapter", "recycler Adapter index : " + index, null);
 
-                // 수정하는 액티비티로 데이터 전달 // 후에 상세정보 불러오기로 바꿔야함 // 우선 기본틀만
+                // 상세정보 액티비티로 데이터 전달
                 Intent intent = new Intent(context, PerformanceInfoActivity.class);
                 intent.putExtra("mt20id",Performance.getPrfId());
-
-                Log.i("recyclerView Adapter 2", "Performance.getPrfId() : " + Performance.getPrfId(), null);
 
                 context.startActivity(intent);
             });

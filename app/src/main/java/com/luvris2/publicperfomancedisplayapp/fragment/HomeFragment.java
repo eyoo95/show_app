@@ -354,7 +354,7 @@ public class HomeFragment extends Fragment {
                 // 200 OK, 네트워크 정상 응답
                 if(response.isSuccessful()) {
                     ArrayList<KopisApiPerformance> data = response.body().getResultList();
-                    Log.i("MyTest HomeFrag getPrf", ""+data);
+                    Log.i("MyTest HomeFragment", "getPerformanceData Success : "+data);
                     // 공연 검색
                     if (data != null) { performanceList.addAll(data); }
                     else {
@@ -377,16 +377,16 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Call<KopisApiPerformance> call, @NonNull Throwable t) {
                 dismissProgress();
-                Log.i("MyTest getprf fail", ""+t);
+                Log.i("MyTest HomeFragment", "getPerformanceData onFailure : "+t);
             }
         });
     }
 
-    // 공연 목록 확인
+    // 추가 공연 목록 확인
     void getPerformanceAddData(String prfTime, String prfName, String prfPlace, String prfGenre, String signgucode, int prfState, int cpage) {
         // 현재 시간 불러오기
         prfTime = getCurrentTime();
-        Log.i("MyTest Scroll addData", ""+cpage);
+        Log.i("MyTest HomeFragment", "getPerformanceAddData (cpage) : "+cpage);
         showProgress("공연 목록 불러오는 중...");
 
         // 네트워크로 데이터 전송, Retrofit 객체 생성
@@ -403,7 +403,7 @@ public class HomeFragment extends Fragment {
                 // 200 OK, 네트워크 정상 응답
                 if(response.isSuccessful()) {
                     ArrayList<KopisApiPerformance> data = response.body().getResultList();
-                    Log.i("MyTest HomeFrag getPrf", ""+data);
+                    Log.i("MyTest HomeFragment", "getPerformanceAddDate : "+data);
                     // 공연 검색
                     if (data != null) { performanceList.addAll(data); }
                     else {
@@ -421,7 +421,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Call<KopisApiPerformance> call, @NonNull Throwable t) {
                 dismissProgress();
-                Log.i("MyTest getprf fail", ""+t);
+                Log.i("MyTest HomeFragment", "getPerformanceAddDate onFailure : "+t);
             }
         });
     }
@@ -464,11 +464,9 @@ public class HomeFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedTypeData(i, signguList);
                 prfPlace = signguList[i];
-
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) { }
-
         });
 
         // 지역 선택에 따른 지역코드 입력
@@ -486,7 +484,6 @@ public class HomeFragment extends Fragment {
         dialogPerformanceSearch.setPositiveButton("확인", (dialogInterface, i) -> {
             // 검색 키워드 저장
             prfName = editPerformanceKeyword.getText().toString().trim();
-            Log.i("MyTest HomeFrag EditTxt", ""+prfName);
 
             // 날짜 변수 초기화
             int prfMonth = dtPick.getMonth()+1;
@@ -505,7 +502,7 @@ public class HomeFragment extends Fragment {
             // 날짜를 6자리로 가공
             prfTime = dtPick.getYear() + prfMonthString + prfDayString ;
 
-            Log.i("MyTest HomeFrag Search", ""+prfTime+prfName+prfPlace+prfGenre+signgucode);
+            Log.i("MyTest HomeFragment", "performanceDetailSearch : "+prfTime+prfName+prfPlace+prfGenre+signgucode);
 
             Intent intent = new Intent(getActivity(), SearchResultActivity.class);
             intent.putExtra("prfTime", prfTime);
@@ -517,7 +514,7 @@ public class HomeFragment extends Fragment {
             initKeyword();
         });
 
-        // 취소를 누르면 실행 될 코드 작성
+        // 취소
         dialogPerformanceSearch.setNegativeButton("취소", (dialogInterface, i) -> {
             // 취소시 실행 코드 작성
         });
@@ -573,6 +570,8 @@ public class HomeFragment extends Fragment {
                 // 200 OK, 네트워크 정상 응답
                 if(response.isSuccessful()) {
 
+                    interestingPerformanceList.clear();
+
                     ArrayList<KopisApiPerformance> data = response.body().getResultList();
 
                     // 공연 검색
@@ -589,7 +588,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Call<KopisApiPerformance> call, @NonNull Throwable t) {
                 dismissProgress();
-                Log.i("MyTest recomm API fail", ""+t);
+                Log.i("MyTest", "HomeFragment getMyInterestingPerformanceData onFailure"+t);
             }
         });
     }

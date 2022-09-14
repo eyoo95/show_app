@@ -9,6 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="20dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,7 +19,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -28,14 +30,16 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="8"
                 android:text="자유게시판"
-                android:textSize="24sp" />
+                android:fontFamily="@font/nanum_square_eb"
+                android:textSize="30sp" />
 
             <ImageView
                 android:id="@+id/imgMoreReview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_back" />
+                app:srcCompat="@drawable/ic_back"
+                app:tint="#7AD7E1" />
 
         </LinearLayout>
 
@@ -47,31 +51,102 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="30dp"
             android:layout_marginRight="20dp"
-            android:background="@drawable/border"
+            android:layout_marginBottom="10dp"
             android:ems="10"
             android:gravity="top"
             android:hint="텍스트 제목 부분"
             android:inputType="textPersonName"
             android:minHeight="48dp"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:textColor="#252525"
+            android:textSize="30sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border"
+            android:backgroundTint="#FCFBFB"
+            android:elevation="2dp"
+            android:orientation="horizontal"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp">
+
+            <TextView
+                android:id="@+id/txtNickname"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="1"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="5dp"
+                android:text="닉네임" />
+
+            <TextView
+                android:id="@+id/txtDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:padding="5dp"
+                android:text="날짜" />
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/txtPrfTitle"
+            android:id="@+id/txtContent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/border"
             android:ems="10"
             android:gravity="top"
             android:hint="텍스트 내용 부분"
             android:inputType="textPersonName"
-            android:minHeight="48dp"
+            android:minHeight="300dp"
             android:padding="10dp"
-            android:textColorHint="#757575" />
+            android:textColorHint="#757575"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txtRecommend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:text="추천 수"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/btnRecommend"
+                android:layout_width="115dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="추천취소"
+                android:textSize="20sp" />
+        </LinearLayout>
 
     </LinearLayout>
 
