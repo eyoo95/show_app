@@ -44,7 +44,7 @@
   - MyPageFragment: 사용자가 활동한 기록과 유저 정보를 수정하고 회원탈퇴가 가능하다.
 
 # 실제 구동 화면 (수정 )
-<img width="200px;"height="400;" src="https://user-images.githubusercontent.com/105832386/190554589-34740111-84ba-43e7-935c-3c49ea36772c.png";/>
+<img width="200px;"height="400;" src="https://user-images.githubusercontent.com/105832386/190554589-34740111-84ba-43e7-935c-3c49ea36772c.png"/>
                                                                                                                                           
 <img width="200px;"height="400;" src="https://user-images.githubusercontent.com/105832386/190554594-c91215f0-8358-47a7-95b3-24e7b301a9f7.png"/>
 
