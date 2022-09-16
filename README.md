@@ -45,9 +45,19 @@
 
 # 실제 구동 화면
 
-![화면1](https://user-images.githubusercontent.com/105832386/190554589-34740111-84ba-43e7-935c-3c49ea36772c.png){: width="200" height="400"}
-
 <img src="https://user-images.githubusercontent.com/105832386/190554589-34740111-84ba-43e7-935c-3c49ea36772c.png" width="300" height="300">
+
+<img src="https://user-images.githubusercontent.com/105832386/190554594-c91215f0-8358-47a7-95b3-24e7b301a9f7.png" width="300" height="300">
+
+<img src="https://user-images.githubusercontent.com/105832386/190554596-680e9d29-4e1f-452f-bf71-5a7b6dd50c5a.png" width="300" height="300">
+
+<img src="https://user-images.githubusercontent.com/105832386/190554597-54a118a8-972b-4354-b06a-fbe98e127b4b.png" width="300" height="300">
+
+<img src="https://user-images.githubusercontent.com/105832386/190554599-60a95d1b-faad-4eaf-bc27-5817436f9c4f.png" width="300" height="300">
+
+<img src="https://user-images.githubusercontent.com/105832386/190554603-992aac1c-b601-48c5-ab1e-bd883be6ec81.png" width="300" height="300">
+
+<!-- ![화면1](https://user-images.githubusercontent.com/105832386/190554589-34740111-84ba-43e7-935c-3c49ea36772c.png){: width="200" height="400"}
 
 ![화면2](https://user-images.githubusercontent.com/105832386/190554594-c91215f0-8358-47a7-95b3-24e7b301a9f7.png){: width="200" height="400"}
 
@@ -57,4 +67,4 @@
 
 ![화면5](https://user-images.githubusercontent.com/105832386/190554599-60a95d1b-faad-4eaf-bc27-5817436f9c4f.png){: width="200" height="400"}
 
-![화면6](https://user-images.githubusercontent.com/105832386/190554603-992aac1c-b601-48c5-ab1e-bd883be6ec81.png){: width="200" height="400"}
+![화면6](https://user-images.githubusercontent.com/105832386/190554603-992aac1c-b601-48c5-ab1e-bd883be6ec81.png){: width="200" height="400"} -->
