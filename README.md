@@ -47,6 +47,8 @@
 
 ![화면1](https://user-images.githubusercontent.com/105832386/190554589-34740111-84ba-43e7-935c-3c49ea36772c.png){: width="200" height="400"}
 
+<img src="https://user-images.githubusercontent.com/105832386/190554589-34740111-84ba-43e7-935c-3c49ea36772c.png" width="300" height="300">
+
 ![화면2](https://user-images.githubusercontent.com/105832386/190554594-c91215f0-8358-47a7-95b3-24e7b301a9f7.png){: width="200" height="400"}
 
 ![화면3](https://user-images.githubusercontent.com/105832386/190554596-680e9d29-4e1f-452f-bf71-5a7b6dd50c5a.png){: width="200" height="400"}
