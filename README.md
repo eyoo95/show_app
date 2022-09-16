@@ -42,3 +42,17 @@
 
 ### **내 정보**
   - MyPageFragment: 사용자가 활동한 기록과 유저 정보를 수정하고 회원탈퇴가 가능하다.
+
+# 실제 구동 화면
+
+![화면1](https://user-images.githubusercontent.com/105832386/190554589-34740111-84ba-43e7-935c-3c49ea36772c.png){: width="200" height="400"}
+
+![화면2]<img width="200px;"height="400;" src="https://user-images.githubusercontent.com/105832386/190554594-c91215f0-8358-47a7-95b3-24e7b301a9f7.png"; />
+
+![화면3]<img width="200px;"height="400;" src="https://user-images.githubusercontent.com/105832386/190554596-680e9d29-4e1f-452f-bf71-5a7b6dd50c5a.png"; />
+
+![화면4]<img width="200px;"height="400;" src="https://user-images.githubusercontent.com/105832386/190554597-54a118a8-972b-4354-b06a-fbe98e127b4b.png"; />
+
+![화면5]<img width="200px;"height="400;" src="https://user-images.githubusercontent.com/105832386/190554599-60a95d1b-faad-4eaf-bc27-5817436f9c4f.png"; />
+
+![화면6]<img width="200px;"height="400;" src="https://user-images.githubusercontent.com/105832386/190554603-992aac1c-b601-48c5-ab1e-bd883be6ec81.png"; />
