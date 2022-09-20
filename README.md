@@ -1,4 +1,5 @@
 # 공연 조회 JAVA Android Application  (뭐보러갈래) Overview
+https://docs.google.com/presentation/d/1WwfQ5CU3-UyYyVl5f6w5fggurQ5EiNB2GDk96inoQos/edit?usp=sharing
 - 공연 정보와 내 지역의 공연 정보를 확인 할 수 있습니다.
 - 사용자 기반 협업 필터링을 활용한 추천 인공지능으로 사용자들의 활동 패턴을 확인하고 좋아 할 것 같은 공연을 추천하는 기능을 포함하고 있습니다.
 - 공연 티켓 이미지를 업로드하면 이미지의 글자를 판독하여 해당 공연과 일치하는 공연 티켓인지 확인하는 인공지능 기능을 포함하고 있습니다.
