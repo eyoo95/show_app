@@ -47,3 +47,10 @@ https://docs.google.com/presentation/d/1WwfQ5CU3-UyYyVl5f6w5fggurQ5EiNB2GDk96ino
 # 실제 구동 화면
 
 <img src="https://user-images.githubusercontent.com/105832386/190554589-34740111-84ba-43e7-935c-3c49ea36772c.png" width="300" height="300"><img src="https://user-images.githubusercontent.com/105832386/190554594-c91215f0-8358-47a7-95b3-24e7b301a9f7.png" width="300" height="300"><img src="https://user-images.githubusercontent.com/105832386/190554596-680e9d29-4e1f-452f-bf71-5a7b6dd50c5a.png" width="300" height="300"><img src="https://user-images.githubusercontent.com/105832386/190554597-54a118a8-972b-4354-b06a-fbe98e127b4b.png" width="300" height="300"><img src="https://user-images.githubusercontent.com/105832386/190554599-60a95d1b-faad-4eaf-bc27-5817436f9c4f.png" width="300" height="300"><img src="https://user-images.githubusercontent.com/105832386/190554603-992aac1c-b601-48c5-ab1e-bd883be6ec81.png" width="300" height="300">
+
+
+개발기술서 Google Slides 주소: https://docs.google.com/presentation/d/1BJ2cNw5j3P4FOtlDy8OxZ3UoWne1K10SR-14FXz_giI/edit?usp=sharing
+화면 UI 기획서 Oven 주소: https://ovenapp.io/view/mPoCI4eiLuu7fKlOjkeaHgkUKuUto8Qr/DRB62
+테이블정의서 ErdCloud 주소: https://www.erdcloud.com/d/5v5C9THyddnhXEpKg
+API 명세서 Postman 주소: https://documenter.getpostman.com/view/21511170/2s7YYu7imm
+서버 소스코드 Github 주소: https://github.com/eyoo95/perform-server-aws
